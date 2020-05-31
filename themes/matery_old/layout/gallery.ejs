@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="<%- theme.libs.css.gallery %>">
+
+<link rel="stylesheet" type="text/css" href="<%- theme.libs.css.fancybox %>">
+<link rel="stylesheet" type="text/css" href="<%- theme.libs.css.justifiedGallery %>">
+
+<%- partial('_partial/post-cover') %>
+
+<%
+let galleries = [];
+if (site.data && site.data.galleries) {
+    galleries = site.data.galleries;
+}
+var pageTitle = page.title;
+function getCurrentGallery(galleries, pageTitle) {
+    for (let i = 0; i < galleries.length; i++) {
+        if (galleries[i]['name'] == pageTitle) {
+            return galleries[i];
+        }
+    }
+}
+var currentGallery = getCurrentGallery(galleries, pageTitle)
+
+var photos = currentGallery.photos;
+
+let imageStr = ''
+
+for (var i = 0, len = photos.length; i < len; i++) {
+    var photo = photos[i];
+
+<!-- 这儿的网址,改为你图片放的位置的网址。比如你用Github图床的话，就改为你图床的网址 -->
+    imageStr += "<a href=\"https://tokisakigalaxy.xyz/" + photo + "\"\n" +
+            "     class=\"photo-item\" rel=\"example_group\"\n" +
+            "     data-fancybox=\"images\">\n" +
+            "      <img src=\"https://tokisakigalaxy.xyz/" + photo + "\"\n" +
+            "       alt=" + photo + " class=\"lazyload\">\n" +
+            "    </a>"
+}
+%>
+
+<!--   "  <p class=\"photo-name\">" + photo + "</p>\n" +
+文件名先注释掉  -->
+
+<div class="container">
+    <div class="photo-wrapper">
+        <div class="waterfall" id="mygallery">
+            <%- imageStr %>
+        </div>
+    </div>
+</div>
+
+<script src="<%- theme.libs.js.fancybox %>"></script>
+<script src="<%- theme.libs.js.justifiedGallery %>"></script>
+
+<script src="<%- theme.libs.js.lazysizes %>"></script>
+
+<script>
+$(".waterfall").lazyload();
+</script>
