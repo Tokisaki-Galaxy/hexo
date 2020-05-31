@@ -1,3 +1,3 @@
 # BLOG
 
-[tokisaki-galaxy.now.sh](tokisaki-galaxy.now.sh)1
+[tokisaki-galaxy.now.sh](tokisaki-galaxy.now.sh)
