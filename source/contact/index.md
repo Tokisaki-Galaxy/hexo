@@ -17,7 +17,7 @@ layout: "contact"
 
 博客网址: https://tokisaki-galaxy.now.sh
 
-博客头像: https://tokisaki-galaxy.now.sh/medias/avatars/avatar.jpg
+博客头像: https://tokisaki-galaxy.now.sh/medias/avatar.jpg
 
 博客介绍: 
 
@@ -25,4 +25,4 @@ layout: "contact"
 
 ![contact](https://www.toolnb.com/ipqmd/a7f6316dab52381828f3dbc7c5369274.html)
 
-PS: 有一些地方可能因为某些原因用不了Gitalk，请将名称、网址、头像、介绍用邮件发给我（134128157@qq.com）
+PS: 有一些地方可能因为某些原因用不了Gitalk，请将名称、网址、头像、介绍用邮件发给我（134128157@qq.com）。
