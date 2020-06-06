@@ -1,5 +1,11 @@
 [
     {
+        "name": "Radium·Stardust",
+	    "title": "访问主页",
+	    "introduction": "Always believe that good things are about to happen.",
+	    "avatar": "https://cdn.jsdelivr.net/gh/radium-bit/res@latest/Texas.webp",
+        "url": "https://radium-bit.tk"
+    },{
 	    "name": "EDGELESS",
 	    "title": "访问主页",
 	    "introduction": "强大而优雅的PE工具",
