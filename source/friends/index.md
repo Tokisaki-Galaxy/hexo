@@ -1,6 +1,5 @@
 ---
-title: friends
-date: 2019-07-19 16:42:10
+title: 友情链接
 type: "friends"
 layout: "friends"
 ---
