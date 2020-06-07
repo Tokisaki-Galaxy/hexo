@@ -274,7 +274,7 @@ postCalendar: true
 # the Gitalk config，default disabled
 # Gitalk 评论模块的配置，默认为不激活
 gitalk:
-  enable: true
+  enable: false
   owner: tokisaki-galaxy
   repo: blogtalk
   oauth:
@@ -309,10 +309,10 @@ livere:
 # To use it, activate the configuration item and set appId and appKey.
 # Valine 评论模块的配置，默认为不激活，如要使用，就请激活该配置项，并设置 appId 和 appKey.
 valine:
-  enable: false
-  appId:
-  appKey:
-  notify: false
+  enable: true
+  appId: XmRejW6TjjNB0JXIQoyHkND2-gzGzoHsz
+  appKey: up9JwAiJiSFuX5ves37Pcygk
+  notify: true
   verify: false
   visitor: true
   avatar: 'mm' # Gravatar style : mm/identicon/monsterid/wavatar/retro/hide
