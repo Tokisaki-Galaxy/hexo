@@ -28,6 +28,7 @@
     "hexo-blog-encrypt": "^3.0.12",
     "hexo-deployer-git": "^2.1.0",
     "hexo-filter-github-emojis": "^2.1.0",
+    "hexo-generator-alias": "^0.1.3",
     "hexo-generator-archive": "^1.0.0",
     "hexo-generator-baidu-sitemap": "^0.1.6",
     "hexo-generator-category": "^1.0.0",

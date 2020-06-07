@@ -14,6 +14,7 @@ tags:
  - 电脑
 categories: 
 password: 
+alias: blog/2020-02-09-cpu-adjust/index.html
 ---
 
 
