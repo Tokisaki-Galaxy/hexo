@@ -14,4 +14,5 @@ tags:
 categories: 
 password: 
 noindex: false
+sitemap: true
 ---

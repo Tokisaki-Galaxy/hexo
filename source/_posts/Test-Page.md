@@ -32,6 +32,8 @@ https://tokisakigalaxy.xyz/
         cover: 'http://p1.music.126.net/qKU7UETrrdH-x7cZf-FfIw==/109951164949003058.jpg'
     }]});</script>
 
+!!! warning
+    这是一条采用默认标题的警告信息。
 
 ![主界面](https://s2.ax1x.com/2020/02/09/1h5Vqs.png)
 
