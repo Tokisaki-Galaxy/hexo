@@ -67,14 +67,12 @@ feed:
   content_limit_delim: ' '
   order_by: -date
 
-Plugins:
-- hexo-generator-baidu-sitemap
-- hexo-generator-sitemap
-
 baidusitemap:
     path: baidusitemap.xml
 sitemap:
-    path: sitemap.xml
+    path: sitemap.xml #指定名字
+    tag: false #不包含tag页面
+    category: false #不包含category页面
   
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
