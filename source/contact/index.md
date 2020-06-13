@@ -16,7 +16,12 @@ layout: "contact"
 
 博客网址: https://tokisaki-galaxy.now.sh
 
-博客头像: https://tokisaki-galaxy.now.sh/medias/avatar.jpg
+博客头像(这两个任选一个就好了，只是格式不同):
+
+https://tokisaki-galaxy.now.sh/medias/avatar.jpg
+
+https://tokisaki-galaxy.now.sh/medias/avatar.webp
+
 
 博客介绍: 
 

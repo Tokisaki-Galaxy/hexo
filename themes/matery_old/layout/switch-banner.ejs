@@ -1,7 +1,0 @@
-<!-- 每天切换 banner 图.  Switch banner image every day. -->
-<script>
-// $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay() + '.jpg)');
-// 下面那个数字就是图片的数量，注意是从零开始，后面那个+1别管他
-// $('.bg-cover').css('background-image', 'url(/medias/banner/' + Math.floor(Math.random()*(13+1)) + '.jpg)');
-$('.bg-cover').css('background-image', 'url(<%- theme.img.banner_url %>' + '/' + Math.floor(Math.random()*(<%- theme.img.banner_count %>+1)) + '.jpg)');
-</script>
