@@ -17,6 +17,7 @@ password:
 alias:
  - blog/2020-02-09-cpu-adjust/index.html
  - 2020-02-09-cpu-adjust/index.html
+ - cpu-adjust/index.html
 ---
 
 

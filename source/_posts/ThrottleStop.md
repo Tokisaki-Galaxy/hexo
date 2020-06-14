@@ -14,7 +14,10 @@ tags:
  - 电脑
 categories: 
 password: 
-alias: blog/2020-02-09-ThrottleStop/index.html
+alias:
+ - blog/2020-02-09-ThrottleStop/index.html
+ - 2020/02/09/throttlestop/index.html
+ - throttlestop/index.html
 ---
 
 
