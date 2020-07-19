@@ -140,53 +140,6 @@ githubEmojis:
 #   sanitizeUrl: false
 #   headerIds: true
 
-minify:
-  enable: true
-  html:
-    enable: true
-    exclude:
-  css:
-    enable: true
-    exclude:
-      - '*.min.css'
-  js:
-    enable: true
-    exclude:
-      - '*.min.js'
-  svg:
-    enable: true
-    include:
-      - '*.svg'
-      - '!*.min.svg'
-  gzip:
-    enable: true
-    include:
-      - '*.html'
-      - '*.css'
-      - '*.js'
-      - '*.txt'
-      - '*.ttf'
-      - '*.atom'
-      - '*.stl'
-      - '*.xml'
-      - '*.svg'
-      - '*.eot'
-      - '*.json'
-  brotli:
-    enable: true
-    include:
-      - '*.html'
-      - '*.css'
-      - '*.js'
-      - '*.txt'
-      - '*.ttf'
-      - '*.atom'
-      - '*.stl'
-      - '*.xml'
-      - '*.svg'
-      - '*.eot'
-      - '*.json'
-
 lazysizes:
   enable: true
   # 只是告诉你有这玩意，不可以关
