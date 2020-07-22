@@ -15,6 +15,7 @@ tags:
 categories: 
 password: 
 alias:
+ - blog/2020-02-09-throttlestop/index.html
  - blog/2020-02-09-ThrottleStop/index.html
  - 2020/02/09/throttlestop/index.html
  - 2020/02/TS/index.html
