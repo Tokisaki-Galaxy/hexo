@@ -9,7 +9,7 @@
 
     #vcomments textarea {
         box-sizing: border-box;
-        background: url("<%- url_for(theme.valine.background) %>") 100% 100% no-repeat;
+        background: url("<%- theme.jsDelivr.url %><%- url_for(theme.valine.background) %>") 100% 100% no-repeat;
     }
 
     #vcomments p {
