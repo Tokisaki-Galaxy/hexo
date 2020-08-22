@@ -5,7 +5,7 @@ description: C++ | RPi | Games | 游戏
 keywords: blog
 author: Tokisaki Galaxy
 language: zh-CN
-timezone:
+timezone: 'Asia/Shanghai'
 
 # URL
 ## If your site is put in a subdirectory, set url as 'https://yoursite.com/child' and root as '/child/'
