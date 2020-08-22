@@ -1,9 +1,29 @@
 <!DOCTYPE HTML>
 <html lang="<%= config.language %>">
 <%- partial('_partial/head') %>
+<!DOCTYPE HTML>
+<html lang="<%= config.language %>">
+<%- partial('_partial/head') %>
 
+ <% if (theme.loadingPages.enable) { %>
+    <%- partial('_partial/loading-pages') %>
+ <% } %>
 <body>
+    <% if (theme.loadingPages.enable) { %>
+        <div id="loading-container">
+             <p class="loading-text">嘘~  正在从服务器偷取页面 . . . </p> 
+             <div class="loading-image">
+                 <div></div>
+                 <div></div>
+                 <div></div>
+                 <div></div> 
+                 <div></div>
+             </div>
+        </div>
+    <% } %>
+
     <%- partial('_partial/header') %>
+
     <%- body %>
 
     <%- partial('_partial/footer') %>
