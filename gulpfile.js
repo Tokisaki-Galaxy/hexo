@@ -153,7 +153,7 @@ gulp.task(
     "compressHtml",
     "compressCss",
     //"compressJs",
-    "compressImage",
+    //"compressImage",
     gulp.parallel("deploy")
   )
 );
@@ -167,7 +167,7 @@ gulp.task(
     gulp.parallel("compressHtml",
     "compressCss",
     //"compressJs",
-    "compressImage"
+    //"compressImage"
     )
   )
 );
