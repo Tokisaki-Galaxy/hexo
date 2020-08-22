@@ -4,3 +4,8 @@ set /p d=
 git add -A
 git commit -m "Des:%d% Upd:%date:~0,4%/%date:~5,2%/%date:~8,2% %time%"
 git push||git push||git push
+echo Upgrade Res
+cd ..\res
+git add -A
+git commit -m "Des:%d% Upd:%date:~0,4%/%date:~5,2%/%date:~8,2% %time%"
+git push||git push||git push
