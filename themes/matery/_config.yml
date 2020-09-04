@@ -382,23 +382,25 @@ baiduPush: true
 # The used front-end library can be replaced with the corresponding CDN address as needed,
 # If the specific version is not specified below, you can use the latest version.
 # 使用到的前端库，可按需替换成对应的CDN地址，如果下面未指定具体的版本号，使用最新的版本即可.
+# 注意，将".min"添加到任何 JS/CSS 文件，如果一个不存在， jsd将为你生成它
 libs:
   css:
     fontAwesome: /libs/awesome/css/all.min.css # V5.11.1
     materialize: /libs/materialize/materialize.min.css # 1.0.0
-    aos: /libs/aos/aos.css
+    aos: /libs/aos/aos.min.css
     animate: /libs/animate/animate.min.css # V3.5.1
     lightgallery: /libs/lightGallery/css/lightgallery.min.css # V1.6.11
     aplayer: /libs/aplayer/APlayer.min.css
     dplayer: /libs/dplayer/DPlayer.min.css
-    gitalk: /libs/gitalk/gitalk.css
-    jqcloud: /libs/jqcloud/jqcloud.css
-    tocbot: /libs/tocbot/tocbot.css
+    gitalk: /libs/gitalk/gitalk.min.css
+    jqcloud: /libs/jqcloud/jqcloud.min.css
+    tocbot: /libs/tocbot/tocbot.min.css
+    mycss: /css/my.min.css
   js:
     jquery: /libs/jquery/jquery.min.js
     materialize: /libs/materialize/materialize.min.js # 1.0.0
     masonry: /libs/masonry/masonry.pkgd.min.js # v4.0.0
-    aos: /libs/aos/aos.js
+    aos: /libs/aos/aos.min.js
     scrollProgress: /libs/scrollprogress/scrollProgress.min.js
     lightgallery: /libs/lightGallery/js/lightgallery-all.min.js # V1.6.11
     clicklove: /libs/others/clicklove.js
@@ -415,8 +417,8 @@ libs:
     canvas_nest: /libs/background/canvas-nest.min.js
     ribbon: /libs/background/ribbon.min.js
     ribbonRefresh: /libs/background/ribbon-refresh.min.js
-    ribbon_dynamic: /libs/background/ribbon-dynamic.js
-    instantpage: /libs/instantpage/instantpage.js
+    ribbon_dynamic: /libs/background/ribbon-dynamic.min.js
+    instantpage: /libs/instantpage/instantpage.min.js
 
 # The post featured images that needs to be displayed when there is no image.
 # 无文章特色图片时需要显示的文章特色图片.
