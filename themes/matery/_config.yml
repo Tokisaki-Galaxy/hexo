@@ -556,4 +556,5 @@ loadingPages:
   enable: true
 
 live2d:
-  enable: true
+  enable: false
+
