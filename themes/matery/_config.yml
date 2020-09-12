@@ -518,8 +518,12 @@ subtitle:
   startDelay: 300 # 开始延迟
   typeSpeed: 100 # 打字速度
   backSpeed: 50 # 删除速度
-  sub1: 在危险环境中表示绝望的人，在黑暗中看不见光明的人，只是懦夫与机会主义者。
-  #sub2: Never really desperate, only the lost of the soul
+  sub1: 因果は巡る糸車光　と影の多面鏡
+  sub2: 現世の一切は　一時の夢
+  sub3: 善も悪も　愛も嘘も　全て運命の輪の中で
+  sub4: 常世の闇に飲まれゆく
+  sub5: 嗚呼、我は夢の防人
+  sub6: 万華鏡の中で　永遠に生きるのみ
 
 # 手机二级菜单.
 navMenu:
