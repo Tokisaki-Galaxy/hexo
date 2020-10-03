@@ -6,8 +6,8 @@ img:
 coverImg: 
 top: false
 cover: false
-toc: true
-comments: true
+toc: false
+comments: false
 mathjax: false
 summary: 
 tags: 
@@ -16,3 +16,4 @@ password:
 noindex: false
 sitemap: true
 ---
+
