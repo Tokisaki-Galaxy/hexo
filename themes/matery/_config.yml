@@ -559,6 +559,9 @@ jsDelivr:
 loadingPages:
   enable: true
 
+background:
+  enable: true
+
 live2d:
   enable: false
 
