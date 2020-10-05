@@ -8,12 +8,12 @@
  <% if (theme.loadingPages.enable) { %>
     <%- partial('_partial/loading-pages') %>
  <% } %>
-<style>
- body{
-    background-image: url(https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/medias/background.jpg);    
-    }
-    </style>
-<body>
+ 
+<body background="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/medias/background.jpg"
+style=" background-repeat:no-repeat ;
+background-size:100% 100%;
+background-attachment: fixed;"
+>
     <% if (theme.loadingPages.enable) { %>
         <div id="loading-container">
              <p class="loading-text">少女祈祷中 · · · </p> 
