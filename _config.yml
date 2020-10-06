@@ -30,12 +30,17 @@ skip_render:
 new_post_name: :title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
-external_link: true # Open external links in new tab
 filename_case: 0
 render_drafts: false
 post_asset_folder: true
 relative_link: false
 future: true
+
+external_link: # 在新标签中打开链接
+  enable: true
+  field: site # 对整个网站（site）生效或仅对文章（post）生效
+  exclude: # 需要排除的域名。主域名和子域名如 www 需分别配置
+
 highlight:
   enable: false
   line_number: false
