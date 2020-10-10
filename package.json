@@ -7,10 +7,10 @@
   },
   "dependencies": {
     "@babel/core": "^7.11.6",
-    "ajv": "^6.12.5",
+    "ajv": "^6.12.6",
     "autoconf": "^1.2.0",
     "emoji": "^0.3.2",
-    "eslint": "^7.9.0",
+    "eslint": "^7.11.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-changed": "^4.0.2",
@@ -41,7 +41,7 @@
     "hexo-permalink-pinyin": "^1.1.0",
     "hexo-prism-plugin": "^2.3.0",
     "hexo-renderer-ejs": "^1.0.0",
-    "hexo-renderer-marked": "^3.2.0",
+    "hexo-renderer-marked": "^3.3.0",
     "hexo-renderer-stylus": "^2.0.1",
     "hexo-server": "^2.0.0",
     "hexo-tag-emojis-byhj": "^1.0.0",
@@ -53,6 +53,6 @@
   "devDependencies": {
     "automake": "^0.1.4",
     "babel-preset-env": "^1.7.0",
-    "del": "^5.1.0"
+    "del": "^6.0.0"
   }
 }
