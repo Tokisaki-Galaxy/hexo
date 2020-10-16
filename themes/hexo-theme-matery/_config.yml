@@ -596,14 +596,14 @@ icp:
 # https://purge.min.jsdelivr.net/
 
 jsDelivr:
-  url: https://cdn.min.jsdelivr.net/gh/Tokisaki-Galaxy/res/site
+  url: https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site
 
 loadingPages:
   enable: true
 
 background:
   enable: true
-  url: "https://cdn.min.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/medias/background.webp"
+  url: "https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/medias/background.webp"
 
 artitalk:
   enable: true
