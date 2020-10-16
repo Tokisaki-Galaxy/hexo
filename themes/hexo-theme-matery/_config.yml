@@ -123,7 +123,7 @@ recommend:
 # Configure website favicon and LOGO
 # 配置网站favicon和网站LOGO
 #favicon: /favicon.png
-favicon: https://cdn.min.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/favicon.png
+favicon: https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/favicon.png
 logo: /medias/logo.png
 
 # The configuration of the second button in the home banner,
@@ -362,12 +362,12 @@ minivaline:
   # Expression Url.
   # https://github.com/MiniValine/MiniValine/blob/master/.github/FAQ.md#how-to-customize-emoticons
   emoticonUrl:
-    - https://cdn.min.jsdelivr.net/npm/alus@latest
-    - https://cdn.min.jsdelivr.net/gh/MiniValine/qq@latest
-    - https://cdn.min.jsdelivr.net/gh/MiniValine/Bilibilis@latest
-    - https://cdn.min.jsdelivr.net/gh/MiniValine/tieba@latest
-    - https://cdn.min.jsdelivr.net/gh/MiniValine/twemoji@latest
-    - https://cdn.min.jsdelivr.net/gh/MiniValine/weibo@latest
+    - https://cdn.jsdelivr.net/npm/alus@latest
+    - https://cdn.jsdelivr.net/gh/MiniValine/qq@latest
+    - https://cdn.jsdelivr.net/gh/MiniValine/Bilibilis@latest
+    - https://cdn.jsdelivr.net/gh/MiniValine/tieba@latest
+    - https://cdn.jsdelivr.net/gh/MiniValine/twemoji@latest
+    - https://cdn.jsdelivr.net/gh/MiniValine/weibo@latest
 
 # Whether to display fork me on github icon and link, default true, You can change it to your repo address
 # 配置是否在 header 中显示 fork me on github 的图标，默认为true，你可以修改为你的仓库地址.
@@ -417,6 +417,7 @@ libs:
   css:
     matery: /css/matery.min.css
     mycss: /css/my.min.css
+    gallery: /css/gallery.min.css
     fontAwesome: /libs/awesome/css/all.min.css # V5.11.1
     materialize: /libs/materialize/materialize.min.css # 1.0.0
     aos: /libs/aos/aos.min.css
@@ -427,7 +428,6 @@ libs:
     gitalk: /libs/gitalk/gitalk.min.css
     jqcloud: /libs/jqcloud/jqcloud.min.css
     tocbot: /libs/tocbot/tocbot.min.css
-    gallery: /css/gallery.min.css
     jqueryfancybox: /libs/fancybox/jquery.fancybox.min.css
     justifiedGallery: /libs/justifiedGallery/justifiedGallery.min.css
   js:
