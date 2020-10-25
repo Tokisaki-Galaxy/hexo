@@ -24,7 +24,7 @@ https://tokisaki-galaxy.now.sh/medias/avatar.webp
 
 
 博客介绍: 
-不畏苦暗。
+明天一定会比今天更好。
 
 请注意网址是[https://tokisaki-galaxy.now.sh](https://tokisaki-galaxy.now.sh),其余网址可能会更换。
 
