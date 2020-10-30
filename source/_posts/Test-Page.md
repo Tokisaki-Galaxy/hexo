@@ -230,7 +230,6 @@ https://evil-binary.github.io/
 https://evil-binary.github.io/
 https://evil-binary.github.io/
 
-https://tokisakigalaxy.xyz/
 
 <link rel="stylesheet" href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css">
 <div id="aplayer"></div>

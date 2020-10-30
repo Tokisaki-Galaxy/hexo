@@ -25,8 +25,8 @@ password:
 
 ## 数与式
 
-![数与式-数](https://tokisakigalaxy.xyz/blog/project-sh-math/数与式-数.svg)
-![数与式-式](https://tokisakigalaxy.xyz/blog/project-sh-math/数与式-式.svg)
+![数与式-数](https://tokisaki.top/blog/project-sh-math/数与式-数.svg)
+![数与式-式](https://tokisaki.top/blog/project-sh-math/数与式-式.svg)
 
 ## 方程与不等式
 
