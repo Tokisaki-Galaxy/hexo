@@ -16,7 +16,7 @@ tags:
  - 中国移动
  - IPTV
 categories:
- - 杂项
+ - 软件安装与配置
 password:
 ---
 
