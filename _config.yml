@@ -24,7 +24,7 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
-  - 'baidu_verify_code-imXltqWjfO.html'
+  - ''
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -121,7 +121,7 @@ deploy:
 # baidu submit
 baidu_url_submit:
   count: 80                                      # 提交最新的一个链接
-  host: tokisaki.top     # 在百度站长平台中注册的域名
+  host: https://tokisaki.top     # 在百度站长平台中注册的域名
   token: 3JRev4WUPrU7nMIk    # 请注意这是您的秘钥， 所以请不要把博客源代码发布在公众仓库里!
   path: baidu_urls.txt                # 文本文档的地址， 新链接会保存在此文本文档里
 
