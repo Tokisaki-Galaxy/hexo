@@ -24,7 +24,7 @@ https://tokisaki-galaxy.now.sh/medias/avatar.webp
 
 
 博客介绍: 
-明天一定会比今天更好。
+合抱之木,生于毫末;九层之台,起于垒土;千里之行,始于足下。
 
 请注意网址是[https://tokisaki-galaxy.now.sh](https://tokisaki-galaxy.now.sh),其余网址可能会更换。
 
