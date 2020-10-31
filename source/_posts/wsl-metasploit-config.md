@@ -12,8 +12,12 @@ date: 2020-10-25 08:00:53
 img:
 coverImg:
 summary: wsl，debian安装metasploit，并链接数据。
-tags:
-categories:
+tags: 
+ - WSL
+ - metasploit
+ - debian
+ - 电脑
+categories: 软件安装与配置
 password:
 ---
 

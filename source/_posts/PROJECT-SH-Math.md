@@ -10,8 +10,8 @@ toc: true
 comments: true
 mathjax: false
 summary: 高中 数学
-tags: 
-categories: 
+tags: 数学
+categories: 学习
 password: 
 ---
 

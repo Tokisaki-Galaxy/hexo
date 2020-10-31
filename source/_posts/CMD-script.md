@@ -11,7 +11,8 @@ coverImg:
 summary: CMD script
 tags:
  - CMD
-categories: 
+categories:
+ - 编程
 password: 
 ---
 
