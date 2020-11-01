@@ -88,7 +88,7 @@ layout: "tools"
         </div>
     </div>
 
-    <div class="card">
+<div class="card">
         <img class="ava" src="https://cdn.jsdelivr.net/gh/NaiveTomcat/blog/img/sidebar-avatar.jpg">
             <div class="card-header">
                 <div>
