@@ -21,6 +21,8 @@ categories: 软件安装与配置
 password:
 ---
 
+https://mirrors.tuna.tsinghua.edu.cn/help/debian/清华的debian国内镜像
+
 # 将系统语言改为中文
 ```shell
 sudo dpkg-reconfigure locales
