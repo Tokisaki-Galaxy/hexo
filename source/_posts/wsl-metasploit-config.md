@@ -60,6 +60,7 @@ System has not been booted with systemd as init system (PID 1). Can't operate.
 
 启动数据库服务
 ```shell
+msfdb init
 sudo service postgresql start
 sudo service postgresql status
 ```
