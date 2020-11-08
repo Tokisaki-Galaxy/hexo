@@ -69,7 +69,7 @@ sudo service postgresql status
 ```shell
 # 
 cd /etc/postgresql/13/main
-sudo postgres psql
+sudo -u postgres psql
 alter user postgres password 'root';
 create user msf with password 'metasploit' createdb;
 create database msf with owner=msf;
