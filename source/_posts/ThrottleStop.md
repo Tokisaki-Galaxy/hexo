@@ -1,7 +1,7 @@
 ---
 title: ThrottleStop教程
 author: Tokisaki Galaxy
-top: false
+top: true
 cover: false
 toc: true
 mathjax: false
