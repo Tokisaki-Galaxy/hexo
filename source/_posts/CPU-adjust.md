@@ -2,7 +2,7 @@
 title: CPU升(降)压教程
 author: Tokisaki Galaxy
 top: false
-cover: false
+cover: true
 toc: true
 mathjax: false
 date: 2020-02-09
