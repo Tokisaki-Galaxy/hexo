@@ -19,3 +19,6 @@ https://t.me/Cos_AV
 
 [26ID-020 艦隊美少女コスプレイヤー](magnet:?xt=urn:btih:3YMNGVNODI45JXI6RDEJ5BBPYC2I67RN)
 
+[CSDX-002](magnet:?xt=urn:btih:c3eae05a5972008250cfc0e9d1335827cfb6edab)
+
+[CSDX-003](magnet:?xt=urn:btih:be1d0723fcedacb815c48b80959f07720be6cd2c)
