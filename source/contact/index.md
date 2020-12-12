@@ -14,13 +14,13 @@ layout: "contact"
 
 博客名称: Tokisaki Galaxy
 
-博客网址: https://tokisaki.now.sh
+博客网址: https://tokisaki.top
 
 博客头像(这两个任选一个就好了，只是格式不同):
 
-https://tokisaki.now.sh/medias/avatar.jpg
+https://tokisaki.top/medias/avatar.jpg
 
-https://tokisaki.now.sh/medias/avatar.webp
+https://tokisaki.top/medias/avatar.webp
 
 
 博客介绍: 
