@@ -14,3 +14,6 @@ layout: "tools"
                 </div>
             </div>
 </div>
+
+(Pot+LAV+madVR配置教程(又来丢人了)_v1.9)[https://tieba.baidu.com/p/6323319633?fr=ala0&pstaala=3&tpl=5&fid=1264436#128166614906l]
+(Res)[https://share.weiyun.com/JJkzbDho]
