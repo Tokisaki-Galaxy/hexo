@@ -22,4 +22,8 @@ https://t.me/Cos_AV
 
 [CSDX-002](magnet:?xt=urn:btih:c3eae05a5972008250cfc0e9d1335827cfb6edab)
 
-[CSDX-003](magnet:?xt=urn:btih:be1d0723fcedacb815c48b80959f07720be6cd2c)
+[CSDX-003](magnet:?xt=urn:btih:XZ6MTEQIRLHU6BVD4UKHTSUS2KTLUFBH)
+
+[Sex Syndrome (265.6GiB)](magnet:?xt=urn:btih:8614c73e8903d0c99059e5834af1b85d10e8fdd7)
+
+[Sex Syndrome DLC (12.1 GiB)](magnet:?xt=urn:btih:2cceb40fad90cdfde696adbc8a60ac75aae16556)
