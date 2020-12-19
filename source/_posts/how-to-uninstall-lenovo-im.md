@@ -11,7 +11,9 @@ comments: true
 mathjax: false
 summary: 删除LenovoIM控制进程
 tags: 
-categories: 
+ - 电脑
+ - Lenovo
+categories: 软件安装与配置
 password: 
 noindex: false
 sitemap: true
