@@ -19,7 +19,7 @@ noindex: false
 sitemap: true
 ---
 
-> 本文转载自(ERU博客)[https://sxjeru.wordpress.com/2020/04/17/%e3%80%90%e7%a2%a7%e8%93%9d%e8%88%aa%e7%ba%bf%e3%80%91azur-lane-crosswave-%e8%a7%a3%e5%8c%85%e6%8c%87%e5%8d%97%e6%8e%a2%e7%b4%a2%e5%8e%86%e7%a8%8b/]
+> 本文转载自[ERU博客](https://sxjeru.wordpress.com/2020/04/17/%e3%80%90%e7%a2%a7%e8%93%9d%e8%88%aa%e7%ba%bf%e3%80%91azur-lane-crosswave-%e8%a7%a3%e5%8c%85%e6%8c%87%e5%8d%97%e6%8e%a2%e7%b4%a2%e5%8e%86%e7%a8%8b/)
 
 前排注意：任何解包行为需把握资源用途，为尊重作品著作权，请勿用于商业行为或大范围传播！
 此处仅提供教程与经验，无资源。
@@ -47,9 +47,11 @@ sxjeru@gmail.com
 或许是幸运，或许是“自知之明”，总之地雷社没有给ALC的数据包加密，这也使得解包变得异常简单。这一步并没有坑，因而也就没有探索文字啦。
 
 准备解包工具QuickBMS（官网、网盘）与UE4解包脚本（官网同上、网盘）。
-!(znarqh5exmviggm)[https://sxjeru.files.wordpress.com/2020/04/znarqh5exmviggm.png]
+![znarqh5exmviggm](https://sxjeru.files.wordpress.com/2020/04/znarqh5exmviggm.png)
+
 双击“quickbms.exe”，依次选择脚本、PAK数据包（通常位于“~\Azur Lane Crosswave\Azurlane\Content\Paks”）、解包位置（资源保存至何处）。
 等待……  Done！
+
 二、渗透UE4
 
 ALC采用UE4（v4.21.2.0）游戏引擎，导致所有资源文件都被“加密”成uasset、uexp等文件，如何将这些还原成原始文件是这一关的核心任务。
@@ -76,7 +78,7 @@ World*：含有主线剧情内世界场景的资源文件，包括地图架构�
 
 **注：UE Viewer仅能导出部分资源文件，一些数据文件无法识别与导出。**
 
-通常没有什么刚需的话，止步于此即可。也就只有我这么死脑筋的人会去想下面的内容了……
+*通常没有什么刚需的话，止步于此即可。也就只有我这么死脑筋的人会去想下面的内容了……*
 
 三、​​啊Q版小人太可爱了还会动 i了i了 一定要把她们导出来！~~
 
@@ -84,7 +86,6 @@ World*：含有主线剧情内世界场景的资源文件，包括地图架构�
 
 在这节里，经验伴你同行。
 
-人生经验（点击查看）
 1. 经分析可知此类2D建模由Spine软件设计，单个建模包含json*1、atlas*1、png*1，对应解包后的路径为“~\Azurlane\Content\World\Spine”。其中“Ch001”即岛风，“Ch002”即…… 额这是谁来着？
 
 Ch002_touch.png
@@ -97,7 +98,13 @@ Ch002_touch.png
 
 注：SpineViewerWPF需要.NET Framework 4.7.2与Microsoft XNA Framework Redistributable 4.0作为前置库。
 
-经验+1（点击查看）
+> 经验+1（点击查看）
+> 这一步就着实不容易呐，Spine Viewer出奇的好用，虽然有点小Bug但作者很快就修复了，真得感谢他，不然可能就得买原装Spine了。（试用版无法导出图像，基础版就要69刀……）
+
+> 悲惨的是，到最后我才找到这玩意。
+
+> 辛运的是，你们的时间不会浪费了
+
 3. 利用第二节的方法，通过 umodel 从“~\Azur Lane Crosswave\World\Spine\Chxxx\Textures”（xxx指数字，为避免误解下面采用001，毕竟小岛风辣么可爱，拿来练手也不错~）得到Ch001.png。
 
 4. 神奇又关键的一步。资源管理器定位至“~\Azurlane\Content\World\Spine\Ch001”，将“Ch001.uexp”用文本编辑器打开，得到下图内容。（可能会有所卡顿）Z9YKX_8E(JQG)4FCKFXBGZL.png
