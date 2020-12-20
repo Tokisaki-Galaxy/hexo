@@ -21,8 +21,10 @@ sitemap: true
 
 > 本文转载自[ERU博客](https://sxjeru.wordpress.com/2020/04/17/%e3%80%90%e7%a2%a7%e8%93%9d%e8%88%aa%e7%ba%bf%e3%80%91azur-lane-crosswave-%e8%a7%a3%e5%8c%85%e6%8c%87%e5%8d%97%e6%8e%a2%e7%b4%a2%e5%8e%86%e7%a8%8b/)
 
-前排注意：任何解包行为需把握资源用途，为尊重作品著作权，请勿用于商业行为或大范围传播！
-此处仅提供教程与经验，无资源。
+**前排注意：任何解包行为需把握资源用途，为尊重作品著作权，请勿用于商业行为或大范围传播！**
+
+**此处仅提供教程与经验，无资源。**
+
 本人共计探索了超过4天，终于摸透了包里的数据。目前除了3D模型还未测试（已可提取），其余资源都可成功提取。
 
 大体流程（目录）：
@@ -42,17 +44,17 @@ sxjeru@gmail.com
 
 此篇教程依据全站规则，适用于CC BY-NC-SA 4.0协议共享。
 
-一、裂解PAK
+## 一、裂解PAK
 
 或许是幸运，或许是“自知之明”，总之地雷社没有给ALC的数据包加密，这也使得解包变得异常简单。这一步并没有坑，因而也就没有探索文字啦。
 
-准备解包工具QuickBMS（官网、网盘）与UE4解包脚本（官网同上、网盘）。
+准备解包工具QuickBMS（[官网](https://aluigi.altervista.org/quickbms.htm)、[网盘](http://sxj.mcmod.cn/tutorial/quickbms.zip)）与UE4解包脚本（[官网同上](https://aluigi.altervista.org/quickbms.htm)、[网盘](http://sxj.mcmod.cn/tutorial/unreal_tournament_4.bms)）。
 ![znarqh5exmviggm](https://sxjeru.files.wordpress.com/2020/04/znarqh5exmviggm.png)
 
 双击“quickbms.exe”，依次选择脚本、PAK数据包（通常位于“~\Azur Lane Crosswave\Azurlane\Content\Paks”）、解包位置（资源保存至何处）。
 等待……  Done！
 
-二、渗透UE4
+## 二、渗透UE4
 
 ALC采用UE4（v4.21.2.0）游戏引擎，导致所有资源文件都被“加密”成uasset、uexp等文件，如何将这些还原成原始文件是这一关的核心任务。
 
@@ -64,14 +66,15 @@ ALC采用UE4（v4.21.2.0）游戏引擎，导致所有资源文件都被“加�
 
 2.双击“umodel.exe”，按图中配置参数，路径自选，不建议选择根路径（Content），否则所需时间较长。我在下面列出了子目录中包含的部分资源，可参考个人需要选择相应路径。
 最后点击“OK”，等待处理。（此时命令符窗口无显示，请耐心等待）
-![7~$P0]J57V)OQ)}0%ULLLLQ.png](https://sxjeru.files.wordpress.com/2020/04/7p0j57voq0ullllq.png)
+![7~$P0%ULLLLQ.png](https://sxjeru.files.wordpress.com/2020/04/7p0j57voq0ullllq.png)
 Battle：含有战斗场景下的各种3D模型，2D UI设计等。
 Event：含有VN（视觉小说）界面下的各种立绘、CG。
 Sound：含有游戏内所有的BGM、SE、Voice（配音）。
 System：含有游戏主页面的UI设计文件。
 World*：含有主线剧情内世界场景的资源文件，包括地图架构，2D动态Q版人物等。
 
-4.处理完成后弹出资源选择窗口，左侧目录树找到目标后可在右侧双击感兴趣的资源来预览。建议预览较大的文件，这些文件通常是图片、模型、音乐。TD7S`[]%7SR{O_O$4HP6KOK.png
+4.处理完成后弹出资源选择窗口，左侧目录树找到目标后可在右侧双击感兴趣的资源来预览。建议预览较大的文件，这些文件通常是图片、模型、音乐。
+![TD7S7SR{O_O$4HP](https://sxjeru.files.wordpress.com/2020/04/td7s7sro_o4hp6kok.png)
 
 5.预览完毕后可以直接在预览器的“Tools”菜单中导出，或在文件浏览窗口批量选择需导出的文件，点击下方“Export”，选好路径与图片格式（仅影响图片文件）后确认导出即可。
 ![a](https://sxjeru.files.wordpress.com/2020/04/31q40q0eth2mxcb1.png)
@@ -80,15 +83,20 @@ World*：含有主线剧情内世界场景的资源文件，包括地图架构�
 
 *通常没有什么刚需的话，止步于此即可。也就只有我这么死脑筋的人会去想下面的内容了……*
 
-三、​​啊Q版小人太可爱了还会动 i了i了 一定要把她们导出来！~~
+## 三、​​啊Q版小人太可爱了还会动 i了i了 一定要把她们导出来！~~
 
 闹着玩嘛，这节主要是来提取ALC地图场景那些Q版小人。在这个坑里花了70%的时间才爬出来，获得不少经验的同时也感谢各位提供神奇工具的开源作者。
 
 在这节里，经验伴你同行。
 
+> 人生经验（点击查看）
+>一开始就花了半小时分析数据包文件架构，才找到路径“~\Azurlane\Content\World\Spine”。本以为是CG一样的玩意，结果用Umodel（UE Viewer）一看——Ch001.png
+> ![aab](https://sxjeru.files.wordpress.com/2020/04/ch001.png?w=1024)
+>【心脏骤停】誒呀好难受啊……与六年前拆CS1.6素材文件是一样的感觉呢。
+
 1. 经分析可知此类2D建模由Spine软件设计，单个建模包含json*1、atlas*1、png*1，对应解包后的路径为“~\Azurlane\Content\World\Spine”。其中“Ch001”即岛风，“Ch002”即…… 额这是谁来着？
 
-Ch002_touch.png
+![Ch002_touch.png](https://sxjeru.files.wordpress.com/2020/04/ch002_touch.png)
 
 是绫波吗…？是她吧…… 誒别打我啊！
 
@@ -107,20 +115,32 @@ Ch002_touch.png
 
 3. 利用第二节的方法，通过 umodel 从“~\Azur Lane Crosswave\World\Spine\Chxxx\Textures”（xxx指数字，为避免误解下面采用001，毕竟小岛风辣么可爱，拿来练手也不错~）得到Ch001.png。
 
-4. 神奇又关键的一步。资源管理器定位至“~\Azurlane\Content\World\Spine\Ch001”，将“Ch001.uexp”用文本编辑器打开，得到下图内容。（可能会有所卡顿）Z9YKX_8E(JQG)4FCKFXBGZL.png
+4. 神奇又关键的一步。资源管理器定位至“~\Azurlane\Content\World\Spine\Ch001”，将“Ch001.uexp”用文本编辑器打开，得到下图内容。（可能会有所卡顿）
+![Z9YKX_8KFXBGZL.png](https://sxjeru.files.wordpress.com/2020/04/z9ykx_8ejqg4fckfxbgzl.png?w=768&h=455)
 
 将分界线（一排乱码）上端的文字复制，注意顶端乱码不用，按岛风举例是从“Ch001.png”到“index: -1”，创建一个新文本文件，重命名为Ch001.atlas，将内容粘贴进去，保存。
 
-再将分界线下端文字复制，底端乱码不用，同样以岛风为例是从“{“skeleton”:”到“”angle”:-0.05}]}}}}}”。注意编辑器显示缺陷导致的复制不全。3{R_HUHH}4NX~D@BG~(~T~N.png
+再将分界线下端文字复制，底端乱码不用，同样以岛风为例是从“{“skeleton”:”到“”angle”:-0.05}]}}}}}”。注意编辑器显示缺陷导致的复制不全。
+![523N.png](https://sxjeru.files.wordpress.com/2020/04/3r_huhh4nxd40bgtn.png?w=768&h=455)
 
 创建新文本文件，命名为Ch001.json，将内容粘贴进去，保存。
 
 建议移至同个文件夹，便于处理。顺便吹一波QTTabBar。
 
-(]B)C%{_ERK)JAHTS3L~~Q0.png
+![JAHTS3LQ0.png](https://sxjeru.files.wordpress.com/2020/04/bc_erkjahts3lq0.png)
 
-痛苦不堪的经历（点击查看）
-接下去我会分成两种情况，5富人党（购买了Spine正式版）与6穷人党（如本人），分别用两种颜色描述。
+>痛苦不堪的经历（点击查看）
+>知道是Spine模型后，我苦思冥想地雷社把json藏哪了。当时用umodel找了一晚上也没找着，倒是在预览窗口发现了端倪，但问题是——根本不能导出啊！！
+> ![G4LUO5B4HPCUU.png](https://sxjeru.files.wordpress.com/2020/04/g4luort5b4hkd26pcuu.png)
+> 诶呦真的火气来了。在解包文件中浏览，突然一个“Azurlane.uproject”让我眼前一亮。woc，这不就是ALC的工程文件吗！感觉胜利的曙光都要照到身上了，赶紧双击，结果报错……
+> ![Q2CDNO04.png](https://sxjeru.files.wordpress.com/2020/04/hpzlaa7_kp_q2cdno04.png)
+> 凉拌，这胜利曙光刺激啊，把我眼都给亮瞎了。
+> 接着网上冲浪，但几乎丧失了信心，直到有一次想复制“Ch001.uasset”文件名，不小心双击打开了它……
+> ![5GATFI73.png](https://sxjeru.files.wordpress.com/2020/04/5gatfi723o9nqeg40w3.png?w=1024)
+> ？？梦寐以求的json与atlas，简直就是乱码丛中的那两颗耀眼的钻石啊！
+> 顺手打开和它在一起的“Ch001.uexp”，便出现教程里这一幕。简直泪流满面……辛苦没有白费！
+
+接下去我会分成两种情况，**5富人党（购买了Spine正式版）**与**6穷人党（如本人）**，分别用两种颜色描述。
 
 由于个人经济情况限制，以下步骤可能不准确，以Spine客服为准。
 
@@ -132,15 +152,29 @@ Ch002_touch.png
 
 5-4. 选择导出，各种图片视频格式任君挑选。
 
-6. 接上第4步。双击打开“SpineViewerWPF.exe”，在“Use Version”菜单中选择“3.7.83”（注意不是最新的3.8.x）。再点击“File -> Load Spine”，选择Ch001.atlas文件路径，并保证png与json在同一文件夹，能看到如下图。[T6(KPEMFN55`9QP}(3`PLM.png
+6. 接上第4步。双击打开“SpineViewerWPF.exe”，在“Use Version”菜单中选择“3.7.83”（注意不是最新的3.8.x）。再点击“File -> Load Spine”，选择Ch001.atlas文件路径，并保证png与json在同一文件夹，能看到如下图。
+![ASG.PNG](https://sxjeru.files.wordpress.com/2020/04/t6kpemfn559qp3plm.png)
 
 其中左侧“Anime”可选择不同动画，一个角色通常有多种动画（如岛风有3种）。下方是播放控件与截图（相机键）还有Gif导出（摄像键）。
 
 没错，白嫖就是那么简单~~  不过探索出这条路来并不是那么简单的……
 
-在此提醒下，导出Gif时会占用大量内存资源，请留出足够的内存，否则程序会崩溃。
+**在此提醒下，导出Gif时会占用大量内存资源，请留出足够的内存，否则程序会崩溃。**
 
-现在让我们看看探索历程的艰辛——（点击查看）
+> 现在让我们看看探索历程的艰辛——
+> 一开始我用Spine 试用版，它可以导入json数据文件。然而Spine不认atlas，而“纹理解包器”功能试用版又无法使用，导致只有骨架，材质全部遗失…… 简直就是死路一条啊。
+> ![ab](https://sxjeru.files.wordpress.com/2020/04/u49e0tfy_dri.png)
+> 然后就开始考虑分割图集（那张大png），网上找了近乎两天，测试了各种软件：Skeleton Viewer、Texture Packer、Sprite UV、Gdx Texture Packer、Dragon Bones Pro 等等。
+> 最后找到了“splitAtlas.py”，可惜没有原出处了。不过它成功帮我分割了大图，当时怕是都感动到哭了
+> 
+> 一言难尽，其中的辛酸没人能理解，文字完全没法描述。这几天已经处于返校倒计时，我是多么想在返校前作出一番成就呢！终于——
+> ![KP89O26YGB7SN.png](https://sxjeru.files.wordpress.com/2020/04/ota55_asbp2om95gt2xu.png)
+> 热泪盈眶，终于在游戏外看到成品了！！虽然不能导出，但也足矣。
+> 我并非没想过找破解版的Spine，可这设计软件太小众了，以至于根本没人破解，或许也有联网激活难破解的原因吧。
+> 也尝试了替代品，Dragon Bones Pro。可这玩意有Bug，硬生生把可怜岛风的头发给整没了…… （wdnmd！！毁谁形象呢？！）受害者照片如下：
+> ![4K5DC.png](https://sxjeru.files.wordpress.com/2020/04/e94057woete1404k5dc.png?w=1024)
+> 最后的最后，我看到了真正的曙光——Spine Viewer WPF！
+
 感谢你能看到最后，祝提取顺利。
 
 当然如果有了解Spine Web用法的盆友，欢迎联系我，我实在是无法玩明白这东西。这是我搭建的测试网址：http://sxj.mcmod.cn/123.html
@@ -148,4 +182,4 @@ Ch002_touch.png
 
 插一句，岛风这憨憨，我要定了，都礼貌点儿，别抢。
 
-最后有个彩蛋~ 虽与教程无关，但挺有趣的。
+最后有个[彩蛋](https://www.bilibili.com/video/BV1da4y147Qq)~ 虽与教程无关，但挺有趣的。
