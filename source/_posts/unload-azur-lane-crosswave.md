@@ -108,14 +108,12 @@ World*：含有主线剧情内世界场景的资源文件，包括地图架构�
 
 > 经验+1（点击查看）
 > 这一步就着实不容易呐，Spine Viewer出奇的好用，虽然有点小Bug但作者很快就修复了，真得感谢他，不然可能就得买原装Spine了。（试用版无法导出图像，基础版就要69刀……）
-
 > 悲惨的是，到最后我才找到这玩意。
-
 > 辛运的是，你们的时间不会浪费了
 
-3. 利用第二节的方法，通过 umodel 从“~\Azur Lane Crosswave\World\Spine\Chxxx\Textures”（xxx指数字，为避免误解下面采用001，毕竟小岛风辣么可爱，拿来练手也不错~）得到Ch001.png。
+3. 利用第二节的方法，通过 umodel 从“\~\Azur Lane Crosswave\World\Spine\Chxxx\Textures”（xxx指数字，为避免误解下面采用001，毕竟小岛风辣么可爱，拿来练手也不错~）得到Ch001.png。
 
-4. 神奇又关键的一步。资源管理器定位至“~\Azurlane\Content\World\Spine\Ch001”，将“Ch001.uexp”用文本编辑器打开，得到下图内容。（可能会有所卡顿）
+4. 神奇又关键的一步。资源管理器定位至“\~\Azurlane\Content\World\Spine\Ch001”，将“Ch001.uexp”用文本编辑器打开，得到下图内容。（可能会有所卡顿）
 ![Z9YKX_8KFXBGZL.png](https://sxjeru.files.wordpress.com/2020/04/z9ykx_8ejqg4fckfxbgzl.png?w=768&h=455)
 
 将分界线（一排乱码）上端的文字复制，注意顶端乱码不用，按岛风举例是从“Ch001.png”到“index: -1”，创建一个新文本文件，重命名为Ch001.atlas，将内容粘贴进去，保存。
