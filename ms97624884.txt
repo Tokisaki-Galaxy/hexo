@@ -1,5 +1,0 @@
-﻿{
-  "Description": "Microsoft 365 的域所有权验证文件 - 放置在网站根目录中",
-  "Domain": "tokisaki.top",
-  "Id": "40cc8dc4-6d26-4a7f-b04c-57f076216225"
-}
