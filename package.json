@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "5.2.0"
+    "version": "5.3.0"
   },
   "dependencies": {
-    "@babel/core": "^7.11.6",
+    "@babel/core": "^7.12.10",
     "ajv": "^6.12.6",
     "autoconf": "^1.2.0",
     "emoji": "^0.3.2",
