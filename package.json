@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.12.10",
-    "ajv": "^6.12.6",
+    "ajv": "^7.0.3",
     "autoconf": "^1.2.0",
     "emoji": "^0.3.2",
     "eslint": "^7.11.0",
@@ -35,7 +35,7 @@
     "hexo-generator-feed": "^3.0.0",
     "hexo-generator-index": "^2.0.0",
     "hexo-generator-search": "^2.4.1",
-    "hexo-generator-seo-friendly-sitemap": "0.0.25",
+    "hexo-generator-seo-friendly-sitemap": "^0.2.1",
     "hexo-generator-tag": "^1.0.0",
     "hexo-lazyload-image": "^1.0.9",
     "hexo-permalink-pinyin": "^1.1.0",
@@ -47,15 +47,15 @@
     "hexo-tag-emojis-byhj": "^1.0.0",
     "hexo-wordcount": "^6.0.1",
     "highlight": "^0.2.4",
-    "markdown-it-emoji": "^1.4.0",
+    "markdown-it-emoji": "^2.0.0",
     "twemoji": "^13.0.1"
   },
   "devDependencies": {
     "automake": "^0.1.4",
     "babel-preset-env": "^1.7.0",
     "del": "^6.0.0",
-    "yargs-parser": ">=13.1.2",
     "lodash": ">=4.17.19",
-    "prismjs": ">=1.21.0"
+    "prismjs": ">=1.21.0",
+    "yargs-parser": "^20.2.4"
   }
 }
