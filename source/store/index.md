@@ -11,3 +11,5 @@ layout: "store"
 [masuit.com](https://masuit.com)
 
 azur.deskthemepack
+
+storage.tokisaki.top
