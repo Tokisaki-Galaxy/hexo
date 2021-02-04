@@ -13,3 +13,7 @@ layout: "store"
 azur.deskthemepack
 
 storage.tokisaki.top
+
+https://go.naodai.org/
+https://upan.2bmi.com/#/main
+https://dl.ffis.me/#/1/main
