@@ -18,12 +18,12 @@ layout: "contact"
 
 博客头像(这两个任选一个就好了，只是格式不同):
 
-https://tokisaki.top/medias/avatar.jpg
+https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/medias/avatar.jpg
 
-https://tokisaki.top/medias/avatar.webp
+https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/medias/avatar.webp
 
 
-博客介绍: 
-合抱之木,生于毫末;九层之台,起于垒土;千里之行,始于足下。
+描述: 
+唯其不可能，所以才值得相信。
 
 ![contact](https://www.toolnb.com/ipqmd/a7f6316dab52381828f3dbc7c5369274.html)
