@@ -89,6 +89,13 @@ Set-PoshPrompt -Theme powerline
 
 一样的操作，只不过要修改的文件在`"%windir%\system32\WindowsPowerShell\v1.0\Microsoft.PowerShell_profile.ps1"`。
 
+## 乱码的解决方法
+
+乱码是因为oh-my-posh使用了图标，但是你的字体里又没有包含图标，所以需要换一个新的，带图标的字体。
+[Nerd字体下载地址](https://www.nerdfonts.com/)
+我自用的是Nerd里面的[Cascadia Cove Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/CascadiaCode.zip)，感觉挺舒服的。
+下载完之后安装到电脑，然后在Windows Terminal设置里面使用该字体就好了。
+
 ## 自用的设置文件(只是颜色的那一部分)
 
 ```json
