@@ -16,24 +16,19 @@ categories:
   - 软件安装与配置
 password:
 ---
-
-# 树莓派3B国内软件源
-
------------
-
 ## 先使用官方源进行一次update
-
 
 ## 查看系统版本(非常重要)
 
 注意不要使用不是你系统版本的软件源
-```
+
+```shell
 lsb_release -c
 ```
 
 ## 换源
 
-```
+```shell
 sudo nano /etc/apt/sources.list
 deb https://mirrors.ustc.edu.cn/raspbian/raspbian/ buster main contrib non-free
 deb-src https://mirrors.ustc.edu.cn/raspbian/raspbian/ buster main contrib non-free
@@ -46,12 +41,14 @@ deb https://mirrors.tuna.tsinghua.edu.cn/raspberrypi/ buster main ui
 
 ## 更新
 
-```
+```shell
 sudo apt update
 sudo apt upgrade
 sudo apt dist-upgrade
 ```
-> 加个新架构
-```
+
+### 加个新架构
+
+```shell
 dpkg --add-architecture arm
 ```
