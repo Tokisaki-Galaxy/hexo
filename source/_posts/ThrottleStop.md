@@ -33,7 +33,7 @@ alias:
 下载地址:
 [ThrottleStop](https://www.techpowerup.com/download/techpowerup-throttlestop/)
 
-# ThrottleStop配置
+## ThrottleStop配置
 
 ![主界面](https://s2.ax1x.com/2020/02/09/1h5Vqs.png)
 
@@ -126,7 +126,7 @@ CLR 清空数据
 
 -----
 
-## Options
+### Options
 
 **打开下面 Options 按钮**
 
@@ -191,7 +191,7 @@ Defaults 还原默认设置
 
 -----
 
-## FIVR(最重要的部分)
+### FIVR(最重要的部分)
 
 ![1hLqR1.png](https://s2.ax1x.com/2020/02/09/1hLqR1.png)
 
@@ -224,7 +224,7 @@ Save Voltages Changes to ThrottleStop.INI 选项一，不保存电压设置。�
 
 -----
 
-## TPL
+### TPL
 
 ![1hvVL6.png](https://s2.ax1x.com/2020/02/09/1hvVL6.png)
 
@@ -239,7 +239,7 @@ PP0 就是PL4 设置
 
 -----
 
-## C7s
+### C7s
 
 ![1hvVL6.png](https://s2.ax1x.com/2020/02/09/1hvVL6.png)
 

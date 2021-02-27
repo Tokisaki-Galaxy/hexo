@@ -33,13 +33,13 @@ alias:
 
 -----
 
-## 注意事项:
+### 注意事项:
 
 XTU和TS不需要用在一起
 
 -----
 
-# ThrottleStop
+## ThrottleStop
 
 下载后解压到固定位置(**不要轻易更改的路径**)(*例如"C:\Program File\ThrottleStop"*)
 
@@ -106,7 +106,7 @@ Nvidia GPU/AMD GPU 你用哪个勾哪个
 
 -----
 
-## FIVR(最重要的部分)
+### FIVR(最重要的部分)
 
 ![1hLqR1.png](https://s2.ax1x.com/2020/02/09/1hLqR1.png)
 
@@ -132,7 +132,7 @@ Save Voltages Changes to ThrottleStop.INI 选项一，不保存电压设置。�
 
 -----
 
-## 设置开机自启动
+### 设置开机自启动
 
 按一下windows(或者按搜索)输入任务计划程序
 
@@ -160,6 +160,6 @@ Save Voltages Changes to ThrottleStop.INI 选项一，不保存电压设置。�
 
 -----
 
-# Process Lasso
+## Process Lasso
 
 施工中.....

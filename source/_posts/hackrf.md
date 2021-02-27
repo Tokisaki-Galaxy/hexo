@@ -23,13 +23,13 @@ password:
 *win10都可以，linux不会有问题的吧*
 **关于本文中的所有链接，文末有整合地址，如果你们不嫌弃慢可以去那里下载**
 
-# 伪造GPS信号原理
+## 伪造GPS信号原理
 这个没啥好说的，就是用一个更强的信号覆盖掉微弱的GPS信号。
 
-# 下载Hackrf_Tools
+## 下载Hackrf_Tools
 这个不好找，只能去Github下，然后编译。我提供的整合包里有这些文件。
 
-# 下载gps-sdr-sim
+## 下载gps-sdr-sim
 [Github地址](https://github.com/osqzss/gps-sdr-sim)
 
 建议下载Release，不用自己编译，而且windows直接用。
@@ -40,12 +40,12 @@ password:
 拉到最下面，下载brdc2780.20n.Z，然后解压就是了。（注意要是以n结尾的星历）
 ![RINEX](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/source/_posts/hackrf/RINEX.png)
 
-# 生成GPS仿真数据
+## 生成GPS仿真数据
 `./gps-sdr-sim -e brdc2780.20n -l 0,0,100 -b 8·`
 指定星历文件，设置经纬度，必须指定采样精度为8。
 默认情况下只生成300秒的仿真数据，因为生成的文件太大了，怕你硬盘塞不下去2333。
 
-# 发射仿真数据
+## 发射仿真数据
 `hackrf_transfer -t gpssim.bin -f 1575420000 -s 2600000 -a 1 -x 0`
 -t 指定GPS数据
 -f 指定频率为1575420000 即民用GPS L1波段频率。
@@ -56,7 +56,7 @@ password:
 **请尽量避免使用手机进行测试，使用其他GPS终端。**
 因为手机会采用多重方法进行定位，比如基站，Wifi，GPS。这类多重定位的东西不好干扰。
 
-# 相关链接
+## 相关链接
 [HackRF首页](http://www.hackrf.net/)
 [Github上的HackRF](https://github.com/mossmann/hackrf)
 
