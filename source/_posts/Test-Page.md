@@ -10,7 +10,7 @@ toc: true
 mathjax: false
 summary: 测试页面。
 categories:
-  - 博客
+  - 学习记录
 password:
 comments: false
 noindex: true

@@ -13,6 +13,8 @@ img:
 coverImg:
 summary: 裸连r6
 tags:
+ - 游戏
+ - 彩虹六号
  - 电脑
  - 中国移动
 categories: 游戏

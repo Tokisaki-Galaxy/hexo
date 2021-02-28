@@ -11,7 +11,6 @@ coverImg:
 password:
 summary: Markdown模板
 tags:
-  - 博客
 categories:
 ---
 # 欢迎使用 Cmd Markdown 编辑阅读器

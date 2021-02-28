@@ -17,7 +17,7 @@ tags:
   - zeit
   - vercel
 categories:
-  - 博客
+  - 学习记录
 ---
 
 ## 第一部分
