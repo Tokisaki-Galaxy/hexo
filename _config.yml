@@ -41,16 +41,10 @@ external_link: # 在新标签中打开链接
   exclude: # 需要排除的域名。主域名和子域名如 www 需分别配置
 
 highlight:
-  enable: false
+  enable: enable
   line_number: false
   auto_detect: true
   tab_replace:
-
-prism_plugin:
-  mode: 'preprocess'    # realtime/preprocess
-  theme: 'tomorrow'
-  line_number: false    # default false
-  custom_css:
 
 search:
   path: search.xml
