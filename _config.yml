@@ -42,7 +42,7 @@ external_link: # 在新标签中打开链接
 
 highlight:
   enable: enable
-  line_number: false
+  line_number: true
   auto_detect: true
   tab_replace:
 
