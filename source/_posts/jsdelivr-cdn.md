@@ -63,5 +63,5 @@ https://cdn.jsdelivr.net/npm/包名@版本号/目录
 如果不加"@版本/分支"偶尔会错误的出现文件过大报错，并且无法加载，（10KB+>50MB ¿)例如下面这一条是有潜在问题的。
 `https://cdn.jsdelivr.net/gh/jquery/jquery/src/core.min.js`
 所以无论什么时候，必须加上分支/版本名，上面的URL必须写成这样：
-`https://cdn.jsdelivr.net/gh/jquery/jquery@master/src/core.min.js`
+`https://cdn.jsdelivr.net/gh/jquery/jquery@latest/src/core.min.js`
 这应该也算个小小的bug？
