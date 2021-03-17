@@ -24,6 +24,6 @@ https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/medias/avatar.webp
 
 
 描述: 
-唯其不可能，所以才值得相信。
+爱你所爱,行你所行。听从你心,无问西东。
 
 ![contact](https://www.toolnb.com/ipqmd/a7f6316dab52381828f3dbc7c5369274.html)
