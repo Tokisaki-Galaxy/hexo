@@ -43,3 +43,37 @@ keytool -delete -alias cobaltstrike
 最后用nslook ns1.xxxxx来检验是否配置正确。
 
 设置listener的时候，DNS Host(Stager)不是一定要填IP地址，可以填上面DNS Host的任意一条就行。
+
+## 使用Cloudflare隐匿C&C
+
+去Freenom注册个域名，然后挂到Cloudflare下。
+
+Cloudflare -> SSL/TLS -> 源服务器 -> 创建证书
+
+选择PEM格式，把源证书复制下来叫server.pem。私钥复制下来叫server.key。
+然后
+
+```bash
+openssl pkcs12 -export -in server.pem -inkey server.key -out cfcert.p12 -name cloudflare_cert -passout pass:123456
+
+sudo keytool -importkeystore -deststorepass 123456 -destkeypass 123456 -destkeystore cfcert.store -srckeystore cfcert.p12  -srcstoretype PKCS12 -srcstorepass 123456 -alias cloudflare_cert
+```
+
+然后在Malleable C2里加上这个
+
+```yaml
+https-certificate {
+    set keystore "cfcert.store";
+    set password "123456";
+}
+```
+
+另外一定要记得修改X-Forwarded-For 头配置，不然上线IP就是Cloudflare的数据中心了。
+
+```yaml
+http-config {
+    set trust_x_forwarded_for "true";
+}
+```
+
+然后可以访问[https://www.cloudflare.com/ips/](https://www.cloudflare.com/ips/)，去把cloudflare的地址都加入云服务器的安全组，只允许cloudflare链接。

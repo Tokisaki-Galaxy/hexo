@@ -206,4 +206,95 @@ eof成员函数。
 
 #### 预定义字符函数
 
-待施工。。。
+略
+
+## 第7章 数组
+
+### C++11基于范围的for语句
+
+C++11中一种新的for循环，用于快速遍历数组元素。
+
+```c++
+int arr[]={1,2,3,4,5};
+for(auto i : arr)
+    cout<<i;
+```
+
+甚至可以这样
+
+```c++
+int arr[]={1,2,3,4,5};
+for(int& i : arr)
+    i++;
+for(int i : arr)
+    cout<<i;
+```
+
+### 整个数组作为函数参数
+
+和传引用参数用法差不多。
+**为了防止不经意间的修改，一般使用const修饰。**
+
+## 第8章 字符串和向量
+
+### 预定义C字符串函数
+
+函数|说明|提示
+---|---|---
+strcpy(Target_string,Src_string)|将Src_string中的值复制到Target_string中|不检查Target_string中最大可存储的容量
+strcat(Target_string,Src_string)|将Src_string中的值连接到Target_string末尾|不检查Target_string中最大可存储的容量
+strlen(Src_string)|返回Src_string长度的整数（空字符'\0'不计算在内）
+strcmp(String_1, String_2)|如果两个字符串相等，就返回0|如果相等，会返回0，它会转换成false。注意这可能与你想象的相反。
+
+如果需要检查Target_string中最大可存储的容量，可以使用例如strcpy_s，后面带_s的函数。
+
+### 标准string类
+
+#### getline成员函数
+
+有两个版本
+
+```c++
+istream& getline(istream& ins, string& strVar, char delimiter);
+istream& getline(istream& ins, string& strVar);
+```
+
+第一个版本允许你自定义定界符，第二个版本默认定界符为'\n'
+
+**注意，混用cin和getline的时候需要注意，cin会把'\n'给getline，导致getline读到空字符串。**
+
+#### 成员函数
+
+示例|说明
+---|---
+**元素访问**<br>str[i]<br>str.at(i)<br><br>str.substr(position, length)<br>str,length()|<br>返回对索引i处的引用，不检查非法索引<br>和上面一样，但是这个版本会检查非法索引<br>返回调用对象的一个子字符串，从position开始，含有length个字符<br>返回长度
+**赋值/修改**<br>str.empty()<br>str.insert(pos, str2)<br>str.erase(pos, length)|<br>如果str为空字符串，就返回true，否则返回false<br>在str的pos处插入str2<br>删除长度为length的子字符串，从pos处开始
+**查找**<br>str.find(str1)<br><br>str.find(str1, pos)<br>str.find_first_of(str1, pos)<br>str.find_first_not_of(str1, pos)|<br>返回str1在str中首次出现的索引。如果str1没找到，返回特殊值string::npos<br>返回str1在str中首次出现的索引，从pos出开始查找<br>返回str1的任何字符在str中首次出现的索引，从pos处开始查找<br>返回不属于str1的任何字符在str中首次出现的索引，从pos处开始查找
+
+#### 小细节
+
+赋值操作不适应于C字符串，所以下面这个看似合法的语句其实是非法的。
+
+```c++
+aCString = stringVariable.c_str();  //非法
+```
+
+#### 字符串转换
+
+C++11下的函数（C++11前滚）
+转化到数字
+stof(不会吧还有人用float),stod,stoi,stol
+各种奇怪的类型转换为字符串
+to_string
+
+### 向量
+
+最喜欢的功能之一，必须拥有名字，安排上。
+*可以自动扩充还一下子就知道长度的高级数组谁不喜欢呢*
+
+## 第9章 指针和动态数组
+
+### 基本内存管理
+
+new完了记得要delete。
+另外delete之后的虚悬指针记得要指向nullptr。
