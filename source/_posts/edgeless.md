@@ -14,7 +14,7 @@ coverImg:
 summary: Edgeless
 tags: 
  - Edgeless
- - 电脑
+ - PE
 categories: 软件安装与配置
 password:
 ---

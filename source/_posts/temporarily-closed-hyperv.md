@@ -13,7 +13,7 @@ img:
 coverImg:
 summary: 临时关闭hyper-V
 tags:
- - 电脑
+ - hyper-v
  - Linux
  - WSL
  - hackrf

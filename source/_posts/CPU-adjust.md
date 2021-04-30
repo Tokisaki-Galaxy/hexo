@@ -11,7 +11,6 @@ img:
 coverImg: 
 summary: CPU升(降)压教程
 tags:
- - 电脑
  - CPU超频
  - CPU降频
 categories:
