@@ -45,7 +45,7 @@
     "hexo-server": "^2.0.0",
     "hexo-tag-emojis-byhj": "^1.0.0",
     "hexo-wordcount": "^6.0.1",
-    "highlight": "^0.2.4",
+    "hexo-prism-plus": "^2",
     "markdown-it-emoji": "^2",
     "twemoji": "^13"
   },
