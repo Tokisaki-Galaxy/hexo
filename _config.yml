@@ -9,7 +9,7 @@ timezone: 'Asia/Shanghai'
 
 # URL
 ## If your site is put in a subdirectory, set url as 'https://yoursite.com/child' and root as '/child/'
-url: https://tokisaki.top
+url: https://www.tokisaki.top
 root: /
 #permalink: :year/:month/:day/:title/
 permalink: blog/:title/
