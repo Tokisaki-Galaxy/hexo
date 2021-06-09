@@ -1,4 +1,6 @@
 User-agent: *
-Disallow: /404.html
+Allow: tokisaki.top/*
+Allow: www.tokisaki.top/*
+Disallow: *
 Sitemap: http://tokisaki.top/sitemap.xml
 Sitemap: http://tokisaki.top/baidusitemap.xml
