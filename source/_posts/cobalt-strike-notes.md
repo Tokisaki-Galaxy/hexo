@@ -4,7 +4,7 @@ date: 2021-3-27 21:53:14
 author: Tokisaki Galaxy
 summary: 随便记一下玩cs踩的坑
 tags: 
-categories: 学习记录
+categories: 学习
 ---
 
 ## Windows Executeable（s）和>Windows Executeable的区别

@@ -13,8 +13,7 @@ password:
 summary: Linux新建服务
 tags:
   - Linux
-categories:
-  - 软件安装与配置
+categories: 软件安装与配置
 ---
 
 ```
@@ -37,5 +36,5 @@ WantedBy=multi-user.target
 
 ```
 systemctl daemon-reload
-systemctl start frpc.service
+systemctl start xxx.service
 ```

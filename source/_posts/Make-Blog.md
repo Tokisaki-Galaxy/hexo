@@ -10,14 +10,12 @@ comments: true
 img:
 coverImg:
 password:
-summary: 使用zeit托管博客，并使用cloudflare进行访问加速
+summary: 使用vercel托管博客，并使用cloudflare进行访问加速
 tags:
   - Github
   - Hexo
-  - zeit
   - vercel
-categories:
-  - 学习记录
+categories: 踩坑记录
 ---
 
 ## 第一部分
@@ -38,7 +36,7 @@ categories:
 
 **如果你用deploy部署，那随便你设不设私有**
 
- 去Github上新建一个存储库，名字随便，记得**设置私有**。保证只有你和ZEIT上的机器人看得到。
+ 去Github上新建一个存储库，名字随便，记得**设置私有**。保证只有你和vercel上的机器人看得到。
 
 至于为什么把整个HEXO上传，原因是如果你换一台电脑不是还可以接写博客吗。
 
@@ -71,7 +69,7 @@ git push -u origin main
 
 接着试着用github desktop或者git进行push，如果没问题就往下看。
 
-当然有些教程会说设置deploy，直接上传源目录和上传public目录效果完全一致，区别只是在zeit上的部署有一点点不同。但是我更喜欢这种方法。（毕竟可以直接在github上写博客嘛）
+当然有些教程会说设置deploy，直接上传源目录和上传public目录效果完全一致，区别只是在vercel上的部署有一点点不同。但是我更喜欢这种方法。（毕竟可以直接在github上写博客嘛）
 
 #### 4.本地预览
 
@@ -129,9 +127,9 @@ git push -u origin main
 
   **之后你所有DNS更改都需要在cloudflare上操作，否则无效**
 
-##### 5.增加指向zeit的记录
+##### 5.增加指向vercel的记录
 
-  去ZEIT，在项目里找到"view domains"，将你想用的域名输进去（就是前缀+""."+之前搞到的域名）
+  去vercel，在项目里找到"view domains"，将你想用的域名输进去（就是前缀+""."+之前搞到的域名）
 
   然后按照他的提示去cloudflare增加一条CNAME。
 

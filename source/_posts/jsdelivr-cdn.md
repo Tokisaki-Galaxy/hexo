@@ -6,7 +6,7 @@ summary: jsdelivrCDN使用方法
 tags:
  - jsdelivr
  - 优化
-categories: 学习记录
+categories: 踩坑记录
 ---
 
 博客上用了很多js和css，如果都通过服务器加载，加载速度会很慢（一开始我用这个主题，GithubPages托管的时候，第一次加载用来40s+）。所以需要把js和css文件放到CDN上。

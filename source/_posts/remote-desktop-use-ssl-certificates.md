@@ -4,10 +4,10 @@ date: 2021-4-30 19:57:20
 author: Tokisaki Galaxy
 summary: 让远程桌面使用SSL证书，解决证书错误
 tags: 
- - win10
+ - windows
  - 远程桌面
  - SSL
-categories: 学习记录
+categories: 软件安装与配置
 ---
 
 远程桌面默认的证书是自签的，会报证书错误，为了安全起见使用CA签的证书。

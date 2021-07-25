@@ -16,7 +16,7 @@ tags:
  - cloudflare
  - DNSPod
  - DNSSEC
-categories: 学习记录
+categories: 踩坑记录
 password:
 ---
 

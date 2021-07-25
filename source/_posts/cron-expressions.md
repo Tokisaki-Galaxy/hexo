@@ -5,7 +5,7 @@ author: Tokisaki Galaxy
 summary: cron表达式结构
 tags:
  - cron
-categories: 学习记录
+categories: 学习
 ---
 
 > 工具型软件cron是一款类Unix的操作系统下的基于时间的任务管理系统。用户们可以通过cron在固定时间、日期、间隔下，运行定期任务（可以是命令和脚本）。cron常用于运维和管理，但也可用于其他地方，如：定期下载文件和邮件。cron该词来源于希腊语chronos（χρόνος），原意是时间。

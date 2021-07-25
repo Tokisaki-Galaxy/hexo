@@ -5,7 +5,7 @@ author: Tokisaki Galaxy
 summary: VS静态编译设置
 tags:
  - C++
-categories: 学习记录
+categories: 踩坑记录
 ---
 
 有时候把自己写的程序拷到其他电脑上运行，会出现缺少msxxxx.dll的提示，这是因为目标电脑上没有安装对应版本的C++运行库。

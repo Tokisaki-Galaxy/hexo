@@ -16,7 +16,7 @@ tags:
  - 中国移动
  - IPTV
 categories:
- - 软件安装与配置
+ - 踩坑记录
 password:
 ---
 

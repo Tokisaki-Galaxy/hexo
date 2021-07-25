@@ -6,16 +6,12 @@ img: https://src.onlinedown.net/d/file/p/2019-02-21/0d7b1ece1e9daf93d082fadc8fdb
 coverImg:
 top: false
 cover: false
-toc: true
 mathjax: false
 summary: 测试页面。
-categories:
-  - 学习记录
-password:
+categories: 踩坑记录
 comments: false
 noindex: true
 sitemap: false
-reprintPolicy: cc_by
 ---
 
 <style>

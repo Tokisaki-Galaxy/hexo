@@ -13,10 +13,10 @@ img:
 coverImg:
 summary: wsl，debian安装metasploit，并链接数据库。
 tags: 
- - win10
+ - windows
  - WSL
  - metasploit
- - debian
+ - linux
 categories: 软件安装与配置
 password:
 ---

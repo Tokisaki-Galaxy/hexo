@@ -19,7 +19,7 @@ tags:
  - hackrf
  - debian
  - metasploit
-categories: 软件安装与配置
+categories: 踩坑记录
 password:
 ---
 

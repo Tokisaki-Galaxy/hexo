@@ -4,7 +4,7 @@ date: 2021-3-13 17:36:42
 author: Tokisaki Galaxy
 summary: 
 tags: 
-categories: 学习记录
+categories: 学习
 ---
 
 写在学《C++入门经典（第10版）》的时候，主要是记录一些以前没有注意，不知道的地方。
