@@ -1,10 +1,12 @@
 ---
-title: tencent-public-dns
-date: 2021-8-10 16:8:44
+title: dnspod public dns 初体验
+date: 2021-8-10 16:08:44
 author: Tokisaki Galaxy
-summary: 
-tags: 
-categories: 
+summary: 试试腾讯的public dns
+tags:
+ - DNSPod
+ - DNS
+categories: 踩坑记录
 ---
 
 最近腾讯DnsPod新出了一个性化dns，可以自定义拦截列表，用于拦截广告，追踪器。国内以前也要类似的产品，比如红🐟之类的。

@@ -13,7 +13,7 @@ img:
 coverImg:
 summary: wsl，debian安装metasploit，并链接数据库。
 tags: 
- - windows
+ - Windows
  - WSL
  - metasploit
  - linux
