@@ -9,7 +9,7 @@ tags:
 categories: 软件安装与配置
 ---
 
-![最后的效果](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/source/_posts/beautify-windows-terminal/1.webp)
+![最后的效果](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/beautify-windows-terminal/1.webp)
 
 ## 安装Windows Terminal
 
