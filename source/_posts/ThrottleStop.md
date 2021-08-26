@@ -26,11 +26,20 @@ alias:
 
 
 
-
->* ThrottleStop
-
-下载地址:
+官网下载地址：
 [ThrottleStop](https://www.techpowerup.com/download/techpowerup-throttlestop/)
+
+
+
+## ThrottleStop是什么
+
+ThrottleStop最初的设计目的是为了对付笔记本电脑中的温度墙，以及调整CPU时钟速度。
+
+但是它不仅仅可以作为解除温度墙的工具，也可以用来给CPU打鸡血（老电脑狂喜）和给CPU放血（降频。
+
+为什么要给CPU降频？cpu降频之后，可以让续航时间加倍。比如之前网课的时候，我这电脑不用TS续航大概两个小时，用了之后锁到1Ghz。虽然低，但是网课也够用了，续航时间能达到4-5个小时
+
+
 
 ## ThrottleStop配置
 
@@ -243,3 +252,4 @@ PP0 就是PL4 设置
 ![1hvVL6.png](https://s2.ax1x.com/2020/02/09/1hvVL6.png)
 
 C10 分别设置 1-4 四种配置的 C-states，C0 为最高性能状态，基本上后边的数字越大越省电，相应的恢复到 C0 需要的时间也就越长。调整这里的选项可以省电降低待机温度或者相反的提高待机温度费电以获得更高的性能。
+

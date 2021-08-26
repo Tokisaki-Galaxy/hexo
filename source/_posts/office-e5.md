@@ -22,14 +22,14 @@ Office 365 开发版 E5 是为开发人员提供的。申请Office 365开发者�
 **网上有人说，如果到了90天之后，微软会给你点时间进行数据备份，然后微软会删除你的数据，到了这个时候就乖乖备份吧（我没到过这个阶段，你可以赌一下）**
 
 顺便晒一下续订成功的邮件
-![续订成功邮件](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/source/_posts/office-e5/1.jpg)
+![续订成功邮件](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/source/_posts/office-e5/1.jpg)
 
 ## 申请教程
 
 ### 申请Office E5
 
 1.进入[官网](https://developer.microsoft.com/zh-cn/microsoft-365/dev-program)后，点击立即加入。
-![立即加入](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/source/_posts/office-e5/2.jpg)
+![立即加入](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/source/_posts/office-e5/2.jpg)
 
 ### 用自己的微软账户登录
 
@@ -38,17 +38,17 @@ Office 365 开发版 E5 是为开发人员提供的。申请Office 365开发者�
 ### 创建订阅
 
 这一步很关键，关系到你的onedrive数据等存储位置。比如我选择US，那么我的数据就是放在美国的微软数据中心。所以根据你自己的真实位置去选择。
-![创建订阅](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/source/_posts/office-e5/3.jpg)
+![创建订阅](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/source/_posts/office-e5/3.jpg)
 然后会让你验证一个手机号。
 
 ### 添加许可证
 
 接着上面，验证完手机号之后你会跳转到[这个页面](https://developer.microsoft.com/zh-cn/microsoft-365/profile)，**（当然你应该是显示91天，我这里是因为续订了，才显示120天）**。点击那个用红框框出来的按钮，进入后台。
-![转到订阅](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/source/_posts/office-e5/4.jpg)
+![转到订阅](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/source/_posts/office-e5/4.jpg)
 **进后台最好挂个梯子，不然国内有些地区加载不了。**
 
 进入 管理 - > 用户 -> 活跃用户 -> 点击用户名 -> 许可证和用户 ,添加好后点击应用就可以了
-![“管理”按钮在哪](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/source/_posts/office-e5/5.jpg)
+![“管理”按钮在哪](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/source/_posts/office-e5/5.jpg)
 
 ### 其他杂项
 
