@@ -16,7 +16,7 @@ tags:
  - Windows
  - WSL
  - metasploit
- - linux
+ - Linux
 categories: 软件安装与配置
 password:
 ---
