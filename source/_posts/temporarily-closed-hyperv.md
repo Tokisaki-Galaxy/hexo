@@ -17,7 +17,6 @@ tags:
  - Linux
  - WSL
  - hackrf
- - debian
  - metasploit
 categories: 踩坑记录
 password:
