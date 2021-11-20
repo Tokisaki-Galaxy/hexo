@@ -39,14 +39,16 @@ password:
 
 首先点击`Xbox Live多人游戏`最下面的修复，并重启电脑后重新检查`NAT类型`是否已经变为开放，如果这样就能解决，那么自然皆大欢喜。
 
-# 手动启用teredo
+## 手动启用teredo
 如果很不幸的（事实上大部分人都没法通过简单的修复按钮修复）无法修复，那需要手动启用teredo。
 
 打开powershell或者cmd，输入
+
 ```shell
 netsh interface Teredo set state servername=default
 netsh interface Teredo set state type=natawareclient
 ```
+
 // 网上有人说`natawareclient`比`enterpriseclient`更适合家庭使用，如果`natawareclient`不行就试试`enterpriseclient`。
 
 重启电脑，再次查看NAT类型

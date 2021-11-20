@@ -16,7 +16,7 @@ categories: 踩坑记录
 > Argo隧道提供了一种简便的方法，可将Web服务器安全地公开到Internet，而无需打开防火墙端口和配置ACL。 Argo隧道还可以确保请求在到达网络服务器之前先通过Cloudflare进行路由，因此可以确保通过Cloudflare的WAF和Unmetered DDoS缓解功能停止了攻击流量，并且如果为帐户启用了这些功能，则可以通过Access进行身份验证。
 
 为什么走Argo而不是普通CDN？
-因为走CDN要用安全组放通60000端口，并且泄露了C&C服务器的IP地址，增加了被朔源隐患。使用ArgoTunnel不需要放通后台端口。而且有Cloudflare官方证书。
+因为走CDN要用安全组放通60000端口，并且泄露了C&C服务器的IP地址，增加了被溯源隐患。使用ArgoTunnel不需要放通后台端口。而且有Cloudflare官方证书。
 
 并且现在Cloudflare默认走香港节点，大陆访问也不慢。
 
