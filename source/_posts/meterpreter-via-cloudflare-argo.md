@@ -45,10 +45,10 @@ sudo systemctl restart cloudflared
 ```
 
 在[cloudflare dashboard](https://dash.cloudflare.com)的dns面板里面，将tp.example.top的记录设置为与vip.example.top的记录一样
-![就像这样](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/beautify-windows-terminal/1.png)
+![就像这样](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/meterpreter-via-cloudflare-argo/1.png)
 
 然后通过浏览器访问http://tp.example.top:2095，应该会有这样的提示。
-![提示404 Not found](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/beautify-windows-terminal/2.png)
+![提示404 Not found](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/meterpreter-via-cloudflare-argo/2.png)
 
 ## 通过http上线
 
@@ -64,8 +64,8 @@ sudo systemctl restart cloudflared
 
 如果用HostHeader伪装C2域名，理论上来讲没问题，但是实操会导致上线但无法操作，可能跟缓存有关，下周回来试试。
 
-![设置完之后大概这样](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/beautify-windows-terminal/3.png)
+![设置完之后大概这样](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/meterpreter-via-cloudflare-argo/3.png)
 
 生成PE/ELF文件，然后执行。就会产生一个Session。
 
-![最终成果](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/beautify-windows-terminal/3.png)
+![最终成果](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/meterpreter-via-cloudflare-argo/4.png)
