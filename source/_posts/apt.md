@@ -3,8 +3,12 @@ title: apt
 date: 2021-10-30 17:43:11
 author: Tokisaki Galaxy
 summary: 
-tags: 
-categories: 
+ - Linux
+ - cloudflare
+ - Argo
+ - metasploit
+ - 网络安全
+categories: 踩坑记录
 ---
 
 ## meterpreter/reverse_tcp和meterpreter_reverse_tcp区别

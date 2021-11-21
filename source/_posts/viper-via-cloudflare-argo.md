@@ -26,7 +26,7 @@ categories: 踩坑记录
 
 因为viper使用的是自签名证书，如果直接转发`https://127.0.0.1:60000`是不行的，会报证书错误。所以要先进容器内改nginx的配置文件，关掉ssl，改成http。
 
-```shell
+```bash
 docker ps #查看容器名
 docker exec -i -t viper-c /bin/bash
 #下面是在容器内的操作
@@ -36,7 +36,7 @@ nano viper.conf
 
 用Ctrl+Shift+_跳转到第7行。
 
-```config
+```yml
 .......
 server {
         include /root/viper/Docker/nginxconfig/viper.conf;
@@ -47,7 +47,7 @@ server {
 
 最后记得重载nginx的配置文件，让改动生效。
 
-```shell
+```bash
 nginx -s reload
 exit #退出容器内
 ```
@@ -68,7 +68,7 @@ Github Release
 
 ### 配置Tunnel
 
-```shell
+```bash
 cloudflared tunnel login #先登录，并且选择example.com的域名
 cloudflared tunnel create viper
 cloudflared tunnel route dns viper vip #通过vip这条隧道，自动在cloudflare中添加一条指向vip.example.com的CNAME记录
@@ -78,7 +78,7 @@ cloudflared tunnel route dns viper vip #通过vip这条隧道，自动在cloudfl
 
 启动隧道试试，如果没问题就继续。
 
-```shell
+```bash
 cloudflared tunnel --name viper --url http://127.0.0.1:60000
 ```
 
@@ -88,16 +88,15 @@ cloudflared tunnel --name viper --url http://127.0.0.1:60000
 ### 持久化Argo
 
 先运行`cloudflared tunnel list`记一下Tunnel的ID是多少。
-然后创立cloudflared的配置文件。
 
-```shell
-cd ~/.cloudflare
-nano config.yaml
+```bash
+sudo cloudflared service install
+nano /etc/cloudflared/config.yml
 ```
 
 按照下面这样写，该改的改一下
 
-```config
+```yml
 tunnel: <Tunnel-UUID>
 credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
 
@@ -107,10 +106,8 @@ ingress:
   - service: http_status:404
 ```
 
-将cloudflared安装为服务，并启动。
+重启cloudfalred服务
 
-```shell
-sudo cloudflared --config ~/.cloudflared/config.yaml service install
-sudo systemctl start cloudflared && sudo systemctl enable cloudflared
-cloudflared tunnel run viper
+```bash
+sudo systemctl restart cloudflared && sudo systemctl enable cloudflared
 ```
