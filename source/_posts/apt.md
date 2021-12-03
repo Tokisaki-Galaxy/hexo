@@ -11,6 +11,10 @@ summary:
 categories: 踩坑记录
 ---
 
+## 绝对禁止在实战中使用HTTP协议
+
+用cobaltstrike的HTTP上线，被教育局抓了，刚上线几分钟教育局就打来电话了。还好套了层cloudflare argo
+
 ## meterpreter/reverse_tcp和meterpreter_reverse_tcp区别
 
 ```text
