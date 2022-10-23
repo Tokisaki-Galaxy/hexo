@@ -108,8 +108,8 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: 
-# - hexo-theme-matery
- - hexo-theme-fluid
+ - hexo-theme-matery
+# - hexo-theme-nexmoe
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
