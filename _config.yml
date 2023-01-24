@@ -109,7 +109,7 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: 
 # - hexo-theme-matery
- - hexo-theme-nexmoe
+ - hexo-theme-fluid
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

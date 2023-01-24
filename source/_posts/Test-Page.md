@@ -244,5 +244,4 @@ https://evil-binary.github.io/
 ![主界面](https://s2.ax1x.com/2020/02/09/1h5Vqs.png)
 
 
-{% img [主界面] https://s2.ax1x.com/2020/02/09/1h5Vqs.png %}
 
