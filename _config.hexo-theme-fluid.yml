@@ -5,11 +5,11 @@
 
 # 用于浏览器标签的图标
 # Icon for browser tab
-favicon: /img/fluid.png
+favicon: https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/favicon.png
 
 # 用于苹果设备的图标
 # Icon for Apple touch
-apple_touch_icon: /img/fluid.png
+apple_touch_icon: https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/favicon.png
 
 # 浏览器标签页中的标题分隔符，效果： 文章名 - 站点名
 # Title separator in browser tab, eg: article - site
@@ -244,7 +244,7 @@ web_analytics:  # 网页访问统计
   # Google 统计的 Tracking ID
   # Google analytics, set Tracking ID
   # See: https://developers.google.com/analytics/devguides/collection/analyticsjs
-  google:
+  google: UA-157552051-3
 
   # Google gtag.js 的媒体资源 ID
   # Google gtag.js GA_MEASUREMENT_ID
@@ -315,7 +315,7 @@ iconfont: //at.alicdn.com/t/font_1736178_lbnruvf0jn.css
 navbar:
   # 导航栏左侧的标题，为空则按 hexo config 中 `title` 显示
   # The title on the left side of the navigation bar. If empty, it is based on `title` in hexo config
-  blog_title: "Fluid"
+  blog_title: ""
 
   # 导航栏毛玻璃特效，实验性功能，可能会造成页面滚动掉帧和抖动，部分浏览器不支持会自动不生效
   # Navigation bar frosted glass special animation. It is an experimental feature
@@ -339,7 +339,7 @@ navbar:
     - { key: "category", link: "/categories/", icon: "iconfont icon-category-fill" }
     - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
     - { key: "about", link: "/about/", icon: "iconfont icon-user-fill" }
-    #- { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
+    - { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
 
 # 搜索功能，基于 hexo-generator-search 插件，若已安装其他搜索插件请关闭此功能，以避免生成多余的索引文件
 # Search feature, based on hexo-generator-search. If you have installed other search plugins, please disable this feature to avoid generating redundant index files
@@ -449,7 +449,7 @@ footer:
 index:
   # 首页 Banner 头图，可以是相对路径或绝对路径，以下相同
   # Path of Banner image, can be a relative path or an absolute path, the same on other pages
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
 
   # 头图高度，屏幕百分比
   # Height ratio of banner image
@@ -468,7 +468,7 @@ index:
 
     # 为空则按 hexo config.subtitle 显示
     # If empty, text based on `subtitle` in hexo config
-    text: "An elegant Material-Design theme for Hexo"
+    text: ""
 
     # 通过 API 接口作为首页副标题的内容，必须返回的是 JSON 格式，如果请求失败则按 text 字段显示，该功能必须先开启 typing 打字机功能
     # Subtitle of the homepage through the API, must be returned a JSON. If the request fails, it will be displayed in `text` value. This feature must first enable the typing animation
@@ -521,7 +521,7 @@ index:
 # Post Page
 #---------------------------
 post:
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
   banner_img_height: 70
   banner_mask_alpha: 0.3
 
@@ -607,7 +607,7 @@ post:
     # 文章的排序字段，前面带减号是倒序，不带减号是正序
     # Sort field for posts, with a minus sign is reverse order
     # Options: date | title | or other field of front-matter
-    post_order_by: "title"
+    post_order_by: title
 
     # 单个分类中折叠展示文章数的最大值，超过限制会显示 More，0 则不限制
     # The maximum number of posts in a single category. If the limit is exceeded, it will be displayed More. If 0 no limit
@@ -717,7 +717,7 @@ post:
     # 指定的插件，需要同时设置对应插件的必要参数
     # The specified plugin needs to set the necessary parameters at the same time
     # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus
-    type: waline
+    type: cusdis
 
 
 #---------------------------
@@ -822,7 +822,7 @@ changyan:
 # Based on third-party service
 # See: https://www.livere.com
 livere:
-  uid: ''
+  uid: 'MTAyMC81Nzk3Mi8zNDQzNQ=='
 
 # Remark42
 # 需要自托管服务端
@@ -849,8 +849,8 @@ twikoo:
 # Based on third-party or self-hosted service
 # See https://cusdis.com
 cusdis:
-  host:
-  app_id:
+  host: https://cusdis.com
+  app_id: 27923e0d-279d-4dad-bdc5-f1b12b6add4c
   lang: zh-cn
 
 # Giscus
@@ -875,7 +875,7 @@ giscus:
 # Archive Page
 #---------------------------
 archive:
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -886,7 +886,7 @@ archive:
 #---------------------------
 category:
   enable: true
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -915,7 +915,7 @@ category:
 #---------------------------
 tag:
   enable: true
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
   banner_img_height: 80
   banner_mask_alpha: 0.3
   tagcloud:
@@ -932,18 +932,18 @@ tag:
 #---------------------------
 about:
   enable: true
-  banner_img: /img/default.png
+  banner_img: /img/about.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
-  avatar: /img/avatar.png
-  name: "Fluid"
-  intro: "An elegant theme for Hexo"
+  avatar: /img/avatar.jpg
+  name: "Tokisaki Galaxy"
+  intro: ""
   # 更多图标可从 https://hexo.fluid-dev.com/docs/icon/ 查找，`class` 代表图标的 css class，添加 `qrcode` 后，图标不再是链接而是悬浮二维码
   # More icons can be found from https://hexo.fluid-dev.com/docs/en/icon/  `class` is the css class of the icon. If adding `qrcode`, The icon is no longer a link, but a hovering QR code
   icons:
-    - { class: "iconfont icon-github-fill", link: "https://github.com", tip: "GitHub" }
-    - { class: "iconfont icon-douban-fill", link: "https://douban.com", tip: "豆瓣" }
-    - { class: "iconfont icon-wechat-fill", qrcode: "/img/favicon.png" }
+    - { class: "iconfont icon-github-fill", link: "https://github.com/tokisaki-galaxy", tip: "GitHub" }
+    - { class: "iconfont icon-mail", link: "tokisaki-galaxy@qq.com", tip: "E-mail" }
+    #- { class: "iconfont icon-wechat-fill", qrcode: "/img/favicon.png" }
 
 
 #---------------------------
@@ -954,7 +954,7 @@ about:
 # Custom Page through `hexo new page`
 #---------------------------
 page:
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -965,7 +965,7 @@ page:
 #---------------------------
 page404:
   enable: true
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
   banner_img_height: 85
   banner_mask_alpha: 0.3
   # 重定向到首页的延迟(毫秒)
@@ -979,7 +979,7 @@ page404:
 #---------------------------
 links:
   enable: true
-  banner_img: /img/default.png
+  banner_img: /img/default.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
   # 友链的成员项
@@ -992,16 +992,64 @@ links:
       avatar: "/img/favicon.png"
     }
     - {
-      title: "Fluid Docs",
-      intro: "主题使用指南",
-      link: "https://hexo.fluid-dev.com/docs/",
-      avatar: "/img/favicon.png"
+	    title: "EDGELESS",
+	    intro: "强大而优雅的PE工具",
+	    avatar: "https://home.edgeless.top/favicon.ico",
+	    link: "https://home.edgeless.top"
     }
     - {
-      title: "Fluid Repo",
-      intro: "主题 GitHub 仓库",
-      link: "https://github.com/fluid-dev/hexo-theme-fluid",
-      avatar: "/img/favicon.png"
+      title: "夏·祈·楓",
+      intro: "Zaphkiel,Zayin!",
+      avatar: "https://cdn.jsdelivr.net/gh/Nastsuki-Kaede/Blog-Resources/icon/favicon.ico",
+      link: "https://flymc.cc"
+    }
+    - {
+      title: "Rabbit's Blog",
+      intro: "♥愿有一天能和你最重要的人重逢",
+      avatar: "https://i.loli.net/2019/07/27/5d3bf538d0c1e60286.jpg",
+      link: "https://onetuzi.cn"
+    }
+    - {
+      title: "灵魂只应独行",
+      intro: "May the love be with you always",
+      avatar: "https://puppetsheep.cn/images/icons/icon_192.png",
+      link: "https://puppetsheep.cn"
+    }
+    - {
+      title: "NaiveTomcat-AKA Trimethyldopa",
+      intro: "Keep on going never give up.",
+      avatar: "https://cdn.jsdelivr.net/gh/NaiveTomcat/blog/img/sidebar-avatar.jpg",
+      link: "https://www.tsinghuamakerxian.cn"
+    }
+    - {
+      title: "梦魇小栈",
+      intro: "心，若没有栖息的地方，到哪里都是流浪......",
+      avatar: "https://cdn.ihoey.com/avatar.png?imageMogr2/thumbnail/200x200/format/png/blur/1x0/quality/75|imageslim",
+      link: " https://blog.ihoey.com"
+    }
+    - {
+      title: "Lete乐特",
+      intro: "人生只有一次，大胆的生活！！",
+      avatar: "https://www.lete114.top/img/avatar.png",
+      link: "https://www.lete114.top/"
+    }
+    - {
+      title: "凡尘纪",
+      intro:  "念念不忘 必有回响",
+      avatar: "https://hesifan.top/medias/avatar.jpg",
+      link:  "https://hesifan.top"
+    }
+    - {
+      title: "fudreamin",
+      intro:  "诗酒趁年华",
+      avatar: "http://img.reainyday.top/5adfe3c0bbe1271e.jpg",
+      link:  "http://www.reainyday.top/"
+    }
+    - {
+      title: "LovelyCat",
+      intro:  "この世に笑颜がひとつ多かったら、泣く人は一人少なくなる",
+      avatar: "http://lovelycatv.cn/favicon.ico",
+      link:  "https://lovelycatv.cn/"
     }
 
   # 当成员头像加载失败时，替换为指定图片
@@ -1011,18 +1059,24 @@ links:
   # 友链下方自定义区域，支持 HTML，可插入例如申请友链的文字
   # Custom content at the bottom of the links
   custom:
-    enable: false
-    content: '<hr><p>在下方留言申请加入我的友链，按如下格式提供信息：</p><ul><li>博客名：Fluid</li><li>简介：Fluid 主题官方博客</li><li>链接：https://hexo.fluid-dev.com</li><li>图片：https://hexo.fluid-dev.com/img/favicon.png</li></ul>'
+    enable: true
+    content: '<hr><p>在下方留言申请加入我的友链，按如下格式提供信息：</p><ul><li>博客名：tokisaki</li><li>简介：tokisaki</li><li>链接：https://xxxxx</li><li>图片：https://xxxxx</li></ul>'
 
   # 评论插件
   # Comment plugin
   comments:
-    enable: false
+    enable: true
     # 指定的插件，需要同时设置对应插件的必要参数
     # The specified plugin needs to set the necessary parameters at the same time
     # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus
-    type: disqus
+    type: cusdis
 
+# 来必力 Livere
+# 基于第三方的服务
+# Based on third-party service
+# See: https://www.livere.com
+  livere:
+    uid: 'MTAyMC81Nzk3Mi8zNDQzNQ=='
 
 #---------------------------
 # 以下是配置 JS CSS 等静态资源的 URL 前缀，可以自定义成 CDN 地址，
@@ -1045,17 +1099,17 @@ static_prefix:
 
   github_markdown: https://lib.baomitu.com/github-markdown-css/4.0.0/
 
-  jquery: https://lib.baomitu.com/jquery/3.6.0/
+  jquery: https://cdn.bootcdn.net/ajax/libs/jquery/3.6.3/
 
-  bootstrap: https://lib.baomitu.com/twitter-bootstrap/4.6.1/
+  bootstrap: https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/
 
   prismjs: https://lib.baomitu.com/prism/1.29.0/
 
-  tocbot: https://lib.baomitu.com/tocbot/4.18.2/
+  tocbot: https://cdn.bootcdn.net/ajax/libs/tocbot/4.20.0/
 
-  typed: https://lib.baomitu.com/typed.js/2.0.12/
+  typed: https://cdn.bootcdn.net/ajax/libs/typed.js/2.0.12/
 
-  fancybox: https://lib.baomitu.com/fancybox/3.5.7/
+  fancybox: https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/
 
   nprogress: https://lib.baomitu.com/nprogress/0.2.0/
 
@@ -1065,7 +1119,7 @@ static_prefix:
 
   busuanzi: https://busuanzi.ibruce.info/busuanzi/2.3/
 
-  clipboard: https://lib.baomitu.com/clipboard.js/2.0.11/
+  clipboard: https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.11/
 
   mermaid: https://lib.baomitu.com/mermaid/8.14.0/
 
@@ -1077,6 +1131,6 @@ static_prefix:
 
   disqusjs: https://lib.baomitu.com/disqusjs/1.3.0/
 
-  twikoo: https://lib.baomitu.com/twikoo/1.6.8/
+  twikoo: https://cdn.bootcdn.net/ajax/libs/twikoo/1.6.8/
 
-  hint: https://lib.baomitu.com/hint.css/2.7.0/
+  hint: https://cdn.bootcdn.net/ajax/libs/hint.css/2.7.0/
