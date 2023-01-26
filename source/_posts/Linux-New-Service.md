@@ -13,7 +13,8 @@ password:
 summary: Linux新建服务
 tags:
   - Linux
-categories: 软件安装与配置
+  - service
+categories: Linux
 ---
 
 ```

@@ -4,9 +4,8 @@ date: 2023-1-23 20:27:43
 author: Tokisaki Galaxy
 summary: debian有时候安装完驱动，网卡名字会变得很奇怪，可以重新命名
 tags: 
- - Linux
  - Debian
-categories: android-linux
+categories: Linux
 ---
 
 新买了个RTL8812BU网卡，打算用来给parrot用，然后去找了驱动装上之后，发现网卡名居然不是wlan0，是一串长长的名字，这个可忍不了。

@@ -7,7 +7,7 @@ tags:
  - 游戏
  - 云服务器
  - Linux
-categories: 游戏
+categories: Linux
 ---
 
 ## 服务端

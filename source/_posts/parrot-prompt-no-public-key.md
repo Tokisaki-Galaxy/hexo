@@ -4,7 +4,9 @@ date: 2021-7-23 21:14:36
 author: Tokisaki Galaxy
 summary: 
 tags: 
-categories: 
+ - Linux
+ - Parrot
+categories: Linux
 ---
 
 本有了wsl2，指望彻底把vmware扔到垃圾桶里，结果今天发现wsl2居然不支持usb设备。。。

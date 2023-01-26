@@ -8,7 +8,7 @@ summary:
  - Argo
  - metasploit
  - 网络安全
-categories: 踩坑记录
+categories: Linux
 ---
 
 ## 绝对禁止在实战中使用HTTP协议
