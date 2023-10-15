@@ -16,7 +16,7 @@ categories: 软件安装与配置
 password:
 ---
 
-# 正文
+## 正文
 
 [不想动手可以直接下载的懒人版,密码QRSJ](https://eyun.baidu.com/s/3jJhjRmA)
 
@@ -26,7 +26,7 @@ password:
 
 [下载VSCode](https://code.visualstudio.com/Download)
 
-**注意选择下载压缩包格式**
+**注意选择下载压缩包格式。**
 
 ---------
 
@@ -34,22 +34,21 @@ password:
 
 不需要选sig文件
 
-**注意选择"Pre-Built Binaries",系统位数要对应你上面选的**
+**注意选择"Pre-Built Binaries",系统位数要对应你上面选的！**
 
 ---------
 
 [下载MinGW-W64](https://sourceforge.net/projects/mingw-w64/files/)
 
-**如果你系统版本是x64,下载x86_64-posix-seh**
+**如果你系统版本是x64,下载x86_64-posix-seh。**
 
-**如果你系统版本是x32,下载x86_64-win32-seh**
+**如果你系统版本是x32,下载x86_64-win32-seh。**
 
-----------
+---------
 
 1.解压VSCode到某个地方,再把MinGW解压到VSCode的目录里
 
 我做这几部只是为了得到LLVM目录,卸载掉它只是因为不想让程序列表里太多**非强迫症可以忽略2-4步,直接选择安装目录到第一步文件夹里**
-
 
 2.安装LLVM,先**随便**安装到一个位置
 
@@ -61,21 +60,23 @@ password:
 
 6.注释掉start.bat最后一行**就是在最后一行前面加::**
 
-7.**!!这一步做完不要关!!**在cmd(或者power shell)中输入.\start.bat运行脚本,然后输入clang和gcc.**如果出现xxx不是内部或外部命令,就说明你start.bat配置有问题** 
+7.**!!这一步做完不要关!!**在cmd(或者power shell)中输入.\start.bat运行脚本,然后输入clang和gcc.**如果出现xxx不是内部或外部命令,就说明你start.bat配置有问题** 。
 
 8.在你第1步的文件夹中新建以下名字的**文件夹**
-```
+
+```bash
 Users
-	Users\AppData
-		Users\AppData\Local
-		Users\AppData\Roaming
-		Users\AppData\Desktop
+Users\AppData
+Users\AppData\Local
+Users\AppData\Roaming
+Users\AppData\Desktop
 
 extensions
 ```
 
 9.安装扩展
-```
+
+```bash
 Chinese(简中语言包)
 C/C++
 vscode-clangd
@@ -90,7 +91,6 @@ One Dark Pro(主题包,可选)
 
 需要注意的是这里你把每个语言的工作目录放到单独的文件夹中,比如c放到c中,c++放到c++中
 
-
 12.在!Code中又新建一个名叫C++的文件夹**(具体参照自身情况)**
 
 13.在C++目录中新建一个.vscode的文件夹,然后在里面把附件中的launch.json,tasks.json,settings.json,compile_flags.txt复制进去
@@ -98,12 +98,13 @@ One Dark Pro(主题包,可选)
 14.取消第6步中的注释,关掉这个VSCode.运行!start.vbs
 
 15.新建一个文件,输入点什么测试代码
-```
+
+```c
 #include <iostream>
 using namespace std;
 int main (){
     string a="";
-	cout << "Input:" << endl;
+    cout << "Input:" << endl;
     cin >> a;
     cout << a;
     return 0;
@@ -114,14 +115,13 @@ int main (){
 
 17.没了
 
+## 附件
 
+---------
 
-# 附件
+### start.bat
 
---------------
-
-## start.bat
-```
+```bash
 set ThisDir=%~dp0
 set USERPROFILE=%ThisDir%Users
 set APPDATA=%USERPROFILE%\AppData\Roaming
@@ -130,14 +130,16 @@ REM Code.exe --extensions-dir "extensions"
 Code.exe !Code\C++\code.code-workspace
 ```
 
-## !start.vbs
-```
+### !start.vbs
+
+```bash
 set ws=createobject("wscript.shell")
 ws.run "start.bat",0
 ```
 
-## launch.json
-```
+### launch.json
+
+```json
 {
     "version": "0.2.0",
     "configurations": [
@@ -167,9 +169,9 @@ ws.run "start.bat",0
 }
 ```
 
-## tasks.json
+### tasks.json
 
-```
+```json
 {
     "version": "2.0.0",
     "tasks": [
@@ -196,13 +198,14 @@ ws.run "start.bat",0
                 "focus": false,
                 "panel": "shared"
             },
-		}
+        }
     ]
 }
 ```
 
-## settings.json
-```
+### settings.json
+
+```json
 {
     "files.defaultLanguage": "c",
     "editor.formatOnType": true,
@@ -226,8 +229,9 @@ ws.run "start.bat",0
 }
 ```
 
-## compile_flags.txt
-```
+### compile_flags.txt
+
+```bash
 -Wall
 --target=x86_64-w64-mingw
 -std=c++17
