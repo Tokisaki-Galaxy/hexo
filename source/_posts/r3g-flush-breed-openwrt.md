@@ -10,13 +10,15 @@ tags:
  - breed
  - openwrt
  - 固件
-categories: Linux
+categories: 捡垃圾
 ---
 
 ## 前言
 
-挺早之前打算买个路由器玩，因为学了网络技术这么久都没用上，很想玩。其次宿舍里打游戏有时候要局域网，总是开热点不方便。所以整个路由器刷个openwrt是个不错的选择。
-一开始我打算选随身wifi，但是发现那高通CPU太弱了，根本带不动游戏联机，所以买了台据说对标K2P的R3G。因为第一次刷breed和openwrt，网上没有什么现成的教程。七零八碎，版本也不对的教程看的挺难受，一路上挺坎坷的，终于成功之后记录一下过程。
+挺早之前打算买个路由器玩，因为学了网络技术这么久都没用上，很想玩。
+其次宿舍里打游戏有时候要局域网，总是开热点不方便。所以整个路由器刷个openwrt是个不错的选择。
+一开始我打算选随身wifi，但是发现那高通CPU太弱了，根本带不动游戏联机，所以买了台据说对标K2P的R3G。
+因为第一次刷breed和openwrt，网上没有什么现成的教程。七零八碎，版本也不对的教程看的挺难受，一路上挺坎坷的，终于成功之后记录一下过程。
 
 ## 打开SSH
 
@@ -145,3 +147,24 @@ reboot
 
 上述命令中nvram是uboot专有命令，Breed与uboot相互独立，参数不共用，根据国外论坛对于小米路由器原厂uboot的分析，小米路由器的kernel0包含的usb恢复的功能，就是将官方固件命名为miwifi.bin放入U盘内，断电时插入路由器，用硬物抵住reset键后插电，保持10秒左右，待黄灯快速闪动后可松手，可恢复至官方固件，这个功能可用于原厂固件损坏后的修复，也算是不错的功能，所以OpenWrt官网上的建议是将内核文件刷入kernel1
 
+## 更新源
+
+```yml
+src/gz immortalwrt_core https://mirror.sjtu.edu.cn/immortalwrt/snapshots/targets/ramips/mt7621/packages
+src/gz immortalwrt_base https://downloads.immortalwrt.org/snapshots/packages/mipsel_24kc/base
+src/gz immortalwrt_luci https://downloads.immortalwrt.org/snapshots/packages/mipsel_24kc/luci
+src/gz immortalwrt_packages https://downloads.immortalwrt.org/snapshots/packages/mipsel_24kc/packages
+src/gz immortalwrt_routing https://downloads.immortalwrt.org/snapshots/packages/mipsel_24kc/routing
+src/gz immortalwrt_small8 https://downloads.immortalwrt.org/snapshots/packages/mipsel_24kc/small8
+src/gz immortalwrt_telephony https://downloads.immortalwrt.org/snapshots/packages/mipsel_24kc/telephony
+```
+
+```yml
+src/gz immortalwrt_core https://mirrors.cloud.tencent.com/openwrt/snapshots/targets/ramips/mt7621/packages
+src/gz immortalwrt_base https://mirrors.cloud.tencent.com/openwrt/snapshots/packages/mipsel_24kc/base
+src/gz immortalwrt_luci https://mirrors.cloud.tencent.com/openwrt/snapshots/packages/mipsel_24kc/luci
+src/gz immortalwrt_packages https://mirrors.cloud.tencent.com/openwrt/snapshots/packages/mipsel_24kc/packages
+src/gz immortalwrt_routing https://mirrors.cloud.tencent.com/openwrt/snapshots/packages/mipsel_24kc/routing
+src/gz immortalwrt_small8 https://mirrors.cloud.tencent.com/openwrt/snapshots/packages/mipsel_24kc/small8
+src/gz immortalwrt_telephony https://mirrors.cloud.tencent.com/openwrt/snapshots/packages/mipsel_24kc/telephony
+```
