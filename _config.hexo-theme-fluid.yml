@@ -986,7 +986,7 @@ links:
   # Member item of page
   items:
     - {
-        name: "千里之豪",
+        title: "千里之豪",
         intro":  "Fun to life， fun to coding",
         avatar: "https://gadore.top/upload/Snipaste_2023-05-19_15-20-47.jpg",
         link":  "https://gadore.top"
