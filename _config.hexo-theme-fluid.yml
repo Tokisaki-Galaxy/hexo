@@ -986,16 +986,23 @@ links:
   # Member item of page
   items:
     - {
-      title: "Fluid Blog",
-      intro: "主题博客",
-      link: "https://hexo.fluid-dev.com/",
-      avatar: "/img/favicon.png"
+        "name": "千里之豪",
+        "title": "前去参观",
+        "introduction":  "Fun to life， fun to coding",
+        "avatar": "https://gadore.top/upload/Snipaste_2023-05-19_15-20-47.jpg",
+        "url":  "https://gadore.top"
     }
     - {
 	    title: "EDGELESS",
 	    intro: "强大而优雅的PE工具",
 	    avatar: "https://home.edgeless.top/favicon.ico",
 	    link: "https://home.edgeless.top"
+    }
+    - {
+      title: "Fluid Blog",
+      intro: "主题博客",
+      link: "https://hexo.fluid-dev.com/",
+      avatar: "/img/favicon.png"
     }
     - {
       title: "夏·祈·楓",
@@ -1032,18 +1039,6 @@ links:
       intro: "人生只有一次，大胆的生活！！",
       avatar: "https://www.lete114.top/img/avatar.png",
       link: "https://www.lete114.top/"
-    }
-    - {
-      title: "凡尘纪",
-      intro:  "念念不忘 必有回响",
-      avatar: "https://hesifan.top/medias/avatar.jpg",
-      link:  "https://hesifan.top"
-    }
-    - {
-      title: "fudreamin",
-      intro:  "诗酒趁年华",
-      avatar: "http://img.reainyday.top/5adfe3c0bbe1271e.jpg",
-      link:  "http://www.reainyday.top/"
     }
     - {
       title: "LovelyCat",
