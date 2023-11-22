@@ -33,7 +33,7 @@ C++写的，默认3分钟定时检查一次电量，所以如果有**略微超�
 **感谢coreboot提供的ectool。**
 
 真的希望大家顺路可以去gayhub点个star，
-[github项目链接（首选）](github.com/Tokisaki-Galaxy/chromebook_batterymanage)
+[github项目链接（首选）](https://github.com/Tokisaki-Galaxy/chromebook_batterymanage)
 
 分流地址（可能没有更新到最新版本）
 https://www.lanzouj.com/b00rw55id
