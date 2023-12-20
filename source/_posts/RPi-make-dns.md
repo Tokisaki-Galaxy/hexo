@@ -9,7 +9,7 @@ cover: false
 toc: true
 mathjax: false
 comments: true
-summary: RPi搭建DNS服务器
+excerpt: RPi搭建DNS服务器
 tags:
   - RPi
 categories:

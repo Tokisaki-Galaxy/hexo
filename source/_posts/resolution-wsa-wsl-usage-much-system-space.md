@@ -2,7 +2,7 @@
 title: 解决WSA或WSL占用过多C盘空间
 date: 2021-12-25 23:8:27
 author: Tokisaki Galaxy
-summary: 用了WSA、WSL之后C盘空间爆炸，迁移到其他盘的方法
+excerpt: 用了WSA、WSL之后C盘空间爆炸，迁移到其他盘的方法
 tags:
  - WSA
  - WSL

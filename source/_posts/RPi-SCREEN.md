@@ -9,7 +9,7 @@ cover: false
 toc: true
 mathjax: false
 comments: true
-summary: RPi使用Screen
+excerpt: RPi使用Screen
 tags:
   - RPi
 categories:

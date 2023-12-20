@@ -11,7 +11,7 @@ sitemap: true
 date: 2020-10-04 16:25:59
 img:
 coverImg:
-summary: 使用hackrf伪造GPS信号
+excerpt: 使用hackrf伪造GPS信号
 tags:
  - hackrf
 categories: 学习

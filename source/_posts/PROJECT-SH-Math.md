@@ -9,7 +9,7 @@ cover: false
 toc: true
 comments: true
 mathjax: false
-summary: 高中 数学
+excerpt: 高中 数学
 tags: 数学
 categories: 学习
 password: 

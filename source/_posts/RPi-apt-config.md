@@ -9,7 +9,7 @@ cover: false
 toc: true
 mathjax: false
 comments: true
-summary: RPi配置国内软件源
+excerpt: RPi配置国内软件源
 tags:
   - RPi
 categories:

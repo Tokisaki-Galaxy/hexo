@@ -2,7 +2,7 @@
 title: ChromeBook电池阈值限制充电到80%停止
 date: 2023-9-16 15:25:58
 author: Tokisaki Galaxy
-summary: ChromeBook适用于coreboot的电池阈值，限制充电到80%停止
+excerpt: ChromeBook适用于coreboot的电池阈值，限制充电到80%停止
 tags: 
  - coreboot
  - chromebook

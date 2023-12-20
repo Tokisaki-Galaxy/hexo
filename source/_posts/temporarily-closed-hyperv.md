@@ -11,7 +11,7 @@ sitemap: true
 date: 2020-11-21 21:38:36
 img:
 coverImg:
-summary: 临时关闭hyper-V
+excerpt: 临时关闭hyper-V
 tags:
  - hyper-v
  - Linux

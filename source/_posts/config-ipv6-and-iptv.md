@@ -11,7 +11,7 @@ sitemap: true
 date: 2020-08-16 15:37:36
 img:
 coverImg:
-summary: 中国移动宽带配置ipv6与IPTV
+excerpt: 中国移动宽带配置ipv6与IPTV
 tags:
  - 中国移动
  - IPTV

@@ -2,7 +2,7 @@
 title: TencentOS安装Docker
 date: 2021-11-13 18:5:50
 author: Tokisaki Galaxy
-summary: 在TencentOS中安装Docker
+excerpt: 在TencentOS中安装Docker
 tags:
  - Linux
  - TencentOS

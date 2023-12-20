@@ -2,7 +2,7 @@
 title: 晓龙410芯片随身wifi刷机浅谈
 date: 2022-10-23 11:22:15
 author: Tokisaki Galaxy
-summary: 安卓系统随身wifi刷机中一点坑，自己感想
+excerpt: 安卓系统随身wifi刷机中一点坑，自己感想
 tags:
  - android
  - 刷机

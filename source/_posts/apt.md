@@ -2,7 +2,7 @@
 title: apt
 date: 2021-10-30 17:43:11
 author: Tokisaki Galaxy
-summary: 
+excerpt: 
  - Linux
  - cloudflare
  - Argo

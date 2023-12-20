@@ -9,7 +9,7 @@ date: 2020-02-09
 comments: true
 img: 
 coverImg: 
-summary: CPU升(降)压教程
+excerpt: CPU升(降)压教程
 tags:
  - CPU超频
  - CPU降频

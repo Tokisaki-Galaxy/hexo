@@ -10,7 +10,7 @@ comments: true
 img:
 coverImg:
 password:
-summary: 使用vercel托管博客，并使用cloudflare进行访问加速
+excerpt: 使用vercel托管博客，并使用cloudflare进行访问加速
 tags:
   - Github
   - Hexo

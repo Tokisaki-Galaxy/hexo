@@ -2,7 +2,7 @@
 title: jsdelivrCDN使用方法
 date: 2021-2-28 11:22:15
 author: Tokisaki Galaxy
-summary: jsdelivrCDN使用方法
+excerpt: jsdelivrCDN使用方法
 tags:
  - jsdelivr
  - 优化

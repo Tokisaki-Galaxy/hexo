@@ -2,7 +2,7 @@
 title: 美化Windows Terminal
 date: 2021-2-27 8:42:48
 author: Tokisaki Galaxy
-summary: 美化Windows Terminal
+excerpt: 美化Windows Terminal
 tags:
  - 美化
  - Windows Terminal

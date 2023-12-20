@@ -9,7 +9,7 @@ cover: false
 toc: true
 mathjax: false
 comments: true
-summary: RPi连接GPS模块
+excerpt: RPi连接GPS模块
 tags:
   - RPi
 categories:

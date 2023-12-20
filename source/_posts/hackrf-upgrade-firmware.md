@@ -2,7 +2,7 @@
 title: Win/Lin HackRF升级固件 (2021.03.1)
 date: 2021-7-23 21:55:23
 author: Tokisaki Galaxy
-summary: Windows/Linux下HackRF 升级固件 (2021.03.1)
+excerpt: Windows/Linux下HackRF 升级固件 (2021.03.1)
 tags:
  - hackrf
  - Windows

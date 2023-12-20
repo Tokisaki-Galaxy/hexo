@@ -7,7 +7,7 @@ coverImg:
 top: false
 cover: false
 mathjax: false
-summary: 测试页面。
+excerpt: 测试页面。
 categories: 踩坑记录
 comments: false
 noindex: true

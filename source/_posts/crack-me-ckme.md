@@ -2,7 +2,7 @@
 title: 【CrackMe】之CKme
 date: 2021-8-23 11:29:36
 author: Tokisaki Galaxy
-summary: CKme.exe破解
+excerpt: CKme.exe破解
 tags:
  - x64dbg
  - 逆向工程

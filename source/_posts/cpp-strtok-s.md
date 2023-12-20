@@ -11,7 +11,7 @@ sitemap: true
 date: 2020-08-28 18:34:18
 img:
 coverImg:
-summary: strtok_s()函数用法
+excerpt: strtok_s()函数用法
 tags:
  - C++
 categories:

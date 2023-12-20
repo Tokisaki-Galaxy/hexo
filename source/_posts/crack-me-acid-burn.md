@@ -2,7 +2,7 @@
 title: 【CrackMe】之Acid Burn
 date: 2021-8-22 22:24:31
 author: Tokisaki Galaxy
-summary: Acid Burn.exe破解
+excerpt: Acid Burn.exe破解
 tags:
  - x64dbg
  - 逆向工程

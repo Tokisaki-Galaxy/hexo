@@ -9,7 +9,7 @@ cover: false
 toc: true
 mathjax: false
 comments: true
-summary: 制作基于VsCode的C++便携版
+excerpt: 制作基于VsCode的C++便携版
 tags:
   - VSCode
 categories: 软件安装与配置

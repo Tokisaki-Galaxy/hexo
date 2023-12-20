@@ -9,7 +9,7 @@ cover: false
 toc: true
 comments: false
 mathjax: false
-summary: PRIVATE
+excerpt: PRIVATE
 tags: 
 categories: 
 password: 159159159

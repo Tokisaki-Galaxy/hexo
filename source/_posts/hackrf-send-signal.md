@@ -2,7 +2,7 @@
 title: HackRF发送信号
 date: 2021-7-23 18:49:18
 author: Tokisaki Galaxy
-summary: GNURadio+HackRF发送信号
+excerpt: GNURadio+HackRF发送信号
 tags:
  - hackrf
  - Windows

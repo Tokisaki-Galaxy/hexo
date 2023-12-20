@@ -2,7 +2,7 @@
 title: 远程桌面使用SSL证书
 date: 2021-4-30 19:57:20
 author: Tokisaki Galaxy
-summary: 让远程桌面使用SSL证书，解决证书错误
+excerpt: 让远程桌面使用SSL证书，解决证书错误
 tags: 
  - Windows
  - 远程桌面

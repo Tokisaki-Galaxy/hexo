@@ -11,7 +11,7 @@ sitemap: true
 date: 2020-10-10 20:04:58
 img:
 coverImg:
-summary: DnsPod配合cloudflare启用DNSSEC
+excerpt: DnsPod配合cloudflare启用DNSSEC
 tags:
  - cloudflare
  - DNSPod

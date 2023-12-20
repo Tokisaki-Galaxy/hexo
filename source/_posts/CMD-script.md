@@ -8,7 +8,7 @@ mathjax: false
 date: 2020-02-10 21:26:58
 img: 
 coverImg: 
-summary: CMD script
+excerpt: CMD script
 tags:
  - CMD
 categories:

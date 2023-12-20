@@ -2,7 +2,7 @@
 title: ParrotSec提示NO PUBLIC KEY
 date: 2021-7-23 21:14:36
 author: Tokisaki Galaxy
-summary: 
+excerpt: 
 tags: 
  - Linux
  - Parrot

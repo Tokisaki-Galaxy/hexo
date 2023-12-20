@@ -9,7 +9,7 @@ cover: false
 toc: true
 comments: true
 mathjax: false
-summary: 转载【碧蓝航线】Azur Lane Crosswave 解包指南+探索历程
+excerpt: 转载【碧蓝航线】Azur Lane Crosswave 解包指南+探索历程
 tags: 
  - azur-lane
  - 解包

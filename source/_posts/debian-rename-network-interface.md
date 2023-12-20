@@ -2,7 +2,7 @@
 title: debian重新命名网卡
 date: 2023-1-23 20:27:43
 author: Tokisaki Galaxy
-summary: debian有时候安装完驱动，网卡名字会变得很奇怪，可以重新命名
+excerpt: debian有时候安装完驱动，网卡名字会变得很奇怪，可以重新命名
 tags: 
  - Debian
 categories: Linux

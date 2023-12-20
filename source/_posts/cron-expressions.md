@@ -2,7 +2,7 @@
 title: cron表达式结构
 date: 2021-2-28 11:3:44
 author: Tokisaki Galaxy
-summary: cron表达式结构
+excerpt: cron表达式结构
 tags:
  - cron
 categories: 学习

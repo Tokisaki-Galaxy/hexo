@@ -11,7 +11,7 @@ sitemap: true
 date: 2020-10-25 08:00:53
 img:
 coverImg:
-summary: wsl，debian安装metasploit，并链接数据库。
+excerpt: wsl，debian安装metasploit，并链接数据库。
 tags: 
  - Windows
  - WSL

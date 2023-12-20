@@ -11,7 +11,7 @@ sitemap: true
 date: 2020-10-03 19:51:35
 img: https://home.edgeless.top/favicon.ico
 coverImg:
-summary: Edgeless
+excerpt: Edgeless
 tags: 
  - Edgeless
  - PE

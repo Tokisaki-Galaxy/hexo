@@ -9,7 +9,7 @@ date: 2020-02-09 21:26:58
 comments: true
 img: 
 coverImg: 
-summary: ThrottleStop教程
+excerpt: ThrottleStop教程
 tags:
  - CPU超频
  - CPU降频

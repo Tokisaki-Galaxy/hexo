@@ -2,7 +2,7 @@
 title: dnspod public dns 初体验
 date: 2021-8-10 16:08:44
 author: Tokisaki Galaxy
-summary: 试试腾讯的public dns
+excerpt: 试试腾讯的public dns
 tags:
  - DNSPod
  - DNS

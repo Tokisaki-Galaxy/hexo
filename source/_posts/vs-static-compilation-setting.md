@@ -2,7 +2,7 @@
 title: VS静态编译设置
 date: 2021-4-4 10:31:13
 author: Tokisaki Galaxy
-summary: VS静态编译设置
+excerpt: VS静态编译设置
 tags:
  - C++
 categories: 踩坑记录

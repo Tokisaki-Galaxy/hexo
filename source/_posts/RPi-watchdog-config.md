@@ -9,7 +9,7 @@ cover: false
 toc: true
 mathjax: false
 comments: true
-summary: RPi配置watchdog和硬盘自动休眠
+excerpt: RPi配置watchdog和硬盘自动休眠
 tags:
   - RPi
 categories:

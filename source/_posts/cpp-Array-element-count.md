@@ -8,7 +8,7 @@ mathjax: false
 date: 2019-12-03
 img: 
 coverImg: 
-summary: C++数组元素个数计算
+excerpt: C++数组元素个数计算
 tags:
  - C++
 categories: 

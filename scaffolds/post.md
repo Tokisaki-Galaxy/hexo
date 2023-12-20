@@ -2,7 +2,7 @@
 title: {{ title }}
 date: {{ date }}
 author: Tokisaki Galaxy
-summary: 
+excerpt: 
 tags: 
 categories: 
 ---

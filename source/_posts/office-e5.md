@@ -2,7 +2,7 @@
 title: Office E5订阅
 date: 2021-3-17 14:9:34
 author: Tokisaki Galaxy
-summary: 关于Office E5订阅的申请与续订
+excerpt: 关于Office E5订阅的申请与续订
 tags:
  - Office
  - 激活

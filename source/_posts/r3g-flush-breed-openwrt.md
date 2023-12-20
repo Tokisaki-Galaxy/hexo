@@ -2,7 +2,7 @@
 title: 小米R3G刷机breed后刷openwrt
 date: 2023-10-10 23:42:56
 author: Tokisaki Galaxy
-summary: 闲鱼淘了R3G刷Openwrt玩，记录一下第一次刷breed和openwrt
+excerpt: 闲鱼淘了R3G刷Openwrt玩，记录一下第一次刷breed和openwrt
 tags: 
  - R3G
  - 路由

@@ -9,7 +9,7 @@ cover: false
 toc: true
 comments: true
 mathjax: false
-summary: 
+excerpt: 
 tags: 
 categories: 
 password: 
