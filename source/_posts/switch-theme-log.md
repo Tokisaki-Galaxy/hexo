@@ -5,7 +5,7 @@ date: 2023-01-26 15:56:31
 excerpt:
 tags:
  - blog
-categories: 踩坑记录
+categories: blog
 ---
 
 ## 纪念

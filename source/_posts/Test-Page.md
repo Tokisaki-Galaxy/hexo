@@ -8,7 +8,7 @@ top: false
 cover: false
 mathjax: false
 excerpt: 测试页面。
-categories: 踩坑记录
+categories: blog
 comments: false
 noindex: true
 sitemap: false

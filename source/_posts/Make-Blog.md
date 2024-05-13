@@ -15,7 +15,7 @@ tags:
   - Github
   - Hexo
   - vercel
-categories: 踩坑记录
+categories: blog
 ---
 
 ## 第一部分
