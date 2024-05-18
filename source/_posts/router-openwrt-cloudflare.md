@@ -1,5 +1,5 @@
 ---
-title: router-openwrt-cloudflare
+title: 在OpenWrt上安装cloudflared服务
 date: 2024-2-9 14:52:30
 author: Tokisaki Galaxy
 excerpt: 解决openwrt使用cloudflared service install安装服务无法使用的问题   
@@ -15,6 +15,8 @@ openwrt使用cloudflared安装服务的时候会有兼容性问题，问题出�
 
 **procd** 是 OpenWrt 使用的初始化系统。与 SysVinit 不同，procd 可以并行启动服务，从而加快系统启动时间。procd 还提供了一些其他高级功能，如进程监控、自动重启和 cgroup 管理。procd 的服务脚本通常位于 `/etc/init.d/` 目录中，与 SysVinit 类似，但它们的格式和语法有所不同。
 
+修改完`/etc/init.d/cloudflared`后，使用`/etc/init.d/cloudflared restart`重启服务即可。
+
 ```bash
 #!/bin/sh /etc/rc.common
 # Copyright (C) 2021 Tianling Shen <cnsztl@immortalwrt.org>
@@ -27,7 +29,7 @@ PROG="/usr/bin/cloudflared"
 
 start_service() {
     procd_open_instance
-    procd_set_param command "$PROG" "--pidfile" "/var/run/$CONF.pid" "--autoupdate-freq" "24h0m0s" "tunnel" "run" "--token" "xxxxxxxxxxxxxxxx"
+    procd_set_param command "$PROG" "--pidfile" "/var/run/$CONF.pid" "--logfile" "/var/log/cloudflared.log" "--protocol" "http2" "--no-autoupdate" "tunnel" "run" "--token" "xxxxxxxxxxxxxxxx"
     procd_set_param stdout 1
     procd_set_param stderr 1
     procd_set_param pidfile "/var/run/$CONF.pid"
