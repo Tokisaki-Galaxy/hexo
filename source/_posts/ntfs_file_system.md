@@ -1,10 +1,14 @@
 ---
-title: ntfs_file_system
+title: NTFS文件系统修复经历
 date: 2021-1-31 14:36:39
 author: Tokisaki Galaxy
-excerpt: 
+excerpt: 记录一次在使用OneDrive时遇到的NTFS文件系统问题及其修复过程
 tags: 
+- NTFS
+- 文件系统
+- OneDrive
 categories: 
+- 技术分享
 ---
 
 玩office e5订阅里的5TOnedrive空间时候，发现有个文件死活删不掉。

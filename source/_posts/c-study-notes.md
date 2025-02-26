@@ -2,8 +2,11 @@
 title: 《C++入门经典（第10版）》学习笔记
 date: 2021-3-13 17:36:42
 author: Tokisaki Galaxy
-excerpt: 
+excerpt: 记录学习《C++入门经典（第10版）》过程中一些重要的知识点和心得，适合自学者参考。
 tags: 
+- C++
+- 学习笔记
+- 编程
 categories: 学习
 ---
 
