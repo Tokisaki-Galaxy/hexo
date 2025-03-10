@@ -32,7 +32,7 @@ error: subprocess-exited-with-error
 note: This error originates from a subprocess, and is likely not a problem with pip.
 ```
 
-还有其他各种各样的问题，在重新设置R_HOME、安装R_Tools、安装MinGW等等方法都无法解决。
+还有其他各种各样的问题，在重新设置R_HOME(https://www.cnblogs.com/Xeonilian/p/windows_rpy2_install.html)、安装R_Tools(https://blog.csdn.net/BioFlorist/article/details/121665959)、安装MinGW等等方法都无法解决。
 这个问题困扰了我整整两天，尝试了各种方法都未能解决。
 甚至到了我一度以为是rpy2不支持windows（在rpy2的官网上，他说对windows的支持不由官方提供，而是由社区提供），但是我同学却轻轻松松安装成功了。
 
@@ -40,8 +40,11 @@ note: This error originates from a subprocess, and is likely not a problem with 
 
 在多次尝试失败后，网上别人推荐使用conda安装的方法，但是那种虽然能安装，但是却使用的是conda安装的R环境，而不是我本地的R环境。有大量的R包需要重装。
 在找了许久之后，我发现可以通过预编译的wheel文件来绕过编译问题。
-具体来说，我在[piwheels](https://www.piwheels.org/project/rpy2/)网站上找到了预编译好的rpy2 wheel文件。
-虽然没有想要的3.5.17版本，只有3.6.0.dev2 pre-release，但是怎么说都比没有强很多了。
+但是，网上很多教程用的是[托管在www.lfd.uci.edu的wheel包](https://www.cnblogs.com/cloudtj/articles/6372197.html)，但是维护托管网站的教授因为服务器费用问题，已经关闭不再提供对rpy2的托管。
+不过后来经过寻找，我在[piwheels](https://www.piwheels.org/project/rpy2/)网站上找到了预编译好的rpy2 wheel文件。
+虽然没有很多版本的wheel文件，最新的稳定版3.5.17也没有，只有3.6.0.dev2 pre-release，但是怎么说都比没有强很多了。
+
+另外，[官网上也有些R和rpy2的兼容性情况](https://rpy2.github.io/doc/v3.5.x/html/overview.html#background)。
 
 ## 安装步骤
 
