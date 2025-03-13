@@ -405,11 +405,6 @@ open_graph:
   fb_admins:
   fb_app_id:
 
-# 背景的TrymenT时钟特效，如果需要切换背景图片请在主题目录下替换 /source/img/img.png
-# See: https://github.com/Tokisaki-Galaxy/TrymenT-ClocK
-background_trymentclock:
-  enable: enable
-
 #---------------------------
 # 页脚
 # Footer
@@ -1047,8 +1042,8 @@ links:
     - {
       title: "LovelyCat",
       intro:  "この世に笑颜がひとつ多かったら、泣く人は一人少なくなる",
-      avatar: "http://lovelycatv.cn/favicon.ico",
-      link:  "https://lovelycatv.cn/"
+      avatar: "http://lovelycatv.com/favicon.ico",
+      link:  "https://lovelycatv.com/"
     }
 
   # 当成员头像加载失败时，替换为指定图片
@@ -1096,21 +1091,21 @@ static_prefix:
 
   anchor: https://lib.baomitu.com/anchor-js/4.3.1/
 
-  github_markdown: https://lib.baomitu.com/github-markdown-css/4.0.0/
+  github_markdown: https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/github-markdown-css/4.0.0/
 
-  jquery: https://cdn.staticfile.net/jquery/3.6.4/
+  jquery: https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/
 
-  bootstrap: https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/
+  bootstrap: https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap/4.6.1/
 
-  prismjs: https://lib.baomitu.com/prism/1.29.0/
+  prismjs: https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/prism/1.27.0/
 
-  tocbot: https://cdn.bootcdn.net/ajax/libs/tocbot/4.20.0/
+  tocbot: https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/tocbot/4.18.2/
 
-  typed: https://cdn.bootcdn.net/ajax/libs/typed.js/2.0.12/
+  typed: https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/typed.js/2.0.12/
 
-  fancybox: https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/
+  fancybox: https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/
 
-  nprogress: https://lib.baomitu.com/nprogress/0.2.0/
+  nprogress: https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/nprogress/0.2.0/
 
   mathjax: https://lib.baomitu.com/mathjax/3.2.2/
 
@@ -1118,7 +1113,7 @@ static_prefix:
 
   busuanzi: https://busuanzi.ibruce.info/busuanzi/2.3/
 
-  clipboard: https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.11/
+  clipboard: https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/clipboard.js/2.0.10/
 
   mermaid: https://lib.baomitu.com/mermaid/8.14.0/
 
