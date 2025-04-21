@@ -105,3 +105,18 @@ Set-FileIntegrity cmdlet 也可直接用于卷和目录。
 Set-FileIntegrity H:\ -Enable $True
 Set-FileIntegrity H:\Docs -Enable $True
 ```
+
+### 高级重复数据删除
+
+[高级重复数据删除指令](https://learn.microsoft.com/en-us/powershell/module/microsoft.refsdedup.commands/?view=windowsserver2025-ps)
+我一直分不清ReFSDedupSchedule和ReFSDedupScrubSchedule区别。总之我一直用ReFSDedupScrubSchedule。
+
+不过基本上常用的下面这些
+```powershell
+Disable-ReFSDedup Z:
+refsutil dedup z: /d
+Enable-ReFSDedup -Volume "Z:" -Type DedupAndCompress
+Set-ReFSDedupScrubSchedule -Volume: Z: -Start 2025/4/29 19:0:0 -WeeksInterval 2
+Start-ReFSDedupJob -Volume Z: -CompressionFormat LZ4
+Stop-ReFSDedupJob Z:
+```

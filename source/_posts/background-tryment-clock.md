@@ -16,7 +16,8 @@ keywords:
   - 时钟组件
   - 双环时钟
   - 特效
-comments: true
+index_img: https://fluid.s3.bitiful.net/fluid-clock/cover.png?w=480&fmt=webp
+alias: background-tryment-clock/
 ---
 
 {% note success %}
