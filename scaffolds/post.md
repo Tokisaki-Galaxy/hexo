@@ -6,6 +6,4 @@ excerpt: {{ title }}
 tags:
  - 
 categories: 
-keywords:
-  - 
 ---
