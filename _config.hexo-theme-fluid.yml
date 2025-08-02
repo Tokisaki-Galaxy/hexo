@@ -1091,21 +1091,21 @@ static_prefix:
 
   anchor: https://lib.baomitu.com/anchor-js/4.3.1/
 
-  github_markdown: https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/github-markdown-css/4.0.0/
+  github_markdown: https://cdn.bytedance.com/cdn/expire-1-M/github-markdown-css/4.0.0/
 
-  jquery: https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/
+  jquery: https://cdn.bytedance.com/cdn/expire-1-M/jquery/3.6.0/
 
-  bootstrap: https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap/4.6.1/
+  bootstrap: https://cdn.bytedance.com/cdn/expire-1-M/bootstrap/4.6.1/
 
-  prismjs: https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/prism/1.27.0/
+  prismjs: https://cdn.bytedance.com/cdn/expire-1-M/prism/1.27.0/
 
-  tocbot: https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/tocbot/4.18.2/
+  tocbot: https://cdn.bytedance.com/cdn/expire-1-M/tocbot/4.18.2/
 
-  typed: https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/typed.js/2.0.12/
+  typed: https://cdn.bytedance.com/cdn/expire-1-M/typed.js/2.0.12/
 
-  fancybox: https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/
+  fancybox: https://cdn.bytedance.com/cdn/expire-1-M/fancybox/3.5.7/
 
-  nprogress: https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/nprogress/0.2.0/
+  nprogress: https://cdn.bytedance.com/cdn/expire-1-M/nprogress/0.2.0/
 
   mathjax: https://lib.baomitu.com/mathjax/3.2.2/
 
@@ -1113,7 +1113,7 @@ static_prefix:
 
   busuanzi: https://busuanzi.ibruce.info/busuanzi/2.3/
 
-  clipboard: https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/clipboard.js/2.0.10/
+  clipboard: https://cdn.bytedance.com/cdn/expire-1-M/clipboard.js/2.0.10/
 
   mermaid: https://lib.baomitu.com/mermaid/8.14.0/
 
