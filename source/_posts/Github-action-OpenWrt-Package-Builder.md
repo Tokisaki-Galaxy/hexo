@@ -1,6 +1,6 @@
 ---
-layout: Github云编译Openwrt软件包，再也不用本地配环境
-title: Tokisaki Galaxy
+title: Github云编译Openwrt软件包，再也不用本地配环境
+author: Tokisaki Galaxy
 excerpt: 自动编译多架构 OpenWrt 软件包的 Action
 tags:
  - OpenWrt
