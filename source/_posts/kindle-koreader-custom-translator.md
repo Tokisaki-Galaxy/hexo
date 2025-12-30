@@ -9,7 +9,7 @@ tags:
  - Cloudflare Worker
  - 翻译
 categories:
- - 工具
+ - Kindle
 ---
 
 项目地址 https://github.com/Tokisaki-Galaxy/kindle-koreader-custom-translator
