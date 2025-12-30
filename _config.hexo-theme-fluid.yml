@@ -1045,6 +1045,12 @@ links:
       avatar: "http://lovelycatv.com/favicon.ico",
       link:  "https://lovelycatv.com/"
     }
+    - {
+        title: "kevin",
+        intro: "",
+        avatar: "https://q1.qlogo.cn/g?b=qq&nk=1806190090&s=640",
+        link: "https://acg-n.cn/"
+    }
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
