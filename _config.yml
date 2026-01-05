@@ -71,8 +71,6 @@ feed:
   content_limit_delim: ' '
   order_by: -date
 
-baidusitemap:
-    path: baidusitemap.xml
 sitemap:
     path: sitemap.xml #指定名字
     tag: false #不包含tag页面
@@ -138,31 +136,24 @@ baidu_url_submit:
 #   sanitizeUrl: false
 #   headerIds: true
 
-# hexo-neat
+# hexo-minify
 # 博文压缩
-neat_enable: true
-# 压缩html
-neat_html:
-  enable: true
-  exclude:
-# 压缩css  
-neat_css:
-  enable: true
-  exclude:
-    - '**/*.min.css'
-# 压缩js
-neat_js:
-  enable: true
-  mangle: true
-  output:
-  compress:
-  exclude:
-    - '**/*.min.js'
+minify:
+  preview: false
+  exclude: ['*.min.*']
+  html:
+    enable: true
+  css:
+    enable: true
+  js:
+    enable: true
+  image:
+    enable: true
 
 # llm Translation
 llm_translation:
   enable: true
   endpoint: 'https://api.siliconflow.cn/v1/chat/completions'
   model: 'deepseek-ai/DeepSeek-V3.2'
-  single_timeout: 300
+  single_timeout: 600
   max_concurrency: 6

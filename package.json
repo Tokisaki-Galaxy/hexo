@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "7.3.0"
+    "version": "8.1.1"
   },
   "dependencies": {
     "@babel/core": "^7",
@@ -11,8 +11,8 @@
     "autoconf": "^1.2.0",
     "emoji": "^0",
     "eslint": "^9",
-    "hexo": "^8",
-    "hexo-cli": "^4",
+    "hexo": "^8.1.1",
+    "hexo-cli": "^4.3.2",
     "hexo-admonition": "^1",
     "hexo-asset-image": "^1.0.0",
     "hexo-baidu-url-submit": "https://github.com/huiwang/hexo-baidu-url-submit",
@@ -22,15 +22,14 @@
     "hexo-filter-nofollow": "^2",
     "hexo-generator-alias": "^1.0.0",
     "hexo-generator-archive": "^2.0.0",
-    "hexo-generator-baidu-sitemap": "^0.1.9",
+    "hexo-generator-sitemap": "^3.0.1",
     "hexo-generator-category": "^2.0.0",
     "hexo-generator-feed": "^3.0.0",
     "hexo-generator-index": "^4.0.0",
     "hexo-generator-search": "^2",
-    "hexo-generator-seo-friendly-sitemap": "^0.2.1",
     "hexo-generator-tag": "^2.0.0",
     "hexo-lazyload-image": "^1",
-    "hexo-neat": "^1.0.9",
+    "hexo-minify": "^1.8.1",
     "hexo-permalink-pinyin": "^1.1.0",
     "hexo-renderer-ejs": "^2.0.0",
     "hexo-renderer-marked": "^7",
