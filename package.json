@@ -16,7 +16,7 @@
     "hexo-admonition": "^1",
     "hexo-asset-image": "^1.0.0",
     "hexo-baidu-url-submit": "https://github.com/huiwang/hexo-baidu-url-submit",
-    "hexo-translate-llm": "^2",
+    "hexo-translate-llm": "latest",
     "hexo-blog-encrypt": "^3",
     "hexo-deployer-git": "^4",
     "hexo-filter-nofollow": "^2",
