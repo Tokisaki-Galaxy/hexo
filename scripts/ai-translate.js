@@ -1,5 +1,5 @@
 /**
- * AI 自动翻译插件 (并发控制版)
+ * AI 自动翻译插件
  * feat: hash 缓存，避免重复翻译
  * feat: 支持自定义模型和端点
  * feat: 优化SEO
@@ -28,8 +28,8 @@ if (fs.existsSync(CACHE_FILE)) {
 const saveCache = () => fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2));
 
 // --- 并发控制 ---
-// 允许同时进行 4 个翻译任务，平衡速度与 API 限制
-const MAX_CONCURRENCY = 4;
+// 降低并发至 2，增加稳定性，防止 API 熔断
+const MAX_CONCURRENCY = 2;
 let activeCount = 0;
 const waitingQueue = [];
 
@@ -49,10 +49,31 @@ const runWithLimit = async (fn) => {
     }
 };
 
+const fetchWithRetry = async (url, options, retries = 2) => {
+    for (let i = 0; i <= retries; i++) {
+        try {
+            const controller = new AbortController();
+            const timeout = options.timeout;
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+            
+            const response = await fetch(url, { ...options, signal: controller.signal });
+            clearTimeout(timeoutId);
+            
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return await response.json();
+        } catch (err) {
+            if (i === retries) throw err;
+            const delay = (i + 1) * 2000 + Math.random() * 1000;
+            console.warn(`[AI Translate] Retry ${i + 1}/${retries} after ${Math.round(delay)}ms...`);
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
+    }
+};
+
 hexo.extend.filter.register('before_post_render', async (data) => {
     const config = hexo.config.llm_translation;
     const API_KEY = process.env.LLM_API_KEY;
-    
+
     // 健壮性检查：确保 data 及其属性存在
     if (!data || !data.content || !config || !config.enable || !API_KEY || data.layout !== 'post' || data.no_translate) {
         return data;
@@ -67,28 +88,26 @@ hexo.extend.filter.register('before_post_render', async (data) => {
         const cached = cache[data.source];
         data.title = cached.translatedTitle;
         data.content = cached.wrappedContent;
+        hexo.log.info(`[AI Translate] Cache Hit: ${data.title}`);
         return data;
     }
 
     // --- 并发控制 ---
     return runWithLimit(async () => {
         const endpoint = config.endpoint || 'https://api.siliconflow.cn/v1/chat/completions';
-        
+
         try {
-            const prompt = `You are a professional technical translator. 
+            const prompt = `You are a professional technical translator.
             1. Translate the following Markdown content to English.
             2. DO NOT translate code blocks, technical identifiers, or Hexo tags like {% ... %}.
             3. Maintain all Markdown formatting.
             4. Also translate the title provided.
             Format your response as: [TITLE_START]translated title[TITLE_END][CONTENT_START]translated content[CONTENT_END]`;
 
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), (config.single_timeout || 60) * 1000); // 默认 60 秒超时
-
-            const response = await fetch(endpoint, {
+            const result = await fetchWithRetry(endpoint, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${API_KEY}`, 'Content-Type': 'application/json' },
-                signal: controller.signal,
+                timeout: (config.single_timeout || 120) * 1000,
                 body: JSON.stringify({
                     model: model,
                     messages: [
@@ -98,8 +117,6 @@ hexo.extend.filter.register('before_post_render', async (data) => {
                 })
             });
 
-            clearTimeout(timeoutId);
-            const result = await response.json();
             const raw = result.choices?.[0]?.message?.content;
 
             if (raw) {
@@ -108,7 +125,7 @@ hexo.extend.filter.register('before_post_render', async (data) => {
 
                 if (translatedContent) {
                     const titleScript = `<script>window._zh_title = ${JSON.stringify(data.title)};</script>\n\n`;
-                    
+
                     // 封装内容，注意空行以确保 Markdown 渲染
                     const wrappedContent = `${titleScript}
 <div class="zh-content">

@@ -164,4 +164,4 @@ llm_translation:
   enable: true
   endpoint: 'https://api.siliconflow.cn/v1/chat/completions'
   model: 'deepseek-ai/DeepSeek-V3.2'
-  single_timeout: 30
+  single_timeout: 120
