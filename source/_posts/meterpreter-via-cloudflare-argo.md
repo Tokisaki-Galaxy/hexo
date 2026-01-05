@@ -47,7 +47,7 @@ sudo systemctl restart cloudflared
 在[cloudflare dashboard](https://dash.cloudflare.com)的dns面板里面，将tp.example.top的记录设置为与vip.example.top的记录一样
 ![就像这样](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/meterpreter-via-cloudflare-argo/1.png)
 
-然后通过浏览器访问http://tp.example.top:2095，应该会有这样的提示。
+然后通过浏览器访问 `http://tp.example.top:2095` ，应该会有这样的提示。
 ![提示404 Not found](https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/post/meterpreter-via-cloudflare-argo/2.png)
 
 ## 通过http上线

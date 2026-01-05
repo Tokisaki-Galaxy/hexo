@@ -32,7 +32,7 @@ error: subprocess-exited-with-error
 note: This error originates from a subprocess, and is likely not a problem with pip.
 ```
 
-还有其他各种各样的问题，在重新设置R_HOME(https://www.cnblogs.com/Xeonilian/p/windows_rpy2_install.html)、安装R_Tools(https://blog.csdn.net/BioFlorist/article/details/121665959)、安装MinGW等等方法都无法解决。
+还有其他各种各样的问题，在重新设置 `R_HOME` (https://www.cnblogs.com/Xeonilian/p/windows_rpy2_install.html) 、安装 `R_Tools` (https://blog.csdn.net/BioFlorist/article/details/121665959) 、安装 MinGW 等等方法都无法解决。
 这个问题困扰了我整整两天，尝试了各种方法都未能解决。
 甚至到了我一度以为是rpy2不支持windows（在rpy2的官网上，他说对windows的支持不由官方提供，而是由社区提供），但是我同学却轻轻松松安装成功了。
 
