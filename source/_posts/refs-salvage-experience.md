@@ -2,7 +2,7 @@
 title: 解决REFS卷变成RAW的经历
 date: 2023-10-16 15:58:21
 author: Tokisaki Galaxy
-excerpt: 
+excerpt: 之前把分区格式化成REFS，结果系统更新之后变成RAW分区，最后用微软自带的refsutil工具把数据捞出来了。
 tags: 
  - REFS
  - refsutil
