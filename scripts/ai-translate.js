@@ -1,8 +1,9 @@
 /**
- * AI 自动翻译插件
+ * AI 自动翻译插件 (并发控制版)
  * feat: hash 缓存，避免重复翻译
  * feat: 支持自定义模型和端点
  * feat: 优化SEO
+ * feat: 串行排队，防止 API 并发超限
  */
 
 const fs = require('fs');
@@ -26,17 +27,39 @@ if (fs.existsSync(CACHE_FILE)) {
 
 const saveCache = () => fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2));
 
+// --- 并发控制 ---
+// 允许同时进行 4 个翻译任务，平衡速度与 API 限制
+const MAX_CONCURRENCY = 4;
+let activeCount = 0;
+const waitingQueue = [];
+
+const runWithLimit = async (fn) => {
+    if (activeCount >= MAX_CONCURRENCY) {
+        await new Promise(resolve => waitingQueue.push(resolve));
+    }
+    activeCount++;
+    try {
+        return await fn();
+    } finally {
+        activeCount--;
+        if (waitingQueue.length > 0) {
+            const nextResolve = waitingQueue.shift();
+            nextResolve();
+        }
+    }
+};
+
 hexo.extend.filter.register('before_post_render', async (data) => {
     const config = hexo.config.llm_translation;
     const API_KEY = process.env.LLM_API_KEY;
     
-    // 基础校验：配置开启、API Key 存在、仅处理文章、未设置跳过
-    if (!config || !config.enable || !API_KEY || data.layout !== 'post' || data.no_translate) {
+    // 健壮性检查：确保 data 及其属性存在
+    if (!data || !data.content || !config || !config.enable || !API_KEY || data.layout !== 'post' || data.no_translate) {
         return data;
     }
 
     // 计算内容 Hash，判断是否需要重新翻译
-    const contentHash = crypto.createHash('md5').update(data.content + data.title).digest('hex');
+    const contentHash = crypto.createHash('md5').update(data.content + (data.title || '')).digest('hex');
     const model = config.model || 'deepseek-ai/DeepSeek-V3.2';
 
     // 缓存命中逻辑
@@ -47,44 +70,47 @@ hexo.extend.filter.register('before_post_render', async (data) => {
         return data;
     }
 
-    const endpoint = config.endpoint || 'https://api.siliconflow.cn/v1/chat/completions';
+    // --- 并发控制 ---
+    return runWithLimit(async () => {
+        const endpoint = config.endpoint || 'https://api.siliconflow.cn/v1/chat/completions';
+        
+        try {
+            const prompt = `You are a professional technical translator. 
+            1. Translate the following Markdown content to English.
+            2. DO NOT translate code blocks, technical identifiers, or Hexo tags like {% ... %}.
+            3. Maintain all Markdown formatting.
+            4. Also translate the title provided.
+            Format your response as: [TITLE_START]translated title[TITLE_END][CONTENT_START]translated content[CONTENT_END]`;
 
-    try {
-        const prompt = `You are a professional technical translator. 
-        1. Translate the following Markdown content to English.
-        2. DO NOT translate code blocks, technical identifiers, or Hexo tags like {% ... %}.
-        3. Maintain all Markdown formatting.
-        4. Also translate the title provided.
-        Format your response as: [TITLE_START]translated title[TITLE_END][CONTENT_START]translated content[CONTENT_END]`;
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), (config.single_timeout || 60) * 1000); // 默认 60 秒超时
 
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), (config.single_timeout || 30)*1000); // 30秒超时保护
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${API_KEY}`, 'Content-Type': 'application/json' },
+                signal: controller.signal,
+                body: JSON.stringify({
+                    model: model,
+                    messages: [
+                        { role: 'system', content: prompt },
+                        { role: 'user', content: `Title: ${data.title}\n\nContent: ${data.content}` }
+                    ]
+                })
+            });
 
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${API_KEY}`, 'Content-Type': 'application/json' },
-            signal: controller.signal,
-            body: JSON.stringify({
-                model: model,
-                messages: [
-                    { role: 'system', content: prompt },
-                    { role: 'user', content: `Title: ${data.title}\n\nContent: ${data.content}` }
-                ]
-            })
-        });
+            clearTimeout(timeoutId);
+            const result = await response.json();
+            const raw = result.choices?.[0]?.message?.content;
 
-        clearTimeout(timeoutId);
-        const result = await response.json();
-        const raw = result.choices[0].message.content;
+            if (raw) {
+                const translatedTitle = raw.match(/\[TITLE_START\](.*?)\[TITLE_END\]/s)?.[1] || data.title;
+                const translatedContent = raw.match(/\[CONTENT_START\](.*?)\[CONTENT_END\]/s)?.[1] || "";
 
-        const translatedTitle = raw.match(/\[TITLE_START\](.*?)\[TITLE_END\]/s)?.[1] || data.title;
-        const translatedContent = raw.match(/\[CONTENT_START\](.*?)\[CONTENT_END\]/s)?.[1] || "";
-
-        if (translatedContent) {
-            const titleScript = `<script>window._zh_title = ${JSON.stringify(data.title)};</script>\n\n`;
-            
-            // 封装内容，注意空行以确保 Markdown 渲染
-            const wrappedContent = `${titleScript}
+                if (translatedContent) {
+                    const titleScript = `<script>window._zh_title = ${JSON.stringify(data.title)};</script>\n\n`;
+                    
+                    // 封装内容，注意空行以确保 Markdown 渲染
+                    const wrappedContent = `${titleScript}
 <div class="zh-content">
 
 ${data.content}
@@ -96,27 +122,28 @@ ${translatedContent}
 
 </div>`;
 
-            // 更新数据并存入缓存
-            cache[data.source] = {
-                hash: contentHash,
-                model: model,
-                translatedTitle: translatedTitle,
-                wrappedContent: wrappedContent
-            };
-            saveCache();
+                    // 更新数据并存入缓存
+                    cache[data.source] = {
+                        hash: contentHash,
+                        model: model,
+                        translatedTitle: translatedTitle,
+                        wrappedContent: wrappedContent
+                    };
+                    saveCache();
 
-            data.title = translatedTitle;
-            data.content = wrappedContent;
-            hexo.log.info(`[AI Translate] Translated & Cached: ${data.title}`);
+                    data.title = translatedTitle;
+                    data.content = wrappedContent;
+                    hexo.log.info(`[AI Translate] Success: ${data.title}`);
+                }
+            }
+        } catch (error) {
+            hexo.log.error(`[AI Translate] Skip "${data.title}": ${error.message}`);
         }
-    } catch (error) {
-        hexo.log.error(`[AI Translate] Failed: ${error.message}`);
-    }
-
-    return data;
+        return data; // 无论成功失败，必须返回 data，防止 Hexo 报错
+    });
 });
 
-// 注入 CSS 和 JS (逻辑同前)
+// 注入 CSS 和 JS
 hexo.extend.injector.register('head_end', `
 <style>
     .zh-content { display: none; }
