@@ -1,0 +1,143 @@
+/**
+ * AI 自动翻译插件
+ * feat: hash 缓存，避免重复翻译
+ * feat: 支持自定义模型和端点
+ * feat: 优化SEO
+ */
+
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+
+try { require('dotenv').config(); } catch (e) {}
+
+// 缓存文件路径：利用 node_modules/.cache 绕过 Vercel 的构建清理
+const CACHE_DIR = path.join(process.cwd(), 'node_modules', '.cache');
+if (!fs.existsSync(CACHE_DIR)) fs.mkdirSync(CACHE_DIR, { recursive: true });
+const CACHE_FILE = path.join(CACHE_DIR, 'ai-translate-cache.json');
+
+// 加载缓存
+let cache = {};
+if (fs.existsSync(CACHE_FILE)) {
+    try {
+        cache = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf-8'));
+    } catch (e) { cache = {}; }
+}
+
+const saveCache = () => fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2));
+
+hexo.extend.filter.register('before_post_render', async (data) => {
+    const config = hexo.config.llm_translation;
+    const API_KEY = process.env.LLM_API_KEY;
+    
+    // 基础校验：配置开启、API Key 存在、仅处理文章、未设置跳过
+    if (!config || !config.enable || !API_KEY || data.layout !== 'post' || data.no_translate) {
+        return data;
+    }
+
+    // 计算内容 Hash，判断是否需要重新翻译
+    const contentHash = crypto.createHash('md5').update(data.content + data.title).digest('hex');
+    const model = config.model || 'deepseek-ai/DeepSeek-V3.2';
+
+    // 缓存命中逻辑
+    if (cache[data.source] && cache[data.source].hash === contentHash && cache[data.source].model === model) {
+        const cached = cache[data.source];
+        data.title = cached.translatedTitle;
+        data.content = cached.wrappedContent;
+        return data;
+    }
+
+    const endpoint = config.endpoint || 'https://api.siliconflow.cn/v1/chat/completions';
+
+    try {
+        const prompt = `You are a professional technical translator. 
+        1. Translate the following Markdown content to English.
+        2. DO NOT translate code blocks, technical identifiers, or Hexo tags like {% ... %}.
+        3. Maintain all Markdown formatting.
+        4. Also translate the title provided.
+        Format your response as: [TITLE_START]translated title[TITLE_END][CONTENT_START]translated content[CONTENT_END]`;
+
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), (config.single_timeout || 30)*1000); // 30秒超时保护
+
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${API_KEY}`, 'Content-Type': 'application/json' },
+            signal: controller.signal,
+            body: JSON.stringify({
+                model: model,
+                messages: [
+                    { role: 'system', content: prompt },
+                    { role: 'user', content: `Title: ${data.title}\n\nContent: ${data.content}` }
+                ]
+            })
+        });
+
+        clearTimeout(timeoutId);
+        const result = await response.json();
+        const raw = result.choices[0].message.content;
+
+        const translatedTitle = raw.match(/\[TITLE_START\](.*?)\[TITLE_END\]/s)?.[1] || data.title;
+        const translatedContent = raw.match(/\[CONTENT_START\](.*?)\[CONTENT_END\]/s)?.[1] || "";
+
+        if (translatedContent) {
+            const titleScript = `<script>window._zh_title = ${JSON.stringify(data.title)};</script>\n\n`;
+            
+            // 封装内容，注意空行以确保 Markdown 渲染
+            const wrappedContent = `${titleScript}
+<div class="zh-content">
+
+${data.content}
+
+</div>
+<div class="en-content">
+
+${translatedContent}
+
+</div>`;
+
+            // 更新数据并存入缓存
+            cache[data.source] = {
+                hash: contentHash,
+                model: model,
+                translatedTitle: translatedTitle,
+                wrappedContent: wrappedContent
+            };
+            saveCache();
+
+            data.title = translatedTitle;
+            data.content = wrappedContent;
+            hexo.log.info(`[AI Translate] Translated & Cached: ${data.title}`);
+        }
+    } catch (error) {
+        hexo.log.error(`[AI Translate] Failed: ${error.message}`);
+    }
+
+    return data;
+});
+
+// 注入 CSS 和 JS (逻辑同前)
+hexo.extend.injector.register('head_end', `
+<style>
+    .zh-content { display: none; }
+    .en-content { display: block; }
+    html[lang^="zh"] .en-content { display: none !important; }
+    html[lang^="zh"] .zh-content { display: block !important; }
+</style>
+`, 'default');
+
+hexo.extend.injector.register('head_begin', `
+<script>
+(function() {
+    var userLang = navigator.language || navigator.userLanguage;
+    if (userLang && userLang.startsWith('zh')) {
+        document.documentElement.setAttribute('lang', 'zh-CN');
+        window.addEventListener('DOMContentLoaded', function() {
+            if (window._zh_title) document.title = document.title.replace(/.*(?= |$)/, window._zh_title);
+        });
+    } else {
+        document.documentElement.setAttribute('lang', 'en');
+    }
+})();
+</script>
+`, 'default');
