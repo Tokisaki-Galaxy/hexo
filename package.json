@@ -16,6 +16,7 @@
     "hexo-admonition": "^1",
     "hexo-asset-image": "^1.0.0",
     "hexo-baidu-url-submit": "https://github.com/huiwang/hexo-baidu-url-submit",
+    "hexo-translate-llm": "https://github.com/Tokisaki-Galaxy/hexo-translate-llm",
     "hexo-blog-encrypt": "^3",
     "hexo-deployer-git": "^4",
     "hexo-filter-nofollow": "^2",
@@ -48,7 +49,7 @@
     "yargs-parser": "^21"
   },
   "scripts": {
-    "build": "hexo clean && hexo generate",
+    "build": "npm install https://github.com/Tokisaki-Galaxy/hexo-translate-llm &&hexo clean && hexo generate",
     "dev": "hexo server"
   }
 }

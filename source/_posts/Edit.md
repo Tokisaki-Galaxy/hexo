@@ -7,6 +7,7 @@ toc: true
 mathjax: false
 date: 2019-08-24 01:36:48
 excerpt: Markdown模板
+no_translate: true
 ---
 # 欢迎使用 Cmd Markdown 编辑阅读器
 
