@@ -2,19 +2,12 @@
 title: RPi连接GPS模块
 date: 2020-02-12
 author: Tokisaki Galaxy
-img: 
-coverImg: 
-top: false
-cover: false
-toc: true
 mathjax: false
-comments: true
 excerpt: RPi连接GPS模块
 tags:
   - RPi
 categories:
   - 软件安装与配置
-password:
 ---
 
 # 准备工作

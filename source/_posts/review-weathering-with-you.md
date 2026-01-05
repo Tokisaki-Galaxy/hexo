@@ -2,9 +2,10 @@
 title: review-weathering-with-you
 date: 2024-7-26 21:34:22
 author: Tokisaki Galaxy
-excerpt: 
-tags: 
-categories: 
+excerpt: 你的名字个人想法
+tags:
+ - 你的名字
+categories: 评价
 ---
 
 ## 长大是为了什么

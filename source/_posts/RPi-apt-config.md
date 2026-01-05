@@ -2,7 +2,6 @@
 title: RPi配置国内软件源
 date: 2019-11-1
 author: Tokisaki Galaxy
-img: 
 coverImg: 
 top: false
 cover: false

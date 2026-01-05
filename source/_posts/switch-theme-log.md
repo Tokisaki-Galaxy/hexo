@@ -2,7 +2,7 @@
 title: 切换主题的纪念和一些想法
 author: Tokisaki Galaxy
 date: 2023-01-26 15:56:31
-excerpt:
+excerpt: 记录一下切换博客主题的想法
 tags:
  - blog
 categories: blog

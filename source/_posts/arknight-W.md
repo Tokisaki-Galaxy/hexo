@@ -1,17 +1,10 @@
 ---
 title: ARKNIGHT 5-1限定
 author: Tokisaki Galaxy
-top: false
-cover: false
-toc: true
 mathjax: false
 date: 2020-05-01 21:26:58
-img: 
-coverImg: 
-excerpt: 
 tags: Arknight
 categories: 游戏
-password: 
 ---
 
 5-1劳动节快乐！

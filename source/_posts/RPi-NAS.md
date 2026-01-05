@@ -6,14 +6,12 @@ cover: false
 toc: true
 mathjax: false
 date: 2019-11-1 21:26:58
-img:
 coverImg:
 excerpt: RPi搭建NAS
 tags:
   - RPi
 categories:
   - 软件安装与配置
-password:
 ---
 
 > 安装

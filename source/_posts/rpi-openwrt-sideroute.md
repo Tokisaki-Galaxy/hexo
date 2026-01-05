@@ -2,7 +2,7 @@
 title: 树莓派3b刷openwrt作为旁路由
 date: 2023-1-24 13:24:11
 author: Tokisaki Galaxy
-excerpt: 
+excerpt: 树莓派3b刷openwrt作为旁路由
 tags: 
  - 路由
  - RPi

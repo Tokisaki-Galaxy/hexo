@@ -2,9 +2,6 @@
 title: refs坏处
 date: 2021-3-30 14:3:26
 author: Tokisaki Galaxy
-excerpt: 
-tags: 
-categories: 
 ---
 
 一年半前把我那块移动硬盘格式化为refs（好玩），用了这么久这玩意，随便写一点有啥缺点吧。（我只说我碰到的，老生常谈的什么无法引导我就省略了）

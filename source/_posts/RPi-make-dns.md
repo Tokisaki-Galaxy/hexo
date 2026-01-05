@@ -2,7 +2,6 @@
 title: RPi搭建DNS服务器
 date: 2019-12-26
 author: Tokisaki Galaxy
-img: 
 coverImg: 
 top: false
 cover: false
@@ -14,7 +13,6 @@ tags:
   - RPi
 categories:
   - 软件安装与配置
-password:
 ---
 
 >* 安装
