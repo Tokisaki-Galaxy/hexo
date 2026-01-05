@@ -142,12 +142,10 @@ minify:
   preview: false
   exclude: ['*.min.*']
   html:
-    enable: true
+    enable: false
   css:
     enable: true
   js:
-    enable: true
-  image:
     enable: true
 
 # llm Translation
