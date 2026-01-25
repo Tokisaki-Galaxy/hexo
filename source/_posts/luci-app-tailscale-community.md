@@ -13,6 +13,13 @@ categories:
  - 小玩具
 ---
 
+## 2026/1/23
+经过两三个月的代码审查[PR#8018](https://github.com/openwrt/luci/pull/8018)，`luci-app-tailscale-community` 已正式合并到 OpenWrt 主线 LuCI 仓库中，未来的发行版可以直接通过官方源安装该插件，无需额外操作。
+
+另外，这是我第一次将个人项目成功合并到 OpenWrt 主线，感到非常荣幸！
+
+---
+
 ## 项目地址
 https://github.com/tokisaki-galaxy/luci-app-tailscale-community
 
