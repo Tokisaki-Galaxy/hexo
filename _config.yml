@@ -157,3 +157,6 @@ llm_translation:
   model: 'deepseek-ai/DeepSeek-V3.2'
   single_timeout: 300
   max_concurrency: 6
+
+ignore:
+  - '**/*.en.md'
