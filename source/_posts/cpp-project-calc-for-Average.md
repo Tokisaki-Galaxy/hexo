@@ -17,7 +17,7 @@ tags:
  - 小型项目
 categories:
  - 编程
-password:
+
 ---
 
 ## Calc-for-Average

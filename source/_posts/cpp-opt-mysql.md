@@ -17,7 +17,7 @@ tags:
  - mysql
 categories:
  - 编程
-password:
+
 ---
 
 # mysql5 安装

@@ -15,7 +15,7 @@ tags:
  - CPU降频
 categories:
  - 电脑硬件
-password: 
+
 alias:
  - blog/2020-02-09-throttlestop/index.html
  - blog/2020-02-09-ThrottleStop/index.html

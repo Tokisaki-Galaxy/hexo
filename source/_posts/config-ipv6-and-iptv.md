@@ -17,7 +17,7 @@ tags:
  - IPTV
 categories:
  - 踩坑记录
-password:
+
 ---
 
 ## 登录光猫管理页面

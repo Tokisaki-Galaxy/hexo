@@ -16,7 +16,7 @@ tags:
  - C++
 categories:
  - 编程
-password:
+
 ---
 
 > 当您需要性能优化时，请考虑 C printf和sprintf，它们快速且易于使用。 但是，它们不能扩展或免受漏洞的攻击。 （存在安全版本，但它们会受到轻微的性能损失。 有关详细信息，请参阅printf_s、_printf_s_l、wprintf_s、_wprintf_s_l和sprintf_s、_sprintf_s_l、swprintf_s、_swprintf_s_l。

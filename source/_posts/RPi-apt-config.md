@@ -13,7 +13,7 @@ tags:
   - RPi
 categories:
   - 软件安装与配置
-password:
+
 ---
 ## 先使用官方源进行一次update
 

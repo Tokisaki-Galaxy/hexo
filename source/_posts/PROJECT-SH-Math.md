@@ -12,7 +12,7 @@ mathjax: false
 excerpt: 高中 数学
 tags: 数学
 categories: 学习
-password: 
+
 ---
 
 如果没有加载出来就多等等，或者刷新一下试试。SVG文件挺大的，加载比较慢。

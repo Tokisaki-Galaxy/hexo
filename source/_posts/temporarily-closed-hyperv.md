@@ -19,7 +19,7 @@ tags:
  - hackrf
  - metasploit
 categories: 踩坑记录
-password:
+
 ---
 
 win10的wsl2中可以装metasploit和hackrf，对我来说实在无法拒绝（windows是最好的linux发行版！），但是wsl2需要HyperV。

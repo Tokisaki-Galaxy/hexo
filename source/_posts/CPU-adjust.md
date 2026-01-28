@@ -15,7 +15,7 @@ tags:
  - CPU降频
 categories:
  - 电脑硬件
-password: 
+
 alias:
  - blog/2020-02-09-cpu-adjust/index.html
  - 2020-02-09-cpu-adjust/index.html

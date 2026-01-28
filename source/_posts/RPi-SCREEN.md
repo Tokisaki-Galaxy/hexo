@@ -14,7 +14,7 @@ tags:
   - RPi
 categories:
   - 软件安装与配置
-password:
+
 ---
 
 >* 在使用ssh时虚拟一个终端,实现不间断操作

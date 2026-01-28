@@ -14,7 +14,7 @@ tags:
   - RPi
 categories:
   - 软件安装与配置
-password:
+
 ---
 
 >* rpi 3b watchdog

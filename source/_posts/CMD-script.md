@@ -13,7 +13,7 @@ tags:
  - CMD
 categories:
  - 编程
-password: 
+
 ---
 
 `FOR /L %variable IN (start,step,end) DO command [command-parameters]`
