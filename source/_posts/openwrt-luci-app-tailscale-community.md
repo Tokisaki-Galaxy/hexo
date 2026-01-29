@@ -8,7 +8,7 @@ tags:
  - LuCI
  - Network
 date: 2025-10-19 15:31:50
-alias: luci-app-tailscale-community
+alias: /blog/luci-app-tailscale-community
 categories: openwrt
 ---
 
