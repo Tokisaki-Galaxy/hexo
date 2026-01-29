@@ -8,8 +8,7 @@ tags:
 - SSL
 - HTTPS
 - acme.sh
-categories: 
-- 网络配置
+categories: openwrt
 ---
 
 ## 前言

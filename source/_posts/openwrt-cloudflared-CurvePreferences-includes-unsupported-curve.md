@@ -7,7 +7,7 @@ tags:
  - cloudflare
  - tunnel
  - openwrt
-categories: 网络技术
+categories: openwrt
 ---
 
 ## 问题

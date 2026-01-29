@@ -8,9 +8,8 @@ tags:
  - LuCI
  - Network
 date: 2025-10-19 15:31:50
-categories:
- - 技术分享
- - 小玩具
+alias: luci-app-tailscale-community
+categories: openwrt
 ---
 
 ## 2026/1/23
