@@ -7,9 +7,11 @@ tags:
   - DLL Proxy
   - Windows
   - 安全研究
-categories:
-  - 学习
 ---
+
+{% note error %}
+该项目可能涉及安全研究和渗透测试等敏感领域，请确保在合法授权的环境中使用。未经授权的使用可能违反法律法规。
+{% endnote %}
 
 ## 项目简介
 
