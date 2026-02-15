@@ -2,7 +2,7 @@
 title: DLL Proxy 项目详解：高兼容性 version.dll 劫持与隐匿型 Payload 启动器
 date: 2026-02-15 15:25:16
 author: Tokisaki Galaxy
-excerpt: 一个高度兼容的 version.dll 劫持与隐匿型 Payload 启动器，适用于安全研究与渗透测试。
+excerpt: 高度兼容的dll劫持与隐匿型Payload启动器。
 tags:
   - DLL Proxy
   - Windows

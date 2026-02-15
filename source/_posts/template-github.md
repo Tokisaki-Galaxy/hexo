@@ -2,7 +2,7 @@
 title: 自动化开发模板仓库：Github Actions 与高效项目模版实践
 date: 2026-2-13 15:38:49
 author: Tokisaki Galaxy
-excerpt: 高度兼容的dll劫持与隐匿型Payload启动器。
+excerpt: 通过 Github Actions 和 Copilot Agent 实现的自动化开发模板仓库，涵盖 Zig、Rust、Web 前端和 OpenWrt 插件等多个领域。
 tags:
  - Github
  - CI/CD

@@ -2,6 +2,7 @@
 title: 现代化 LuCI 插件开发方案：AI Agent 集成 Playwright 和 Docker 全自动开发
 date: 2026-01-29 20:09:38
 author: Tokisaki Galaxy
+excerpt: 通过 GitHub Copilot Agent 集成 Playwright 和 Docker 实现的现代化 LuCI 插件开发方案，显著提升开发效率和测试覆盖率。
 tags:
   - openwrt
   - luci

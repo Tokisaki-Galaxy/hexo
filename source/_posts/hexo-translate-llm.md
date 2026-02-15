@@ -2,6 +2,7 @@
 title: 基于大语言模型的 Hexo 博客自动化翻译方案
 date: 2026-01-05 18:47:13
 author: Tokisaki Galaxy
+excerpt: 利用大语言模型实现博客内容的自动化翻译，支持智能双语切换、缓存机制、多端同步和 SEO 优化的npm包。
 tags:
   - Hexo
   - AI
