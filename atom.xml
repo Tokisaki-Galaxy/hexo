@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Tokisaki Galaxy的博客</title>
+  
+  <subtitle>Tokisaki Galaxy</subtitle>
+  <link href="https://tokisaki.top/atom.xml" rel="self"/>
+  
+  <link href="https://tokisaki.top/"/>
+  <updated>2026-02-15T12:36:30.233Z</updated>
+  <id>https://tokisaki.top/</id>
+  
+  <author>
+    <name>Tokisaki Galaxy</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>DLL Proxy 项目详解：高兼容性 version.dll 劫持与隐匿型 Payload 启动器</title>
+    <link href="https://tokisaki.top/blog/dll-proxy/"/>
+    <id>https://tokisaki.top/blog/dll-proxy/</id>
+    <published>2026-02-15T07:25:16.000Z</published>
+    <updated>2026-02-15T12:36:30.233Z</updated>
+    
+    
+    <summary type="html">高度兼容的dll劫持与隐匿型Payload启动器。</summary>
+    
+    
+    
+    
+    <category term="DLL Proxy" scheme="https://tokisaki.top/tags/DLL-Proxy/"/>
+    
+    <category term="Windows" scheme="https://tokisaki.top/tags/Windows/"/>
+    
+    <category term="安全研究" scheme="https://tokisaki.top/tags/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>自动化开发模板仓库：Github Actions 与高效项目模版实践</title>
+    <link href="https://tokisaki.top/blog/template-github/"/>
+    <id>https://tokisaki.top/blog/template-github/</id>
+    <published>2026-02-13T07:38:49.000Z</published>
+    <updated>2026-02-15T12:36:30.312Z</updated>
+    
+    
+    <summary type="html">通过 Github Actions 和 Copilot Agent 实现的自动化开发模板仓库，涵盖 Zig、Rust、Web 前端和 OpenWrt 插件等多个领域。</summary>
+    
+    
+    
+    
+    <category term="CI/CD" scheme="https://tokisaki.top/tags/CI-CD/"/>
+    
+    <category term="Github" scheme="https://tokisaki.top/tags/Github/"/>
+    
+    <category term="Agent" scheme="https://tokisaki.top/tags/Agent/"/>
+    
+    <category term="Template" scheme="https://tokisaki.top/tags/Template/"/>
+    
+    <category term="vibe coding" scheme="https://tokisaki.top/tags/vibe-coding/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>现代化 LuCI 插件开发方案：AI Agent 集成 Playwright 和 Docker 全自动开发</title>
+    <link href="https://tokisaki.top/blog/openwrt-template/"/>
+    <id>https://tokisaki.top/blog/openwrt-template/</id>
+    <published>2026-01-29T12:09:38.000Z</published>
+    <updated>2026-02-15T12:36:30.264Z</updated>
+    
+    
+    <summary type="html">通过 GitHub Copilot Agent 集成 Playwright 和 Docker 实现的现代化 LuCI 插件开发方案，显著提升开发效率和测试覆盖率。</summary>
+    
+    
+    
+    <category term="openwrt" scheme="https://tokisaki.top/categories/openwrt/"/>
+    
+    
+    <category term="openwrt" scheme="https://tokisaki.top/tags/openwrt/"/>
+    
+    <category term="luci" scheme="https://tokisaki.top/tags/luci/"/>
+    
+    <category term="github-copilot" scheme="https://tokisaki.top/tags/github-copilot/"/>
+    
+    <category term="playwright" scheme="https://tokisaki.top/tags/playwright/"/>
+    
+    <category term="agent" scheme="https://tokisaki.top/tags/agent/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于大语言模型的 Hexo 博客自动化翻译方案</title>
+    <link href="https://tokisaki.top/blog/hexo-translate-llm/"/>
+    <id>https://tokisaki.top/blog/hexo-translate-llm/</id>
+    <published>2026-01-05T10:47:13.000Z</published>
+    <updated>2026-02-15T12:36:30.260Z</updated>
+    
+    
+    <summary type="html">利用大语言模型实现博客内容的自动化翻译，支持智能双语切换、缓存机制、多端同步和 SEO 优化的npm包。</summary>
+    
+    
+    
+    <category term="开发工具" scheme="https://tokisaki.top/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
+    
+    
+    <category term="Hexo" scheme="https://tokisaki.top/tags/Hexo/"/>
+    
+    <category term="AI" scheme="https://tokisaki.top/tags/AI/"/>
+    
+    <category term="翻译" scheme="https://tokisaki.top/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+    <category term="DeepSeek" scheme="https://tokisaki.top/tags/DeepSeek/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kindle 浏览器 User-Agent 切换工具</title>
+    <link href="https://tokisaki.top/blog/kindle-modify-browserua/"/>
+    <id>https://tokisaki.top/blog/kindle-modify-browserua/</id>
+    <published>2025-12-30T02:28:10.000Z</published>
+    <updated>2026-02-15T12:36:30.261Z</updated>
+    
+    
+    <summary type="html">针对 Kindle 内置浏览器强制跳转移动版页面的问题，开发了基于 KUAL 的 UA 修改插件，实现桌面端网页的完整访问。</summary>
+    
+    
+    
+    <category term="Kindle" scheme="https://tokisaki.top/categories/Kindle/"/>
+    
+    
+    <category term="Kindle" scheme="https://tokisaki.top/tags/Kindle/"/>
+    
+    <category term="KUAL" scheme="https://tokisaki.top/tags/KUAL/"/>
+    
+    <category term="浏览器" scheme="https://tokisaki.top/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>住理生活自动记账工具开发实践</title>
+    <link href="https://tokisaki.top/blog/statistics-zhulishenghuo/"/>
+    <id>https://tokisaki.top/blog/statistics-zhulishenghuo/</id>
+    <published>2025-12-23T09:09:07.000Z</published>
+    <updated>2026-02-15T12:36:30.312Z</updated>
+    
+    
+    <summary type="html">基于 Tesseract.js 与 IndexedDB 实现的校园生活消费自动统计工具，解决校园 App 缺乏财务统计功能的问题。</summary>
+    
+    
+    
+    <category term="前端" scheme="https://tokisaki.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    <category term="开发笔记" scheme="https://tokisaki.top/categories/%E5%89%8D%E7%AB%AF/%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="JavaScript" scheme="https://tokisaki.top/tags/JavaScript/"/>
+    
+    <category term="OCR" scheme="https://tokisaki.top/tags/OCR/"/>
+    
+    <category term="财务管理" scheme="https://tokisaki.top/tags/%E8%B4%A2%E5%8A%A1%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>KOReader 自定义翻译后端插件</title>
+    <link href="https://tokisaki.top/blog/kindle-koreader-custom-translator/"/>
+    <id>https://tokisaki.top/blog/kindle-koreader-custom-translator/</id>
+    <published>2025-12-16T12:56:33.000Z</published>
+    <updated>2026-02-15T12:36:30.260Z</updated>
+    
+    
+    <summary type="html">通过自建 Cloudflare Worker 端点替换 KOReader 官方翻译接口，解决特定网络下的不可用问题。</summary>
+    
+    
+    
+    <category term="Kindle" scheme="https://tokisaki.top/categories/Kindle/"/>
+    
+    
+    <category term="翻译" scheme="https://tokisaki.top/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+    <category term="KOReader" scheme="https://tokisaki.top/tags/KOReader/"/>
+    
+    <category term="Kindle" scheme="https://tokisaki.top/tags/Kindle/"/>
+    
+    <category term="Cloudflare Worker" scheme="https://tokisaki.top/tags/Cloudflare-Worker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Google AI Studio 对话导出工具</title>
+    <link href="https://tokisaki.top/blog/aistudio-dump-script/"/>
+    <id>https://tokisaki.top/blog/aistudio-dump-script/</id>
+    <published>2025-12-04T07:11:53.000Z</published>
+    <updated>2026-02-15T12:36:29.629Z</updated>
+    
+    
+    <summary type="html">针对 Google AI Studio 缺少原生导出功能的问题，开发了一款基于 Tampermonkey 的用户脚本。该脚本可将对话内容完整抓取并导出为 JSON 格式，支持 Markdown 渲染，便于后续的资料整理与归档。</summary>
+    
+    
+    
+    <category term="效率工具" scheme="https://tokisaki.top/categories/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/"/>
+    
+    
+    <category term="Tampermonkey" scheme="https://tokisaki.top/tags/Tampermonkey/"/>
+    
+    <category term="Google AI Studio" scheme="https://tokisaki.top/tags/Google-AI-Studio/"/>
+    
+    <category term="效率工具" scheme="https://tokisaki.top/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/"/>
+    
+    <category term="JavaScript" scheme="https://tokisaki.top/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>POPUCOM 三消棋：网页的多人联机小游戏</title>
+    <link href="https://tokisaki.top/blog/popucom-chess/"/>
+    <id>https://tokisaki.top/blog/popucom-chess/</id>
+    <published>2025-11-22T08:16:33.000Z</published>
+    <updated>2026-02-15T12:36:30.265Z</updated>
+    
+    
+    <summary type="html">9×9 棋盘的三消策略棋，支持本地与多人联机。提供 Serverless 与 Python（Legacy）两套实现。</summary>
+    
+    
+    
+    <category term="项目" scheme="https://tokisaki.top/categories/%E9%A1%B9%E7%9B%AE/"/>
+    
+    
+    <category term="三消" scheme="https://tokisaki.top/tags/%E4%B8%89%E6%B6%88/"/>
+    
+    <category term="棋类" scheme="https://tokisaki.top/tags/%E6%A3%8B%E7%B1%BB/"/>
+    
+    <category term="Multiplayer" scheme="https://tokisaki.top/tags/Multiplayer/"/>
+    
+    <category term="Serverless" scheme="https://tokisaki.top/tags/Serverless/"/>
+    
+    <category term="Supabase" scheme="https://tokisaki.top/tags/Supabase/"/>
+    
+    <category term="Vercel" scheme="https://tokisaki.top/tags/Vercel/"/>
+    
+    <category term="Upstash" scheme="https://tokisaki.top/tags/Upstash/"/>
+    
+    <category term="Python" scheme="https://tokisaki.top/tags/Python/"/>
+    
+    <category term="Flask" scheme="https://tokisaki.top/tags/Flask/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在 OpenWrt 上优雅地管理 Tailscale：luci-app-tailscale-community</title>
+    <link href="https://tokisaki.top/blog/openwrt-luci-app-tailscale-community/"/>
+    <id>https://tokisaki.top/blog/openwrt-luci-app-tailscale-community/</id>
+    <published>2025-10-19T07:31:50.000Z</published>
+    <updated>2026-02-15T12:36:30.264Z</updated>
+    
+    
+    <summary type="html">一个功能丰富的 LuCI 应用程序，用于在 OpenWrt 上无缝管理 Tailscale，提供直观的状态监控和强大的配置选项。</summary>
+    
+    
+    
+    <category term="openwrt" scheme="https://tokisaki.top/categories/openwrt/"/>
+    
+    
+    <category term="OpenWrt" scheme="https://tokisaki.top/tags/OpenWrt/"/>
+    
+    <category term="Tailscale" scheme="https://tokisaki.top/tags/Tailscale/"/>
+    
+    <category term="Network" scheme="https://tokisaki.top/tags/Network/"/>
+    
+    <category term="LuCI" scheme="https://tokisaki.top/tags/LuCI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Github云编译Openwrt软件包，再也不用本地配环境</title>
+    <link href="https://tokisaki.top/blog/github-action-openwrt-package-builder/"/>
+    <id>https://tokisaki.top/blog/github-action-openwrt-package-builder/</id>
+    <published>2025-10-12T04:32:23.000Z</published>
+    <updated>2026-02-15T12:36:29.628Z</updated>
+    
+    
+    <summary type="html">自动编译多架构 OpenWrt 软件包的 Action</summary>
+    
+    
+    
+    <category term="技术分享" scheme="https://tokisaki.top/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/"/>
+    
+    <category term="小玩具" scheme="https://tokisaki.top/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/%E5%B0%8F%E7%8E%A9%E5%85%B7/"/>
+    
+    
+    <category term="OpenWrt" scheme="https://tokisaki.top/tags/OpenWrt/"/>
+    
+    <category term="GitHub Actions" scheme="https://tokisaki.top/tags/GitHub-Actions/"/>
+    
+    <category term="CI/CD" scheme="https://tokisaki.top/tags/CI-CD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在 Linux 上使用 ipset 高效屏蔽特定国家 IP（中国等）</title>
+    <link href="https://tokisaki.top/blog/use-ipset-ban-chinaip/"/>
+    <id>https://tokisaki.top/blog/use-ipset-ban-chinaip/</id>
+    <published>2025-08-17T10:19:40.000Z</published>
+    <updated>2026-02-15T12:36:30.322Z</updated>
+    
+    
+    <summary type="html">一种在 Linux 服务器上，利用 ipset 和 systemd 定时任务，实现低资源消耗、非持久化、高效率地屏蔽特定国家或地区 IP 地址列表的方案。</summary>
+    
+    
+    
+    <category term="服务器运维" scheme="https://tokisaki.top/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/"/>
+    
+    
+    <category term="Linux" scheme="https://tokisaki.top/tags/Linux/"/>
+    
+    <category term="iptables" scheme="https://tokisaki.top/tags/iptables/"/>
+    
+    <category term="ipset" scheme="https://tokisaki.top/tags/ipset/"/>
+    
+    <category term="systemd" scheme="https://tokisaki.top/tags/systemd/"/>
+    
+    <category term="Google Cloud" scheme="https://tokisaki.top/tags/Google-Cloud/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Resolving Routing Conflicts Between Tailscale and ZeroTier on OpenWrt/Linux (IPProto-44)</title>
+    <link href="https://tokisaki.top/blog/resolve-route-conflict-zerotier-tailscale/"/>
+    <id>https://tokisaki.top/blog/resolve-route-conflict-zerotier-tailscale/</id>
+    <published>2025-07-11T14:44:42.000Z</published>
+    <updated>2026-02-15T12:36:30.312Z</updated>
+    
+    
+    <summary type="html">从发现到解决IPProto-44，Openwrt或Linux上Tailscale与ZeroTier的路由冲突</summary>
+    
+    
+    
+    
+    <category term="OpenWrt" scheme="https://tokisaki.top/tags/OpenWrt/"/>
+    
+    <category term="ZeroTier" scheme="https://tokisaki.top/tags/ZeroTier/"/>
+    
+    <category term="Tailscale" scheme="https://tokisaki.top/tags/Tailscale/"/>
+    
+    <category term="路由冲突" scheme="https://tokisaki.top/tags/%E8%B7%AF%E7%94%B1%E5%86%B2%E7%AA%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ReFS使用注意事项</title>
+    <link href="https://tokisaki.top/blog/refs-attention/"/>
+    <id>https://tokisaki.top/blog/refs-attention/</id>
+    <published>2025-04-21T09:58:22.000Z</published>
+    <updated>2026-02-15T12:36:30.311Z</updated>
+    
+    
+    <summary type="html">ReFS 使用注意事项，例如禁止自动更新，手动更新，数据压缩，重复数据删除，数据修复，完整性流等。</summary>
+    
+    
+    
+    <category term="文件系统" scheme="https://tokisaki.top/categories/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="Windows" scheme="https://tokisaki.top/tags/Windows/"/>
+    
+    <category term="文件系统" scheme="https://tokisaki.top/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/"/>
+    
+    <category term="ReFS" scheme="https://tokisaki.top/tags/ReFS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ZeroTier和Tailscale的区别</title>
+    <link href="https://tokisaki.top/blog/diff-zerotier-tailscale/"/>
+    <id>https://tokisaki.top/blog/diff-zerotier-tailscale/</id>
+    <published>2025-04-20T05:53:45.000Z</published>
+    <updated>2026-02-15T12:36:30.233Z</updated>
+    
+    
+    <summary type="html">对比了ZeroTier和Tailscale，分析了它们在协议、网络结构、连接稳定性等差异。</summary>
+    
+    
+    
+    <category term="网络技术" scheme="https://tokisaki.top/categories/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="ZeroTier" scheme="https://tokisaki.top/tags/ZeroTier/"/>
+    
+    <category term="Tailscale" scheme="https://tokisaki.top/tags/Tailscale/"/>
+    
+    <category term="VPN" scheme="https://tokisaki.top/tags/VPN/"/>
+    
+    <category term="Virtual LAN" scheme="https://tokisaki.top/tags/Virtual-LAN/"/>
+    
+    <category term="Network" scheme="https://tokisaki.top/tags/Network/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>仿 TrymenT 游戏风格的Hexo时钟组件</title>
+    <link href="https://tokisaki.top/blog/background-tryment-clock/"/>
+    <id>https://tokisaki.top/blog/background-tryment-clock/</id>
+    <published>2025-03-10T14:24:58.000Z</published>
+    <updated>2026-02-15T12:36:29.640Z</updated>
+    
+    
+    <summary type="html">一个模仿游戏 TrymenT 中时钟界面的 Web 时钟实现，带有独特双环设计</summary>
+    
+    
+    
+    <category term="前端" scheme="https://tokisaki.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    <category term="Web组件" scheme="https://tokisaki.top/categories/%E5%89%8D%E7%AB%AF/Web%E7%BB%84%E4%BB%B6/"/>
+    
+    
+    <category term="Hexo" scheme="https://tokisaki.top/tags/Hexo/"/>
+    
+    <category term="JavaScript" scheme="https://tokisaki.top/tags/JavaScript/"/>
+    
+    <category term="时钟" scheme="https://tokisaki.top/tags/%E6%97%B6%E9%92%9F/"/>
+    
+    <category term="游戏风格" scheme="https://tokisaki.top/tags/%E6%B8%B8%E6%88%8F%E9%A3%8E%E6%A0%BC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>通过wheel文件解决rpy2安装权限问题</title>
+    <link href="https://tokisaki.top/blog/rpy2-install-via-wheel/"/>
+    <id>https://tokisaki.top/blog/rpy2-install-via-wheel/</id>
+    <published>2025-02-27T15:01:48.000Z</published>
+    <updated>2026-02-15T12:36:30.312Z</updated>
+    
+    
+    <summary type="html">解决Windows环境下pip安装rpy2时出现的权限错误问题</summary>
+    
+    
+    
+    <category term="编程" scheme="https://tokisaki.top/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="Python" scheme="https://tokisaki.top/tags/Python/"/>
+    
+    <category term="rpy2" scheme="https://tokisaki.top/tags/rpy2/"/>
+    
+    <category term="安装问题" scheme="https://tokisaki.top/tags/%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用ZeroTier搭建游戏局域网环境</title>
+    <link href="https://tokisaki.top/blog/zerotier-game-setting/"/>
+    <id>https://tokisaki.top/blog/zerotier-game-setting/</id>
+    <published>2025-02-04T09:32:19.000Z</published>
+    <updated>2026-02-15T12:36:30.322Z</updated>
+    
+    
+    <summary type="html">优化用于游戏的ZeroTier，解决常见的连接问题</summary>
+    
+    
+    
+    <category term="教程" scheme="https://tokisaki.top/categories/%E6%95%99%E7%A8%8B/"/>
+    
+    
+    <category term="游戏" scheme="https://tokisaki.top/tags/%E6%B8%B8%E6%88%8F/"/>
+    
+    <category term="ZeroTier" scheme="https://tokisaki.top/tags/ZeroTier/"/>
+    
+    <category term="网络" scheme="https://tokisaki.top/tags/%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在 OpenWRT 上使用 acme.sh 配置 SSL 证书</title>
+    <link href="https://tokisaki.top/blog/openwrt-acmesh/"/>
+    <id>https://tokisaki.top/blog/openwrt-acmesh/</id>
+    <published>2025-02-03T07:49:47.000Z</published>
+    <updated>2026-02-15T12:36:30.264Z</updated>
+    
+    
+    <summary type="html">如何在 OpenWRT 系统上使用 acme.sh 申请和管理 SSL 证书</summary>
+    
+    
+    
+    <category term="openwrt" scheme="https://tokisaki.top/categories/openwrt/"/>
+    
+    
+    <category term="OpenWRT" scheme="https://tokisaki.top/tags/OpenWRT/"/>
+    
+    <category term="SSL" scheme="https://tokisaki.top/tags/SSL/"/>
+    
+    <category term="HTTPS" scheme="https://tokisaki.top/tags/HTTPS/"/>
+    
+    <category term="acme.sh" scheme="https://tokisaki.top/tags/acme-sh/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>review-relief</title>
+    <link href="https://tokisaki.top/blog/review-relief/"/>
+    <id>https://tokisaki.top/blog/review-relief/</id>
+    <published>2025-01-24T15:00:01.000Z</published>
+    <updated>2026-02-15T12:36:30.312Z</updated>
+    
+    
+    <summary type="html">ReLief 一些想法</summary>
+    
+    
+    
+    <category term="评价" scheme="https://tokisaki.top/categories/%E8%AF%84%E4%BB%B7/"/>
+    
+    
+    <category term="ReLief" scheme="https://tokisaki.top/tags/ReLief/"/>
+    
+  </entry>
+  
+</feed>

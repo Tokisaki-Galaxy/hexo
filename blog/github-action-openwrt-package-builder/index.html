@@ -1,0 +1,962 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<script>
+(function() {
+    var userLang = navigator.language || navigator.userLanguage;
+    if (userLang && userLang.startsWith('zh')) {
+        document.documentElement.setAttribute('lang', 'zh-CN');
+        window.addEventListener('DOMContentLoaded', function() {
+            // 1. Handle article page title and H1
+            if (window._zh_title && window._en_title) {
+                // Precisely detect: find English title in current title and replace with Chinese
+                if (document.title.includes(window._en_title)) {
+                    document.title = document.title.replace(window._en_title, window._zh_title);
+                } else {
+                    // Fallback: if theme handles title specially (e.g., truncation), replace directly
+                    document.title = window._zh_title;
+                }
+                // Replace article page h1 title
+                // Consider different theme selectors, find first h1 tag for replacement
+                var h1 = document.querySelector('h1');
+                if (h1 && window._zh_title) {
+                    h1.textContent = window._zh_title;
+                }
+            }
+            // 2. Replace all title elements with data-zh-title and data-en-title attributes on homepage or list pages
+            var titleElements = document.querySelectorAll('[data-zh-title][data-en-title]');
+            titleElements.forEach(function(el) {
+                var zhTitle = el.getAttribute('data-zh-title');
+                var enTitle = el.getAttribute('data-en-title');
+                if (zhTitle && enTitle) {
+                    // Replace element text content
+                    if (el.textContent.trim() === enTitle.trim()) {
+                        el.textContent = zhTitle;
+                    }
+                    // If it's a link element, also check its title attribute
+                    if (el.hasAttribute('title') && el.getAttribute('title').trim() === enTitle.trim()) {
+                        el.setAttribute('title', zhTitle);
+                    }
+                }
+            });
+            // 3. Replace article titles on homepage/list pages (using global title mapping)
+            if (window._hexo_title_pairs && window._hexo_title_pairs.length > 0) {
+                // Create English to Chinese mapping
+                var titleMap = {};
+                window._hexo_title_pairs.forEach(function(pair) {
+                    titleMap[pair.en.trim()] = pair.zh;
+                });
+                // Helper function to replace article titles, supports exact match and contains match
+                // Preserves child links when replacing text (assumes single link per title element)
+                var replaceTitle = function(el) {
+                    var text = el.textContent.trim();
+                    var zhTitle = null;
+                    var matchedEnTitle = null;
+                    // Prefer exact match
+                    if (titleMap[text]) {
+                        zhTitle = titleMap[text];
+                        matchedEnTitle = text;
+                    } else {
+                        // Try contains match (handle cases with extra spaces or child elements)
+                        // Using indexOf for IE/older browser compatibility (this runs in browser context)
+                        for (var enTitle in titleMap) {
+                            if (text === enTitle || text.indexOf(enTitle) !== -1) {
+                                // Only replace when text is highly similar to title (avoid false replacements)
+                                if (text.length <= enTitle.length * 1.5) {
+                                    zhTitle = titleMap[enTitle];
+                                    matchedEnTitle = enTitle;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (!zhTitle) return;
+                    // Check if element contains a child link - if so, update link text to preserve hyperlink
+                    var childLink = el.querySelector('a');
+                    if (childLink) {
+                        childLink.textContent = zhTitle;
+                        // Also update title attribute if it matches the English title
+                        if (childLink.hasAttribute('title') && childLink.getAttribute('title').trim() === matchedEnTitle) {
+                            childLink.setAttribute('title', zhTitle);
+                        }
+                    } else {
+                        el.textContent = zhTitle;
+                    }
+                };
+                // Find title elements within article card/list containers (limit search scope for performance)
+                var containers = document.querySelectorAll('main, article, .post, .posts, .post-list, .article-list, .card, .content, #content, #main');
+                if (containers.length === 0) {
+                    containers = [document.body];
+                }
+                containers.forEach(function(container) {
+                    var titleSelectors = 'h1, h2, h3, .post-title, .article-title, .entry-title, .card-title, a[rel="bookmark"]';
+                    var potentialTitleElements = container.querySelectorAll(titleSelectors);
+                    potentialTitleElements.forEach(replaceTitle);
+                });
+            }
+        });
+    } else {
+        document.documentElement.setAttribute('lang', 'en');
+    }
+})();
+</script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/favicon.png">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Tokisaki Galaxy">
+  <meta name="keywords" content="blog">
+  
+    <meta name="description" content="自动编译多架构 OpenWrt 软件包的 Action">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Github云编译Openwrt软件包，再也不用本地配环境">
+<meta property="og:url" content="https://tokisaki.top/blog/github-action-openwrt-package-builder/index.html">
+<meta property="og:site_name" content="Tokisaki Galaxy的博客">
+<meta property="og:description" content="自动编译多架构 OpenWrt 软件包的 Action">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-12T04:32:23.000Z">
+<meta property="article:modified_time" content="2026-02-15T12:36:29.628Z">
+<meta property="article:author" content="Tokisaki Galaxy">
+<meta property="article:tag" content="CI&#x2F;CD">
+<meta property="article:tag" content="GitHub Actions">
+<meta property="article:tag" content="OpenWrt">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Github云编译Openwrt软件包，再也不用本地配环境 - Tokisaki Galaxy的博客</title>
+
+  <link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous">
+
+
+
+  <link  rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"tokisaki.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":50,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":"enable","follow_dnt":false,"baidu":"91eeedd7b367cd070a600501df970843","google":{"measurement_id":"G-9YQEB4P3YS"},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"microsoftclarity":"eell8b38tb","gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?91eeedd7b367cd070a600501df970843";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=G-9YQEB4P3YS", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', 'G-9YQEB4P3YS');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "eell8b38tb");
+    </script>
+
+
+
+  
+<!-- hexo injector head_end start -->
+<style>
+    .hexo-llm-zh { display: none; }
+    .hexo-llm-en { display: block; }
+    html[lang^="zh"] .hexo-llm-en { display: none !important; }
+    html[lang^="zh"] .hexo-llm-zh { display: block !important; }
+</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="Tokisaki Galaxy的博客" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Tokisaki Galaxy的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Github云编译Openwrt软件包，再也不用本地配环境"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-12 12:32" pubdate>
+          2025年10月12日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Github云编译Openwrt软件包，再也不用本地配环境</h1>
+            
+            <div class="markdown-body">
+              
+              <h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a target="_blank" rel="noopener" href="https://github.com/Tokisaki-Galaxy/openwrt-package-builder-action">https://github.com/Tokisaki-Galaxy/openwrt-package-builder-action</a></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>对于许多 OpenWrt 爱好者和开发者来说，为不同的目标架构编译软件包可能是一项重复且耗时的工作。为了每次搭建不同环境非常麻烦，我开发并开源了 OpenWrt Package Builder，这是一个基于 GitHub Actions 的自动化工作流，旨在让 OpenWrt 软件包的编译过程变得前所未有的简单和高效。</p>
+<p>你只需要将软件包源码上传至 GitHub 仓库，选择一个预设的工作流，修改两个配置变量，即可自动为多个目标平台编译出 .ipk 文件。<br>下面是项目的README.md</p>
+<hr>
+<p>一个简单、通用且开箱即用的 GitHub Actions 工作流，用于自动编译任何 OpenWrt 软件包。本项目提供了两种编译模式：<strong>SDK 模式（推荐）</strong> 和 <strong>源码模式</strong>，以满足不同需求。</p>
+<p>你只需要将你的软件包源码放在仓库中，选择一个工作流文件，修改两个变量，即可为多个目标架构自动编译出 <code>.ipk</code> 文件。</p>
+<h2 id="✨-特性"><a href="#✨-特性" class="headerlink" title="✨ 特性"></a>✨ 特性</h2><ul>
+<li><strong>🚀 简单易用</strong>: 只需复制粘贴工作流文件，修改两个环境变量即可。</li>
+<li><strong>⚡️ 极速编译 (SDK 模式)</strong>: 利用官方预编译的 SDK，将编译时间从 30+ 分钟缩短至 5 分钟以内。</li>
+<li><strong>💡 灵活强大 (源码模式)</strong>: 可编译包括内核模块在内的任何软件包，并支持 <code>master</code> 等开发分支。</li>
+<li><strong>⚙️ 高度通用</strong>: 可用于编译 LuCI 应用、命令行工具、内核模块等任何类型的 OpenWrt 软件包。</li>
+<li><strong>🎯 多目标编译</strong>: 默认配置为 <code>x86_64</code>, <code>armv8</code>, <code>mips_mt7621</code> 等常用架构，可轻松自定义。</li>
+<li><strong>📦 自动发布</strong>: 编译成功后，自动将 <code>.ipk</code> 文件上传为构建产物 (Artifacts)，方便下载。</li>
+<li><strong>💬 提交评论</strong>: (可选) 所有构建任务成功后，会在对应的 Commit 下自动发表评论，提供产物下载链接。</li>
+</ul>
+<h2 id="🤔-如何选择编译模式？"><a href="#🤔-如何选择编译模式？" class="headerlink" title="🤔 如何选择编译模式？"></a>🤔 如何选择编译模式？</h2><p>本项目提供两种工作流，请根据你的需求选择其一。</p>
+<table>
+<thead>
+<tr>
+<th align="left">特性 &#x2F; 场景</th>
+<th align="left">✅ SDK 模式 (推荐)</th>
+<th align="left">⚠️ 源码模式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>编译速度</strong></td>
+<td align="left"><strong>极快</strong> (通常 &lt; 1 分钟)</td>
+<td align="left">慢 (首次编译 &gt; 40 分钟，后续有缓存)</td>
+</tr>
+<tr>
+<td align="left"><strong>适用包类型</strong></td>
+<td align="left">大多数 <strong>LuCI 应用</strong> 和 <strong>普通软件包</strong></td>
+<td align="left"><strong>所有软件包</strong>，特别是<strong>内核模块 (<code>kmod-xxx</code>)</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>支持的 OpenWrt 版本</strong></td>
+<td align="left">仅支持<strong>官方正式发布版</strong> (如 <code>v23.05.3</code>)</td>
+<td align="left">支持<strong>所有版本</strong>，包括 <code>master</code> 开发分支</td>
+</tr>
+<tr>
+<td align="left"><strong>工作流文件</strong></td>
+<td align="left"><code>build-with-sdk.yml</code></td>
+<td align="left"><code>build-from-source.yml</code></td>
+</tr>
+</tbody></table>
+<p><strong>总而言之：如果不确定，或者你只是编译一个 LuCI 应用，请优先选择 <code>SDK 模式</code>。</strong></p>
+<h2 id="🚀-如何使用"><a href="#🚀-如何使用" class="headerlink" title="🚀 如何使用"></a>🚀 如何使用</h2><h4 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h4><p>如果有不明白地方，可以参考<a target="_blank" rel="noopener" href="https://github.com/Tokisaki-Galaxy/luci-app-tailscale-community/.github/workflows/build.yml">这里</a>。</p>
+<h4 id="步骤-1-选择并创建工作流文件"><a href="#步骤-1-选择并创建工作流文件" class="headerlink" title="步骤 1: 选择并创建工作流文件"></a>步骤 1: 选择并创建工作流文件</h4><p>根据上方的选择，在你的仓库根目录下创建对应的 <code>.github/workflows/</code> 目录和 YAML 文件。</p>
+<ul>
+<li><strong>对于 SDK 模式</strong>: 创建 <code>.github/workflows/build.yml</code></li>
+<li><strong>对于源码模式</strong>: 创建 <code>.github/workflows/build-nonSDK.yml</code></li>
+</ul>
+<h4 id="步骤-2-复制工作流代码"><a href="#步骤-2-复制工作流代码" class="headerlink" title="步骤 2: 复制工作流代码"></a>步骤 2: 复制工作流代码</h4><p>根据你在上一步的选择，将本仓库中对应文件的完整代码复制过去。</p>
+<ul>
+<li>➡️ <a href="build.yml"><strong><code>build-with-sdk.yml</code> 的代码</strong></a></li>
+<li>➡️ <a href="build-nonSDK.yml"><strong><code>build-from-source.yml</code> 的代码</strong></a></li>
+</ul>
+<h4 id="步骤-3-修改配置"><a href="#步骤-3-修改配置" class="headerlink" title="步骤 3: 修改配置"></a>步骤 3: 修改配置</h4><p>打开你创建的 YAML 文件，你只需要修改 <code>env</code> 部分的 <strong>两个</strong> 变量：</p>
+<ol>
+<li><p><strong><code>PACKAGE_NAME</code></strong>:<br>将其值修改为你的软件包的目录名。<strong>非常重要</strong>，这个名字必须和你的软件包在仓库中的文件夹名称完全一致。</p>
+</li>
+<li><p><strong><code>OPENWRT_VERSION</code></strong>:<br>设置你想要基于哪个 OpenWrt 版本进行编译。</p>
+<ul>
+<li><strong>使用 SDK 模式时</strong>: <strong>必须</strong>是一个官方发布的标签，例如 <code>v23.05.3</code>。</li>
+<li><strong>使用源码模式时</strong>: 可以是任何标签或分支名，例如 <code>v23.05.3</code> 或 <code>master</code>。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p><strong>提示:</strong> 别忘了更新 <code>README.md</code> 文件顶部的徽章链接，将 <code>Tokisaki-Galaxy/openwrt-package-builder-action</code> 替换成你自己的！</p>
+</blockquote>
+<h4 id="步骤-4-检查-Makefile-重要"><a href="#步骤-4-检查-Makefile-重要" class="headerlink" title="步骤 4: 检查 Makefile (重要)"></a>步骤 4: 检查 Makefile (重要)</h4><p>确保你的软件包目录下的 <code>Makefile</code> 文件中正确定义了所有依赖项。本工作流依赖 <code>make defconfig</code> 来自动解析并选中这些依赖。</p>
+<p>例如:</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-keyword">define</span> Package/my-cool-package<br>  <span class="hljs-comment"># ...</span><br>  DEPENDS:=+libcurl +libjson-c +some-other-package<br><span class="hljs-keyword">endef</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="步骤-5-提交并运行"><a href="#步骤-5-提交并运行" class="headerlink" title="步骤 5: 提交并运行"></a>步骤 5: 提交并运行</h4><p>将你的代码和 <code>.github/workflows/</code> 下的 YAML 文件提交并推送到 GitHub。GitHub Actions 会自动开始运行。</p>
+<p>你可以在仓库的 <code>Actions</code> 标签页查看编译进度。编译完成后，可以在对应的运行记录页面找到并下载 <code>Artifacts</code>。</p>
+<h2 id="🔧-自定义"><a href="#🔧-自定义" class="headerlink" title="🔧 自定义"></a>🔧 自定义</h2><h3 id="修改编译目标"><a href="#修改编译目标" class="headerlink" title="修改编译目标"></a>修改编译目标</h3><p>如果你需要为其他架构编译，可以修改工作流文件中的 <code>jobs.build.strategy.matrix.target</code> 部分。只需按照现有格式添加或修改条目即可。</p>
+<blockquote>
+<p><strong>请注意</strong>：两种模式的 <code>matrix</code> 结构略有不同，请参照各自文件中的格式进行修改。</p>
+</blockquote>
+<h3 id="修改触发条件"><a href="#修改触发条件" class="headerlink" title="修改触发条件"></a>修改触发条件</h3><p>你可以修改文件顶部的 <code>on</code> 部分来更改触发工作流的条件，例如改为 <code>pull_request</code> 或定时运行 (<code>schedule</code>)。</p>
+<hr>
+<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><p>本项目使用MIT授权。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" class="category-chain-item">技术分享</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/%E5%B0%8F%E7%8E%A9%E5%85%B7/" class="category-chain-item">小玩具</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/OpenWrt/" class="print-no-link">#OpenWrt</a>
+      
+        <a href="/tags/GitHub-Actions/" class="print-no-link">#GitHub Actions</a>
+      
+        <a href="/tags/CI-CD/" class="print-no-link">#CI/CD</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Github云编译Openwrt软件包，再也不用本地配环境</div>
+      <div>https://tokisaki.top/blog/github-action-openwrt-package-builder/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Tokisaki Galaxy</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年10月12日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/openwrt-luci-app-tailscale-community/" title="在 OpenWrt 上优雅地管理 Tailscale：luci-app-tailscale-community">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">在 OpenWrt 上优雅地管理 Tailscale：luci-app-tailscale-community</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/use-ipset-ban-chinaip/" title="在 Linux 上使用 ipset 高效屏蔽特定国家 IP（中国等）">
+                        <span class="hidden-mobile">在 Linux 上使用 ipset 高效屏蔽特定国家 IP（中国等）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="cusdis" style="width:100%; overflow:visible; min-height:480px;">
+    <div id="cusdis_thread"
+      style="width:100%; overflow:visible;"
+      data-host="https://cusdis.com"
+      data-app-id="27923e0d-279d-4dad-bdc5-f1b12b6add4c"
+      data-page-id="9ef33b99f44a8d1f95f62d250a047e45"
+      data-page-url="blog/github-action-openwrt-package-builder/"
+      data-page-title="Github云编译Openwrt软件包，再也不用本地配环境"
+      data-theme="auto"
+    >
+    </div>
+  </div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#cusdis_thread', function() {
+      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
+      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
+
+      // 取消容器滚动条，尝试让 iframe 展开显示
+      var container = document.querySelector('.cusdis');
+      var thread = document.querySelector('#cusdis_thread');
+      if (container) container.style.overflow = 'visible';
+      if (thread) thread.style.overflow = 'visible';
+
+      // 等待 widget 加载后调整 iframe 样式
+      setTimeout(function() {
+        try {
+          var iframe = thread && thread.querySelector('iframe');
+          if (iframe) {
+            iframe.style.width = '100%';
+            iframe.style.border = 'none';
+            iframe.style.overflow = 'visible';
+            iframe.style.minHeight = '600px';
+            iframe.setAttribute('scrolling', 'no');
+
+            // 若同源，尝试根据内容自适应高度
+            try {
+              var doc = iframe.contentDocument || iframe.contentWindow.document;
+              if (doc && doc.body) {
+                iframe.style.height = doc.body.scrollHeight + 'px';
+              }
+            } catch (e) {
+            }
+          }
+        } catch (e) {
+        }
+      }, 600);
+
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema) {
+        document.querySelector('#cusdis_thread').dataset.theme = schema
+      }
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+<script src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" integrity="sha256-pMhcV6/TBDtqH9E9PWKgS+P32PVguLG8IipkPyqMtfY=" crossorigin="anonymous">
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha256-SyTu6CwrfOhaznYZPoolVw2rxoY7lKYKQvqbtqN93HI=" crossorigin="anonymous"></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+<script src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" integrity="sha256-UVQ5HtHTmtqBT3KY5cd4AvI47pp0gJwIM+q45HD9oLk=" crossorigin="anonymous"></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://s4.zstatic.net/ajax/libs/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.js"></script><!-- hexo injector body_end end --></body>
+</html>

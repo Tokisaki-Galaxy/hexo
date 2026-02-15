@@ -1,0 +1,5 @@
+User-agent: *
+#Disallow: /av/*
+#Disallow: /galleries/*
+Sitemap: https://tokisaki.top/sitemap.xml
+Sitemap: https://tokisaki.top/baidusitemap.xml

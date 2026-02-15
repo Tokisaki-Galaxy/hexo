@@ -1,0 +1,1057 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<script>
+(function() {
+    var userLang = navigator.language || navigator.userLanguage;
+    if (userLang && userLang.startsWith('zh')) {
+        document.documentElement.setAttribute('lang', 'zh-CN');
+        window.addEventListener('DOMContentLoaded', function() {
+            // 1. Handle article page title and H1
+            if (window._zh_title && window._en_title) {
+                // Precisely detect: find English title in current title and replace with Chinese
+                if (document.title.includes(window._en_title)) {
+                    document.title = document.title.replace(window._en_title, window._zh_title);
+                } else {
+                    // Fallback: if theme handles title specially (e.g., truncation), replace directly
+                    document.title = window._zh_title;
+                }
+                // Replace article page h1 title
+                // Consider different theme selectors, find first h1 tag for replacement
+                var h1 = document.querySelector('h1');
+                if (h1 && window._zh_title) {
+                    h1.textContent = window._zh_title;
+                }
+            }
+            // 2. Replace all title elements with data-zh-title and data-en-title attributes on homepage or list pages
+            var titleElements = document.querySelectorAll('[data-zh-title][data-en-title]');
+            titleElements.forEach(function(el) {
+                var zhTitle = el.getAttribute('data-zh-title');
+                var enTitle = el.getAttribute('data-en-title');
+                if (zhTitle && enTitle) {
+                    // Replace element text content
+                    if (el.textContent.trim() === enTitle.trim()) {
+                        el.textContent = zhTitle;
+                    }
+                    // If it's a link element, also check its title attribute
+                    if (el.hasAttribute('title') && el.getAttribute('title').trim() === enTitle.trim()) {
+                        el.setAttribute('title', zhTitle);
+                    }
+                }
+            });
+            // 3. Replace article titles on homepage/list pages (using global title mapping)
+            if (window._hexo_title_pairs && window._hexo_title_pairs.length > 0) {
+                // Create English to Chinese mapping
+                var titleMap = {};
+                window._hexo_title_pairs.forEach(function(pair) {
+                    titleMap[pair.en.trim()] = pair.zh;
+                });
+                // Helper function to replace article titles, supports exact match and contains match
+                // Preserves child links when replacing text (assumes single link per title element)
+                var replaceTitle = function(el) {
+                    var text = el.textContent.trim();
+                    var zhTitle = null;
+                    var matchedEnTitle = null;
+                    // Prefer exact match
+                    if (titleMap[text]) {
+                        zhTitle = titleMap[text];
+                        matchedEnTitle = text;
+                    } else {
+                        // Try contains match (handle cases with extra spaces or child elements)
+                        // Using indexOf for IE/older browser compatibility (this runs in browser context)
+                        for (var enTitle in titleMap) {
+                            if (text === enTitle || text.indexOf(enTitle) !== -1) {
+                                // Only replace when text is highly similar to title (avoid false replacements)
+                                if (text.length <= enTitle.length * 1.5) {
+                                    zhTitle = titleMap[enTitle];
+                                    matchedEnTitle = enTitle;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (!zhTitle) return;
+                    // Check if element contains a child link - if so, update link text to preserve hyperlink
+                    var childLink = el.querySelector('a');
+                    if (childLink) {
+                        childLink.textContent = zhTitle;
+                        // Also update title attribute if it matches the English title
+                        if (childLink.hasAttribute('title') && childLink.getAttribute('title').trim() === matchedEnTitle) {
+                            childLink.setAttribute('title', zhTitle);
+                        }
+                    } else {
+                        el.textContent = zhTitle;
+                    }
+                };
+                // Find title elements within article card/list containers (limit search scope for performance)
+                var containers = document.querySelectorAll('main, article, .post, .posts, .post-list, .article-list, .card, .content, #content, #main');
+                if (containers.length === 0) {
+                    containers = [document.body];
+                }
+                containers.forEach(function(container) {
+                    var titleSelectors = 'h1, h2, h3, .post-title, .article-title, .entry-title, .card-title, a[rel="bookmark"]';
+                    var potentialTitleElements = container.querySelectorAll(titleSelectors);
+                    potentialTitleElements.forEach(replaceTitle);
+                });
+            }
+        });
+    } else {
+        document.documentElement.setAttribute('lang', 'en');
+    }
+})();
+</script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/favicon.png">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Tokisaki Galaxy">
+  <meta name="keywords" content="blog">
+  
+    <meta name="description" content="一些海龟汤，网上搜集">
+<meta property="og:type" content="article">
+<meta property="og:title" content="海龟汤">
+<meta property="og:url" content="https://tokisaki.top/blog/ltp/index.html">
+<meta property="og:site_name" content="Tokisaki Galaxy的博客">
+<meta property="og:description" content="一些海龟汤，网上搜集">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-21T02:21:43.000Z">
+<meta property="article:modified_time" content="2026-02-15T12:36:30.261Z">
+<meta property="article:author" content="Tokisaki Galaxy">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>海龟汤 - Tokisaki Galaxy的博客</title>
+
+  <link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous">
+
+
+
+  <link  rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"tokisaki.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":50,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":"enable","follow_dnt":false,"baidu":"91eeedd7b367cd070a600501df970843","google":{"measurement_id":"G-9YQEB4P3YS"},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"microsoftclarity":"eell8b38tb","gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?91eeedd7b367cd070a600501df970843";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=G-9YQEB4P3YS", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', 'G-9YQEB4P3YS');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "eell8b38tb");
+    </script>
+
+
+
+  
+<!-- hexo injector head_end start -->
+<style>
+    .hexo-llm-zh { display: none; }
+    .hexo-llm-en { display: block; }
+    html[lang^="zh"] .hexo-llm-en { display: none !important; }
+    html[lang^="zh"] .hexo-llm-zh { display: block !important; }
+</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="Tokisaki Galaxy的博客" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Tokisaki Galaxy的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="海龟汤"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-05-21 10:21" pubdate>
+          2021年5月21日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          20k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          165 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">海龟汤</h1>
+            
+            <div class="markdown-body">
+              
+              <p>FROM ZHIHU:<br>soup base-horror-1 牛吃草</p>
+<p>夫妻俩屋内吵架，妻子气急而开始摔东西，丈夫一时气恨交加，用刀割掉了她的舌头，在妻子逃跑的同时丈夫用利斧砍断了她的四肢。丈夫行凶后被自己不正常的暴行和血腥场面所惊愕在原地。而逃出房门的妻子因失去了双臂双腿，趴在草地上用牙齿咬着草一点一点挪到邻居家门口，撞门之后得不到求救，最终因失血过多而死。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-horror-2 情人</p>
+<p>情人是个男人，因为老男人拒绝离婚的理由是他生不出孩子，情人绝望之下，去老男人家里把老男人的儿子杀死塞进肚子中，用这种方式证明自己怀了老男人的儿子。墙上的话是“我怀了你的孩子”。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-horror-3 眼睛</p>
+<p>该车站是某个杀人团伙转移重要尸体的窝点，这天在转移时由于疏忽大意让男子无意间进来，他们拆除了厕所的地下管道，改造成了藏尸间，出口就是男子坑位正前方的地板砖，男子蹲坑时他们正好把尸体从里面顶出出口，男子听到的声响是瓷砖被碰开的声音，然后从门缝底下看到尸体从眼睛处慢慢上升。罪犯顶出来尸体后发现了男子，于是杀人灭口。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-horror-4 犬</p>
+<p>小女孩是个盲人，晚上有小偷潜入家里，把狗杀死吊在天花板上，滴水声是狗在滴血，舔她手的也不是她的狗，而是那个人。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-horror-5 厕所</p>
+<p>凶手在刚刚杀完人的时候听到了厕所外面的动静，知道有人来上厕所，凶手为了不让尸体暴露，所以假装是清洁工在上夜班，然后把死者当成了拖把，背过身拖地，当时厕所灯光十分的昏暗，所以急忙去上厕所的主人公并没有发和现什么异常，只看到一个清洁工在拖地而已，于是上完就走了。其实是凶手把死者倒立，背对男主用死者的头发在拖地。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-horror-6 敲门声</p>
+<p>丈夫下车不久就被杀人犯杀害了，杀人犯出于极致的恶趣味，把尸体吊在车上方的树上，每两声的敲车门声是风吹丈夫尸体摇摆的脚碰到车门发出的声音。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-horror-7 咚咚咚</p>
+<p>一个小偷潜进了一个杀人犯的屋子，杀人犯当时拖着一具尸体往楼梯上走，咚咚的声音是尸体头被倒拖着撞到每层楼梯的声音，进门时杀人犯倒提着尸体进来，躲在床底的小偷的目光与尸体倒立的头的目光相遇，于是魂飞魄散。</p>
+<p>注：改编自同名网传灵异汤。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-28<br>soup base-horror-8 别回头</p>
+<p>有天女主在街上，刚好头顶高楼天台上有人争执，一人被失手推下楼顶，坠楼者被高空电线和铁丝网分割成碎状，鲜血和内脏溅落街道，女主身后的朋友看到急忙惊慌失措的喊她，女主听到呼喊转身后被散落的肢体内脏和血淋了一身，以及掉在脚前还睁着眼死不瞑目的半个脑袋。</p>
+<p>注：原创为活跃于众多海龟汤线上群的木鱼同学，群内的重口女王（笑）。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-28<br>souo base-horror-9 爱</p>
+<p>男孩已经死了，抓着的是一只断手，尸体是妈妈的。男孩和男孩母亲长期遭受父亲的家暴，男孩从小体弱多病，再加上家暴的影响，有很深的心理阴影，每晚必须抓着妈妈的手才能入睡。有一天母亲终于忍无可忍，在家里的茶壶里下了安眠药，男孩和父亲在睡前都喝了茶壶里的水。当晚，男孩依旧抓着妈妈的手入睡了。体弱的男孩首先因为过量安眠药致死，母亲半夜准备起来杀掉父亲时，发现男孩已经尸僵，手也挣脱不开，母亲悲痛欲绝之下先砍断自己被男孩握住的手，回头拼命的向孩子父亲砍去。房间满是血迹，男孩父亲被绝望的母亲分尸成碎块散落一地，断手的母亲倚靠在床脚，目光温柔的看着男孩，等待着男孩永远不会再睁开的眼睛睁开，最终因失血过多而死。</p>
+<p>注：此汤是改编里较满意的本子之一。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-28<br>soup base-horror-10 双胞胎<br>我有人格分裂，一个内向的姐姐人格和活泼开朗的妹妹人格，和他约会的时候时而是姐姐时而是妹妹，为了隐瞒所以我说我们是双胞胎，但他喜欢的是妹妹。结婚的时候母亲说，这是我唯一的女儿，你要照顾好她，新郎便得知了真相而疯。</p>
+<p>注：收录自抖音是不是团队。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-28<br>soup base-horror-11 找到你了</p>
+<p>两家人去山林聚餐，小男孩和小女孩跑到深处玩捉迷藏，他们做的约定是谁被找到就偷偷拍身后，那个人就不许动，小女孩躲在从山坡中间斜过来的一颗矮树下，男孩在山坡上发现了女孩，偷偷从他这边的树枝爬到树顶，准备跳到女孩身后吓她一跳，爬上去因为失足摔下来，脖子被卡在树枝中间，窒息死亡后慢慢尸僵，软下来的脚尖刚好搭到女孩背上，女孩一直蹲着捂住耳朵，也没注意到头顶轻微的挣扎声响，背被搭上以为被找到了，于是动也不动。</p>
+<p>注：山法官原创，灵感取自sp-h-6敲门声。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-28<br>soup base-horror-12 三胞胎</p>
+<p>三胞胎长相一摸一样，感情也很好，三兄弟一直同床共眠，老大的死刺激了患有精神疾病的老三，在几晚上都睡不着之后，无法忍耐的老三把老二从中间劈成了两半，把尸体左边一半放在床的右边，把右边放床的左边，老三躺在中间入睡，左右看都是他的哥哥完整的侧脸。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-28<br>soup base-horror-13 爱（二）</p>
+<p>我是一个洋娃娃，是用旁边男尸的女儿的皮做成的。有一家三口人，父亲和女儿都有遗传的精神病，女儿因为年龄太小忍受不了折磨每天痛苦不堪，父亲一直深爱着女儿，无法忍受女儿每天如此痛苦便杀了女儿，用女儿的皮做成洋娃娃陪着自己，母亲得知后因为极端的恐惧杀掉了女儿父亲，说：“你们可以永远在一起了。”</p>
+<p>注：重编自网传汤《洋娃娃》。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-28<br>soup base-horror-14 外婆</p>
+<p>外公因为农村里的重男轻女观念一直不待见孙女，等孙女来到家后晚上拿着镰刀准备杀掉孙女，但外婆发现了急忙上去阻拦，外婆夺过镰刀失手之下杀死了外公，女孩被声音惊醒问进屋来的外婆是什么声音，外婆说是在收麦子，事后外婆把外公制成了一个稻草人放在田地里。隔了几天女孩给外婆在地里帮忙干活时，看到鸟在啄稻草人的脸，稻草人脸上的伪装被鸟啄开，露出了外公尸体的眼珠，女孩问外婆的话是“为什么那个稻草人的眼珠看起来好像外公的眼睛啊。”外婆被孙女的话刺激到了，因为巨大的恐惧与愧疚，便在深夜自杀。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-28<br>soup base-horror-15 床边有人</p>
+<p>我是一个女孩，妈妈被我杀了。女孩从小患有严重的精神错乱和自闭症，小时候因为精神错乱误杀了她的哥哥，母亲怕她的自闭症加深，便把这事含糊过去，但是女孩一直有深深的怀疑，以为是妈妈杀的哥哥。女孩的精神错乱一般都是深夜自闭症加深引发出来的，所以母亲每天半夜都偷偷过来盯着女孩是否安然入睡。这天终于被半夜醒来的女孩发现，女孩以为母亲来杀她了，惊恐不安下精神错乱又开始了。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-28<br>soup base-horror-16 红</p>
+<p>她的床对面墙上挂着一副海报，海报里有个红色眼睛正对着她，但眼睛的墙壁位置其实是被掏空的，她墙对面住着一个红眼病人，盯着她的眼睛是这个红眼病人的。她每次发呆愣神都会一直盯着海报里的眼睛，也同时被这双眼睛死死盯着，晚上也受此影响一直做红色眼睛的噩梦，所以感觉快被逼疯了。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-28<br>soup base-horror-17 女明星</p>
+<p>电视里正在播报新闻，报道说有一个狂热粉丝为了追星，把自己的皮剥下来做成人皮沙发送给了她，而这个明星就是她，女明星低下头看着自己正在坐的柔软的人皮沙发，在惊恐的尖叫中突发心脏病而死。</p>
+<p>注：来自一位海外老哥的友情供稿。</p>
+<p>soup base-weird-1 生日</p>
+<p>这个人天生就是盲人，有次他们出去探险，被困在一个没有任何食物的荒岛上，朋友们骗他说每个人都砍下来自己的一只手臂当食物，他便主动奉上，在生日这天，无数掌声在他耳边响起来时，他忽然明白，自己被骗了。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-2 邻居</p>
+<p>邻居听到女主家有异响，打电话向女主说可能进小偷了，女主回到家寻找完发现并没有丢什么，便放心睡觉了，其实小偷是偷了女主家的备用钥匙，半夜进门后，来到女子床边在她耳朵边轻轻告诉她：“你丢的其实是这把钥匙。”女子因惊恐心脏病发作而死。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-3 水草</p>
+<p>一对情侣在河边玩的时候，不小心双双落水，但两人都不会游泳，男主在水中挣扎的时候脚被水草缠住，男主死命挣脱开才得以活命，女主却再也没有上来。后来和渔夫聊天，被告之河里从来没有水草，男主才醒悟缠住他的不是水草，是女主的头发，女主是被他用脚蹬下去所以死在河中的。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-4 女明星</p>
+<p>女明星毁过容，养女儿是为了移植女儿的脸皮到她自己的脸上，那顶帽子是她自己的，时不时给女儿戴上是为了测量女儿头部大小，一旦刚好合适，就可以带去医院做脸部移植手术，手术后女儿悲愤自杀。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-5 新娘</p>
+<p>故事发生在唐朝，新郎和新娘青梅竹马，定下婚约后新郎去京城求取功名，如愿以偿中了状元当了官之后兴高采烈的回来，才知道新娘因为家里闯进一群歹徒被轮番玷污了身子，新娘不堪受辱便上吊自杀了，新郎大喜后又大悲。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-6 雪山</p>
+<p>两人是一人身中7枪，另外一人自杀而死。自杀的人有梦游症，第一天晚上梦游中把同伴杀死，醒来后发现自己杀人很害怕，就挖了个坑把同伴埋了。第二天晚上梦游的时候，他又把坑里的同伴挖出来，在尸体上打一枪，又去睡了。这样重复了整整7天，在第八天的时候他终于受不了这种恐怖，没有等到救援队就自杀了。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-7 崇拜</p>
+<p>小孩的爸爸是一个魔术师，经常表演用刀切开人体后又如没事般地接回，因而小孩以为魔术是真的，有一天便趁爸爸的同事睡着尝试这项魔术，小孩把这个人真的切块了，等到爸爸回来时，小明对爸爸说了一句“怎么把他变回来啊”，爸爸便在绝望和愧疚中自杀了。</p>
+<p>注：改编自网传汤-魔术。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-8 字条</p>
+<p>女儿有精神病，是她杀了妈妈，字条是妈妈写的。但是被撕碎打乱了顺序，正确的排列应该是，爸爸快走，女儿疯了。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-9 勺</p>
+<p>这是一家人，经常有国外亲戚寄过来特产，有天外祖母在国外过世，国外亲戚便寄过来装在罐子里的骨灰，因为和一起保健品放在箱子里，这家人以为也是罐保健品，便在桌子一勺一勺吃了下去，等最后反应过来他们在吃自己的外祖母，所有人惊恐不已，开始呕吐。</p>
+<p>注：来源于BlackStory黑故事微信公众号，另，骨灰属于无机物，严格意义说有害，但是在故事背景中可以说无毒。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-10 迷踪</p>
+<p>一家三口人，小孩先残疾，生下来就是一条腿，他的父母为了让他们的小孩不自卑，所以搬到了深山老林里面生活，为了给孩子营造出人生下来就是一条腿的假象，所以夫妻两个各自也把一条腿剁了，在男主来到里借住后，夫妻两个为了不让孩子发现，所以趁着男主睡着的时候把男主人公的一条腿也切掉了。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-11 绿牙</p>
+<p>男子是一名殡葬师，有梦游症和异食癖，有一次夜间发作去停尸间拖走并吃了一具尸体，受到上司责骂之后为了搞清楚丢失原因，便用绿色颜料在另一具尸体上做了记号，等第二天发现自己嘴里有绿色颜料，才明白是自己吃了两具尸体，便在惊恐中自杀了。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-12 太平间</p>
+<p>故事有三个人，另一个人躺在尸体架上，3个人是医学院的，这天男子B生日，男子A和男子C约定要用特别的方式帮他庆祝，于是C就假扮成尸体，A去让B帮忙抬尸体。到太平间的时候，C突然跳起来并且拿出藏好的生日蛋糕大喊SUPRISE，B于是被吓得心脏病发作而死。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-13 血</p>
+<p>男子住在一家酒店的最顶层，酒店楼顶的蓄水箱被某个杀人犯扔进尸体，但因为处理不当，在沉尸过程中让大量血液流淌进水箱，混在水中。</p>
+<p>注：改编自洛杉矶塞西尔酒店水箱沉尸案。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-14 腐</p>
+<p>我是一名警察，有人报案说楼里好几天一直味道很重，于是来查看情况。其实一个孤寡老人独自在家，养了很多流浪猫，邻居常常头疼于臭味，有天在鱼里下了毒扔到老人门上，想毒死猫，鱼被老人看到后觉得还新鲜就自己吃了，毒发身亡后尸体被猫啃食干净，因为也出不去，所以一只一只死在屋里，慢慢腐烂。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-15 重见天日</p>
+<p>某先生的太太死后下葬多年，先生准备开馆举行捡骨仪式，但是开馆后发现棺盖上全是太太手指甲的抓痕，说明太太在下葬后还活着，在棺材里活活窒息死的，先生想到这里，便在绝望和愧疚中自杀了。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-16 邻居（二）</p>
+<p>我是一个女人，邻居有通感症，具体是对于声音和画面的通感，觉得我的声音像柠檬，因此他看我就像看到了柠檬一样。</p>
+<p>注：本汤源自豆瓣组。</p>
+<p>另，通感症属于神经系统病症，受外界刺激后，正常人一般只有一个感应器官做出应答，而通感症患者有两个或两个以上。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-17 惩罚</p>
+<p>她是我的妻子，惩罚就是吃人肉。我是个变态杀人狂，喜欢用尸体的腐肉做饭菜，这就是我内心的终极秘密，而妻子一无所知。这天她一边吃一边说看透了我的秘密，所以撒谎的惩罚就是继续吃着满桌的人肉饭菜。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-weird-18 病</p>
+<p>家里老爷子重男轻女，从某处得知了偏方，是用同血缘的人的心脏做药引。于是杀了妹妹取了心脏，做好药汤让哥哥喝。哥哥不见妹妹逼问下老爷子说了实情，绝望痛苦中选择自杀。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-13<br>soup base-weird-19 人影</p>
+<p>我是一个通缉杀人犯，低价购买了这个凶宅用地下室藏尸，我杀人之前先要烫烂他们的眼睛和舌头，这天有一个没被我杀死的人跑了出来，但庆幸的是，他们跑不远。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-weird-20 浪子回头</p>
+<p>我恨死了这个男人。<br>每天在外面掂花惹草。<br>在一天家里他沉迷于球赛在怎么叫喊都不搭理我后，怒火让我失去理智，砍下了他的头，转过来放在脖子上面对着我。<br>我痴迷的看着他如往日般爱我的温顺。<br>欣喜万分。</p>
+<p>注：改编汤，故事原型取自鬼故事集。</p>
+<p>soup base-ratiocinate-1 线索</p>
+<p>凶手是妻子，因为男子长期吸毒，妻子实在忍受不了想离婚，所以趁男子吸完毒神志不清的时候给他又打了一针，使他晕过去，接着用男子的拇指粘了红色墨水盖章在离婚协议书上面。但是因为剂量过大，男子直接死亡，女子发觉后，不得已营造出一个自杀的场景。但是法医在脚上面找到了男子并不是自杀的线索，因为如果是上吊自杀，脚是没有受到力自然下垂的，尸僵后脚尖是向下的，但是如果是被他杀，尸僵的时候脚部也是正常的。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-13<br>soup base-ratiocinate-2 富豪</p>
+<p>富豪年事已高，但妻子还风华正茂，和富豪的私人医生出轨了，他们计划了富豪的死亡为夺取财产。富豪很久就得了心脑血管病，长期服用阿司匹林，但由于阿司匹林会慢慢阻碍身体里维c的运输，所以开始缺c。富豪便让私人医生开维生素c的药，但医生这时已经妻子已经串通好了，所以向富豪开的维c药全部换成了安眠药，富豪因为年老体衰，加上服用药物不当让身体进一步恶化，最终因大量食用安眠药而死。</p>
+<p>注：原创主.霹雳火，一篇珍贵的推理作品，使用时请务必尊重作者版权。</p>
+<p>且，心脑血管病属于神经内科，但是具体部位分布非常广泛，有血管、大脑神经、心肺等，而且症状也遍及全身。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-14<br>soup base-ratiocinate-3 南瓜灯</p>
+<p>我挂的是人头，一个属于我妻子，一个是我的心理医生。现场有四个南瓜灯，两个真的南瓜灯以尸体为灯具。<br>我亲爱的妻子为了踢走我，拥抱她的真爱，也就是我的心理医生，他们合计以认知性障碍综合征把我送进精神病医院，但万圣节当天，由于我各种题测显示正常，我便被特许回家过节，于是回到家的我完美的撞见了这两个混账的爱情现场。我提起斧头，砍下了他们的头，把他们的头颅刻成了南瓜灯，挂在了我的门前作为万圣节装饰，又把真正的南瓜头灯放在他们的尸体上。毕竟在所有人眼里，我只是一个可怜的认知性障碍精神病人罢了，把头颅当成南瓜灯，又不是我的错啊。<br>可问题究竟，谁知道我到底有没有病呢，毕竟，那可是我的心理医生亲口说的呀。</p>
+<p>注：原创主.木鱼，极其珍贵的原创作品，使用时请务必尊重作者版权。</p>
+<p>且：把人头做成南瓜头的细节可自行构想在底中。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-14<br>soup base-ratiocinate-4 白</p>
+<p>我带着我的猫散步，走到一片森林里，大雾弥漫，地上到处散落着白色粉末。我觉得这里不太对劲，想离开这里，但我的猫忽然挣脱我跑了出去，我循着它的方向往森林更深处追去，可等我找到它的时候，看到它正被背对着我的一个男人疯狂虐杀。怒火一瞬间点燃了我的理智，我失控般的举起脚边的石头狠狠的砸向那人的后脑，血液四溅，男人应声倒地。我擦了一把脸上的血，沉默地把猫埋在一旁的树根下。</p>
+<p>我走出迷雾弥漫的森林时，发现已经被警察用枪指着我包围了。在随后漫长的等待中，他们的调研结果出来了，告诉我森林里的白色粉末是一种很强烈的致幻药物，所以推出结论是是我在不慎吸入大量致幻药物后产生了强烈的幻觉，随后杀了男人和猫。<br>因此我从监管室转入医护室，开始被观察测试后续药反。</p>
+<p>这样的日子持续了多久呢，我已经开始记不清了。<br>每天醒来时白色占满我的视野。白色的天花板、白色的墙、白色的床单，和在我身边来来往往的白色的制服。我身上仿佛永远满插着连接庞大冰冷的仪器的管子。<br>最开始的迷茫、进行测试实验时的痛苦、以及永远得不到离开承诺的绝望和永无止境的白色困笼，让我身陷疯狂。</p>
+<p>我睁开眼，茫然的看着眼前的房间。<br>没有仪器，没有试管，没有一切，仿佛只是做了一个很长的梦，可梦的样子也记不清了，慢慢回想，只恍惚看到在一片黑暗中疯狂奔跑，没有亮光。<br>“0213号，病症为重度臆想症，现进行本周第四次康复题测，累积第三百八十一次。”<br>“0213号，基本题测完毕，现开始照例提问。你还记得在森林的事吗。”<br>“我，我杀了人…和猫。”<br>“有白色粉末存在吗。”<br>“……什么粉末。”<br>“………”<br>“好，提问完毕，精神恢复程度尚可，预测接近出院时间，0213号，请回去吧。”<br>我缓缓站起身，浑浊的眼睛扫过房间，最后落到墙壁的铁窗上，有微弱的光。</p>
+<p>“还有什么问题吗，0213号。”<br>“不……不。”</p>
+<p>我难以置信的盯着医生的面孔。<br>藏在面罩背后的眼睛闪着奇异的光。<br>“你是说，你们把我摆弄了这么久，我在这张床上度过了这么长时间，最后得出的结论是我其实得了精神病？”<br>“很遗憾，但是根据监测数据来说…”<br>“你们这是谋杀！我有没有病我自己很清楚！”<br>“那白色粉末呢，我们在森林根本没有找到你说的那种白色粉末。”<br>“不可能，我之前有抓回来一些…我手上有的，我记得很清楚！”<br>“那只是您的幻觉，实际上，只是一些碎石罢了。”<br>“你——”<br>“请您先去收拾您留在我们这边的衣物吧，转移您的车马上就要到了。”<br>房间里，我脱下病号服，换上了来这里就匆忙丢进储物柜的衣服，车就到了。</p>
+<p>我看着精神病院的大门，他们把我扔在这里就急匆匆的走了。<br>我习惯性摸向自己的口袋，一种微妙的触感被我察觉。<br>我张开手，看到手指上不均匀地分布着一些淡淡的白色粉末，在阳光下微微发亮。<br>我被骗了。</p>
+<p>我疯了似的高举着手，冲向大门。<br>大门却开始慢慢合拢。<br>“我有证据！我不是精神病啊，你们放我出去！你们听我说——”</p>
+<p>坚硬的大门合上缝隙，夹断了最后一丝光。</p>
+<p>侯校官，你明白了吗。<br>是长官。<br>请记住，你现在所做的事是正确的，一切为了最高利益，这些都是必要的牺牲。<br>是长官。<br>无论如何也要完成任务，不惜一切代价。<br>是长官，不惜一切代价，完成任务！</p>
+<p>为了暗地研究违背国际惯例的药物，候校官被派命保证任务顺利。<br>这种药物研究必须在特殊血型的人身上进行试验，而全国范围内拥有该血型的普通人只检测到我一个，因此我被策划进这场演出。<br>白色粉末是已经研究出的半成品，只在特殊血型的人身上起作用，但是需要接触皮肤，因此他们乘我不在家的时候潜入杀了猫，粉末洒在猫的身上。而回来的我见猫死亡，悲伤中前往附近的森林去埋掉猫的尸体。但药效开始逐渐发作，我进入森林看见的白雾，地面的白粉，逃掉的猫，和正在虐杀猫的人，全部出自药物对我施加的影响。<br>于是我被顺理成章的开始研究和监测。试验结束后，我被丢进精神病院。<br>饱受药物折磨的我，在大门合闭的时候，心也成死寂。<br>我不知道我到底有没有病，他们也不知道，也不必知道。</p>
+<p>我在精神病院中，度日如年的过着每一天。<br>如果麻木也算一种病。<br>我已病入膏肓。</p>
+<p>END</p>
+<p>注：原创主.小垂，极其珍贵的原创汤，使用时请务必尊重作者版权。</p>
+<p>又：我从头到尾没有病，药物的影响后遗症也不致疯，但是经历了实验时的痛苦过程后，又被强行关到精神病院，我被反复折磨到一个半疯麻木的状态。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-ratiocinate-5 冲水声</p>
+<p>一家三口是毒贩，男邻居是他们的眼线。他们利用母亲的身体运毒。具体为母亲把带保护的胶囊状毒品吞入腹内，回到家后利用泻药排出，排泄完后取出毒品，用马桶冲走其余的排泄物，然后反复进行直到所有的毒品都排出来。而事发当晚，母亲发现自己怀孕了，于是不想进行催泄，但父亲强逼着让她排毒，儿子听到母亲抗拒的哭喊声后与父亲进行争吵，随即和父亲殴打起来，母亲绝望中在厕所进行催泄，导致流产，且因身体长时间催泻的虚弱，最终失血过多而死。儿子因和母亲的深厚感情，绝望中也跳楼自杀。父亲惊怒之下，先逃到了男邻居那里，让男邻居给警察制造儿子和母亲关系不好的导向，借以拖延警察的查案思路，随后带着所有毒品逃命了。</p>
+<p>注：原创主.润子小姐，一篇可以力顶经典老汤牛吃草的极其珍贵的原创汤，使用时请务必尊重作者版权。</p>
+<p>soup base-tale-1 湖</p>
+<p>我和妻子都热衷潜水，在一次差点把整个家砸烂的感情宣泄后，我决定要永远摆脱她，但我不知道妻子和我下了同样的决定，我邀请妻子去一个人迹罕至的深湖潜水，妻子欣然应允。我们穿齐所有潜水装具，坠离小船，沉入湖面下，湖水幽蓝，湖底漆黑。我准备杀妻子的办法是提前到这片湖底，在湖底一块石头绑了铁链，到时候缠住妻子，让她永远留在湖底，谁也找不到她。当我来到那个地方时候，居然发现我的铁链消失了，而一根铁链无声无息的圈住了我，我愕然回头，对上了妻子潜水镜后冷漠的眼睛。原来妻子准备的手段是暗中跟随提前过来的我，在我离开后下去把铁链藏到别的地方。可妻子这根铁链没有锚，根本留不住我，我想把铁链挣脱开，却忽然呼不上气来，原来妻子趁我寻找铁链的时候在身后关了我的氧气瓶。我绝望的看着妻子向我游来，却惊愕的看见她把铁链也缠在自己身上，我们被铁链拉到一起。<br>妻子忽然无声的笑了下，轻轻抱住了我。<br>我不知道的是，妻子的氧气罐在下来之前就一半不到，她根本没打算再回到上面。<br>人在死亡临近走马灯的时候，会看到记忆深处最深刻的一幕。于是我看到了我们第一次在水底相遇的场景，妻子回到了笑起来像盛开在深水的花一样美丽的年纪，眼里满溢着星光。<br>同样年轻的我咧着笑容向她游去，湖水清澈，湖底荡漾。<br>我忽然回抱住我的妻子。<br>我们在黝黑的湖底紧紧相拥，没有声音，没有冷漠。</p>
+<p>那天晴朗，我对这个女孩说。<br>要永远，永远爱你。</p>
+<p>注：故事原型取自鬼故事集(具体出处不明)。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-tale-2 圣诞前夜</p>
+<p>我是个保险推销员，临近年底，我为了冲业绩快逼疯了自己，而小女孩的出现让我有了一个大胆的决定，就是杀掉小女孩然后让她的父母产生恐惧，有利于我上门推销保险。为了造成他杀所以我脱掉了女孩的衣服(他杀属于保险范畴，而自杀不属于)，也同样说明钥匙也落入凶手里。在女孩的父母来不及更换钥匙或者逃离城市之前，我开始上门推销。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-12<br>soup base-tale-3 一百万</p>
+<p>女子长期被家暴，带上家里的100w去找她的情人，但是情人刚好想跟她分手，女子在火车上把装钱的箱子藏好，自己留着钥匙，下火车打电话给情人后得知情况，告诉情人钱和藏的地方后，说想要钥匙，来找我。但因为意外落水而亡，情人在火车找到了箱子，又在几天后找到了女子的尸体，但是由于尸体在水中泡胀，钥匙是项链所以卡进了脖子里面，情人最终也没有找到。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-13<br>soup base-tale-4 悔</p>
+<p>第一个他是警察，第二个他是纵火犯。男子多年前与女儿失散 ，后来打听到是被一家人把女儿拐走，男子找到这家人，这家人为了隐瞒，就骗他说他的女儿早已经被卖走 ，男子愤怒之下，晚上把整个村子放火烧了，随后自首。后来警察鉴定了，他的女儿就在那个村子里。警察拿出的是死亡名单，男子在里面看到了女儿的名字，悔恨中自杀。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-14<br>soup base-tale-5 湖（二）</p>
+<p>我说今天天气这么好，一起去划船吧。<br>男友又和往常一样慢悠悠的说，划什么船啊，逛逛公园还不行啊，好麻烦啊，真的是。<br>啊，好气，为什么我会找这么一个又懒又麻烦的男朋友啊！</p>
+<p>我扭过头生闷气。<br>男友无奈的在一旁哄我。<br>“好啦，咱们这不已经在船上了嘛，别生气啦老婆，我划船你看风景好不好嘛。”<br>“我之前不想来也不是纯粹因为懒嘛，因为我今天看了天气预报好像会有暴风雨––”<br>我猛的扭过头来狠狠的盯着男友。<br>“你还敢狡辩？你就是懒，大懒猪！”<br>看着男友无奈的眼神，我忽然觉得没意思了。<br>“不划了，我要回去。”</p>
+<p>好啊，我们回去。</p>
+<p>突如其来的暴雨差点打翻了我们的小船，短短一会天空已经遍布黑云，我在惊慌失措中猛的记起因为匆忙赶来，我不顾男友的劝阻随手指了一支最小的船。<br>所以现在，小船将倾。<br>“我们该怎么办啊。”我发现我的声音已经带了哭腔。<br>“别害怕，我在。”男友的声音从来没有像这样让我觉得安稳。<br>我看像面色冷静的男友，紧紧揪住的心忽然轻轻松了一下。<br>可下瞬间小船被一个猛浪打了起来！<br>我在空中脑海一片空白。<br>我…就要这么…<br>可下一刻又回到一个温暖的怀抱里。<br>男友在我被拍起的瞬间跳过来抓住了我，可他在握桨啊！<br>我绝望的看着两支桨滑落水里，转瞬即逝。<br>暴雨中男友好像在说话，可我绝望中一点儿也没听懂，但这些话好像有生命一样，一个一个的钻进我的脑中。<br>“没事的老婆，你一定能活下去的，幸好你选了这只渔船，我上船前就发现侧面挂着斧头，待会你要自己划过去了，我的宝贝，要坚强，好吗。”<br>我呆滞的看着男友举起斧头，我忽然明白过来，疯了一样冲过去嚎啕大哭。<br>“你别––”<br>“别动，会砍偏的，我们不是说好了吗，要回去的。”<br>“不行不能这样青你别––”我又被猛浪拍回船框。<br>“别乱动。”男友严厉的看着我。<br>我忽然看不懂他的目光了，我以为我早就熟悉了他。他的慵懒、他的随和、和他从没凶过我的回忆一起在这道严厉的目光里消逝不见。<br>“答应我，和它们一起活着回去。”<br>血溅出来，和泪光混合一起蒙住了我的眼睛。</p>
+<p>好啊，我们回去。</p>
+<p>我呆滞无神的化着桨。<br>暴风依然怒吼在我的耳边。<br>雨点好像小了一点，又好像依然在疯狂的下着。<br>小船两侧留下血色的线，又很快被汹涌的湖面掩盖。</p>
+<p>你怎么又在偷懒啊，大懒猪，给我起床！<br>好啦老婆，别闹了让我再睡一会吧，就一会。<br>睡睡睡，就知道睡！哪天醒不来我看你怎么办！<br>没事啦，你醒来叫我就好了，我没关系的。</p>
+<p>老婆。<br>又怎么啦，我才不叫你呢，我走了，哼。<br>我爱你呀。</p>
+<p>END</p>
+<p>注：原创主之星.小垂汤友的出道作，答主在基础上进行了微不足道的故事加工，原型是她的自身梦境。一篇珍贵的原创汤。</p>
+<p>且：最后是男友把自己两条腿砍下来让女主当船桨，为了减轻船体重量又主动落湖。</p>
+<p>soup base-taste-1 海龟汤</p>
+<p>这个男孩儿跟爸爸一起出海，中途遇到暴风，在弥留之际，爸爸用自己的肉给他熬了一碗汤，骗他的儿子说这是海龟熬成的汤，爸爸牺牲自己保住了孩子的性命。孩子安全上岸之后，去了餐厅点了一碗真正的海龟汤，发现原来不是那个味道，顿时明白了，就自杀了。</p>
+<p>注：网传版本之一，另著名的版本还有“企鹅肉”，基本都是改编自原版“第一碗汤”(收录在第四模板)。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-2 美餐</p>
+<p>我是一只狮子，人类的衣服对我来说就是不能吃的垃圾，今天的垃圾多是因为多了一个大背包，这是一个跳伞的人，因为降落伞没打开摔死在草原里。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-3 蝴蝶结</p>
+<p>小女孩的妈妈有了婚外情，跟情人约定当小女孩的父亲不在家时就给小女孩戴上蝴蝶结作为暗号，以便情人去她家偷情。因为小女孩自己不会系蝴蝶结，所以这个暗号也就一直行之有效。而这天小女孩的老师给小女孩戴上了蝴蝶结，让情人误以为女孩父亲不在家，于是就暴露了，女孩父亲一怒之下杀了情人。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-4 半根火柴</p>
+<p>一群人坐热气球去沙漠旅行，回程途中燃料不足，必须减负，扔完所有行李后还缺多一个人的重量，于是这群人决定用火柴抽签，抽到半根火柴的那个人就自己跳下去。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-5 鞋</p>
+<p>这是一个女人，出门穿了一双高跟鞋，同时也是马戏团表演蒙眼飞镖的员工，这天因为迟到匆忙上台，所以忘了换鞋，由于她的合作搭档之前一直习惯了之前她的身高，在蒙上眼睛后并不知道这个女生由于穿了高跟鞋而改变了高度，所以导致了女生的意外死亡。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-6 苹果</p>
+<p>女孩是单亲家庭，父女之间相处很不和睦，女孩为了缓和关系，特意做了一件苹果雕刻送给父亲，而父亲对女孩的艺术品毫无兴趣，拿到手随口吃了下去，女孩在做雕刻时用于支撑的刀片又忘了取出，于是父亲因利刃割穿喉咙而死。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-7 纸条</p>
+<p>男子在一片沙漠里迷失了道路，给一株仙人掌上贴了纸条用来当路标，可过了很久不知不觉又绕回来后发现了这个贴了纸条的路标，知道自己走不出沙漠了，于是绝望自杀。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-8 海上</p>
+<p>小女孩是台风代号，死在了海上，所有周围陆地上的人都欣喜若狂。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-9 花茶</p>
+<p>男主人邀请他的妻子和朋友在家喝茶，蓝色是妻子的一杯，绿色是他的朋友的一杯。而故事背景中，妻子与男主朋友出轨，妻子以为被男主人察觉了这件事所以提前在他的红色花茶里下了毒药。但男主早已知道妻子了投毒，于是在自己的红色花茶里加了小苏打使其变成蓝色，在妻子的蓝色花茶里加入了柠檬汁变成红色，于是妻子死了。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-10 光</p>
+<p>男主妻子有心脏病，半夜突发心脏衰竭，紧急之下男人送到了家附近最近的一家私立小医院里，妻子用了呼吸机后男子在楼道里等待，光瞬间熄灭说明医院突发了断电，而因为是小医院没有备用电源，所以妻子靠呼吸机维持的生命也熄灭了，男子意识到了无可挽回的这点，所以瞬间崩溃。</p>
+<p>注：改编中忽然很难过的一碗汤。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-11 bird</p>
+<p>他在已经开始降落的飞机上醒来，而这只鸟离飞机只剩一个危险的距离。之前的梦可以理解为对即将发生的事的心理暗示。</p>
+<p>注：改编自焦糖小姐原创汤《一只鸟》，收录自公众号海龟汤推理大师。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-12 救</p>
+<p>女孩穿的凉鞋，里面有小石子，于是靠在一旁想抖出来， 但是她没注意到靠的是电线杆，她身后的男子看她一直再抖，以为被触电了，于是赶紧上来把她拖到，使之脱离发电体，而女孩以为要被坏人强奸，于是拼命呼喊。</p>
+<p>注：收录改编自海龟汤推理大师.焦糖小姐的《少女路边被袭》。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-13 鸡</p>
+<p>老汉是一个精神分裂者，白天他是一个辛苦劳作的农民，晚上他就以为自己是各种动物，有一天晚上他以为自己是一只黄鼠狼，便生吃了一只鸡，第二天依然如此，吃了两只，第三天他吃了三只鸡后，去河边喝水，因为撑的太滚一头栽进河里，淹死了，尸体顺着河流搁浅在下游河岸边被人发现。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-14 天台</p>
+<p>两个人都在精神病院的天台，第一个人手里是块石头，另一个以为自己是块石头，他认为第一个人手里的石头是他的女朋友，他为了去救女朋友也一起扑下天台。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-15 刺</p>
+<p>男子死于自杀。方法是用尖锐的冰锥，冰锥化为水后无影无踪。</p>
+<p>注：收录改编自焦糖小姐的《死后一滩水》。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-16 草地和枪</p>
+<p>男子在雪山下开了一枪，引起雪崩，被淹没后窒息而死，春天雪消融后尸体才被发现在草地上。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-17 碎</p>
+<p>两具尸体是两条鱼，凶手是小男孩，不小心撞碎了鱼缸，哭着跌跌撞撞去找妈妈。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-18 黑</p>
+<p>我回到家后家里太黑，我去开灯，因为家里煤气泄露，在我开灯的一瞬间发生爆炸，我进入了永恒的黑暗里。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-19 出轨</p>
+<p>妻子准备去闺蜜家，而老公和闺蜜出轨。妻子拿着ipad进闺蜜屋后发现wifi自动连接了，而老公说从未进过闺蜜的家，这是ipad里唯一的破绽。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-20 悔</p>
+<p>我是一个临产妇女，又难产而死，按生前遗愿我的眼睛和眼角膜都捐给了别人，受捐者抱着杀人凶手，也就是我的孩子，用我的眼睛看着我的手术记录和死亡证明，流下了眼泪。我并没有死，只不过换了一种方式去看着世界。</p>
+<p>注：收录改编自我们的原创主之星.木鱼小姐的《被杀记录》。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-21 醉酒的人</p>
+<p>醉汉是一名积木爱好者，家里养着一只猴子，他这天由于大醉后睡姿问题，嘴巴张的很大，猴子受主人平时的影响，将他脸上的“洞”理解成了积木底盘，然后将一堆积木硬塞进去，醉汉活生生的在睡梦中窒息而死。</p>
+<p>注：该本在进行中或被引起重口误会，请谨慎使用。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-22 窗内</p>
+<p>我是一个潜水员，我在海底一个漏水严重的潜水艇窗户外面看里面，尸体和物件在水中漂浮。缘由是这艘潜艇曾经发生船难，船舱里最后只剩两个人等待水慢慢淹进来，而手枪里只剩一颗子弹，两人都不想被淹死，所以通过打牌的方式决定谁能用枪自我了断。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-23 溺</p>
+<p>这人在森林的一条河里练习潜水，而恰好附近有片树林突发火灾，被派过来的消防飞机在就近取水的过程中，潜水的人被水泵的离心力吸附，溺水而亡，尸体被卷进水桶，喷洒出去落到森林深处了。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-24 香</p>
+<p>男子是养蜂人，工作的地点就在山林里。由于受强烈刺激的香水味影响，同时男子的熟悉气味也被遮盖，蜜蜂开始表现的具有攻击性，最终引起疯狂蛰叮。</p>
+<p>注：收录改编自焦糖小姐的《致命香水》。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-taste-25 占线音</p>
+<p>修理厂刚刚帮一个女人的车换了轮胎，但匆忙中忘了拧紧螺丝，修理工记起来后赶紧向女人打电话，但每次打过去都是占线，原来女人开出去后一直在接恋人的电话，在路上急转弯时车轮失去控制，于是发生事故。</p>
+<p>注：收录改编自BlackStory黑故事。</p>
+<p>soup base-fairy-1 红皇后的茶话会</p>
+<p>从仙境重回现实世界后，似乎已经过去很久。爱丽丝常常怀疑那是否真的只是一场梦。<br>她照常去湖边看书。一天在森林里行走时忽然脚下一空，首先是无止境的坠落，紧接着是如此熟悉的、从耳旁穿过的风。</p>
+<p>再度醒来，疯帽子已经站在身前。</p>
+<p>他说，红皇后得知爱丽丝再度擅闯领地后勃然大怒，并下令如果她想离开，必须在茶话会上进行一次抽牌游戏，赢了就就放她走，否则将被砍下头颅。<br>“别怕，我会帮你的。”疯帽子温柔地抚摸着爱丽丝金色的头发。</p>
+<p>茶话会开始了，侍女把扑克牌铺成一排，红皇后冷笑着说，三次机会，抽中红桃A，就放你走。<br>爱丽丝连续抽了两张都不是，绝望中记起疯帽子的话，他说买通了侍女，把赢的那张牌放在了第一张。</p>
+<p>爱丽丝翻开了第一张牌，红色的A显露眼前。爱丽丝如释重负的扔给了红皇后。红皇后撇了一眼后，把这张牌扔在地上，侍卫凑上去一看，黑桃A。</p>
+<p>刽子手手起斧落，金色的脑袋滚落在地上。<br>在爱丽丝因为困惑和恐惧而放大的瞳孔里，映出红皇后残忍肆虐的笑。</p>
+<p>疯帽子欣赏的着这一幕，咬下一口黄油甜饼，陶醉于分泌的多巴胺之中。</p>
+<p>爱丽丝，你还是像以前一样单纯，哪怕自己是红黑色盲，也对这张牌毫无防备。<br>可是，自从你那次抛下我回到你的世界，我就被思念和哀怨折磨至今。<br>我真的快被逼疯了。<br>所以这次，你终于再也不会离开了吧。</p>
+<p>可是我没骗你啊，这张牌，的确是赢牌啊。</p>
+<p>喷涌而出的血液把盛开的玫瑰染得更加娇艳，疯帽子站起来看着爱丽丝，那双空洞的眼睛仿佛还在同自己对视。</p>
+<p>“爱丽丝，乌鸦为什么像写字台。”<br>“你为什么不留下，永远陪我呢。”</p>
+<p>注：小垂原创，灵感取自自身梦境，极其珍贵的原创作品，请使用时务必尊重作者版权。</p>
+<p>又：爱丽丝梦游仙境原著中，“乌鸦为什么像写字台”是一句表白语，意为喜欢你没有理由。所以汤面中疯帽子的话的大致意思为，现在你知道我有多爱你了吧。</p>
+<p>soup base-event-1 斩手狂</p>
+<p>大海上发生了船难，男主在救生艇上，但是救生艇已经达到承载人数的上限，许多溺水者仍然不断游过来，想要抓住救生艇。为了避免救生艇翻覆，男子只好将溺水者伸出来的手一一砍断。</p>
+<p>注：算是海龟汤第一碗新闻汤，日本的大和战舰沉没时发生过这样的事情，《史记》中春秋时代的晋楚相争也有过记载。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-event-2 溺</p>
+<p>沙漠的这块地方准备修建水坝，从一处溪谷里引来水流，冲进沙漠，流浪汉就是被这么淹死的。</p>
+<p>注：改编自美国历史中著名的城市开发丑闻，二十世纪初，坐落在荒漠上大海边的洛杉矶缺乏淡水，需要修建水库储水，在此背景上，开发商与市政府合作，推出水坝工程，从远处的埃文斯溪谷引水。中间有三点，其一，开发商承包政府工程利润巨大。其二，为让此工程通过，开发商不惜将水库的储水倾倒大海，加剧城市水危机。其三，开发商大面积廉价购买了郊区荒漠，引来的溪水被用来将此地开发成有水之地，因此得以一本万利。该事件导致了埃文斯溪谷干涸，史称强奸埃文斯溪谷事件。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-event-3 冰激凌</p>
+<p>故事发生在美国六七十年代，小孩们总爱钻进老式冰箱玩耍，他的弟弟才6岁，有天躲进冰箱，但是门被意外上锁，他们家的冰箱里只有巧克力味的冰激凌，他那天想吃其他口味的，于是出去买了，弟弟在冰箱无人回应，最终在又冷又窒息的环境中死去。</p>
+<p>注：改编自某新闻案例。</p>
+<p>又：美国六七十年代大部分家庭还是使用老式冰箱，类似于保险柜，冰箱采用门闩系统，外边的门把垂直锁上后，从里面根本无法打开，为了冷藏效率门关上后密不透风，隔音效果也相当优秀，同时阻拦了空气流通，因此注定使藏身其中的人遭受冰冻和窒息的后果。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-event-4 桥</p>
+<p>我是一名黑人，故事发生在美国的开垦年代，我的居所和公园隔着一条河流，本来用于两地之间通行的桥被改建成了白人专用、禁止黑人及乘载黑人的汽车通行。</p>
+<p>注：改编自美国公民权运动前真实事件。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-event-5 线</p>
+<p>装有心脏起搏器的病人在做核磁共振时，起搏器的导线被共振产生的强大磁力折断，导致死亡。</p>
+<p>注：出自新华网2001年8月新闻报道，美国发生的一项真实案例。</p>
+<p>另，起搏器含有金属，因此才能被核磁共振的磁力吸引。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-event-6 男孩</p>
+<p>男孩在接受核磁共振时，检查室里有一个氧气瓶没有被固定好，被强大的磁力吸入仪器内，砸死了男孩。</p>
+<p>注：出自新华网2001年8月新闻报道，美国发生的一项真实案例。</p>
+<p>另，氧气瓶为金属制，会受磁力牵引。<br>山法官<br>山法官​<br>(作者) 回复山法官​<br>(作者) 2020-11-29<br>soup base-event-7 口角</p>
+<p>故事在美国旧金山，a是白人，b是黑人，且a一家三口都是强烈的黑人歧视者。<br>某天，b在街头撞到了a，因此引发了口角纠纷，a对其进行了强烈的种族侮辱。<br>b因此怀恨在心，跟踪了a几天后，趁a一个人在路上没有防备时背后打晕了a，并带到了自己开的纹身店，把a整个人全部纹成黑色，然后扔到街道上。<br>a醒来后，踉踉跄跄回到家中，但一进门就吓到了妻子，妻子拼命呼喊救命，还不等a去努力解释，a就背后中枪而死。<br>原来是a的儿子在卧室听到母亲尖叫声后，拿上猎枪从窗户翻出去绕到了门外，缓缓地将枪口指向了“黑人”的后背。</p>
+<p>注：改编自盖·纳蒂弗的短篇电影《肤色Skin》(曾获91届奥斯卡金像奖）。</p>
+<p>FROM BILIBILI:<br>①医学院惨案</p>
+<p>汤面：</p>
+<p>在一间医学院里，ABC是舍友，A的成绩很好，是班里的班长。B的身体比较虚弱。有一天有人发现AB的尸体，C疯了，请推理出故事全貌。</p>
+<p>汤底：</p>
+<p>学校最近有一门解剖考试。 A有梦游症，并且可以在梦游中学习知识，所以成绩优秀。因为是班长所以备有解剖室的钥匙，B因为担心考试挂科等大家都睡觉后偷了A的钥匙到解剖室独自练习，身体虚弱的B在练习完后索性睡在了解剖台上连门都没有关。当晚A梦游到了解剖室打算进行“解剖考试”。梦游中的A把B当作实验尸体把四肢绑在解剖台上一点一点的解剖。当A醒来后发现自己已经把B解剖得不堪入目，接受不了事实于是用刀自杀。室友C一早起床发现AB不在，非常担心于是就出去找，直到在开着门的解剖室发现了血肉模糊的B和自杀的A，吓疯了。</p>
+<p>②出不去的厕所</p>
+<p>汤面：</p>
+<p>张三去了趟厕所，结果发现自己出不去了。</p>
+<p>线索：张三的四段内心独白</p>
+<p>…似乎又可以出去了？</p>
+<p>…真的可以出去吗？</p>
+<p>…不行！决不能出去！</p>
+<p>…我想，我应该是出不去了…</p>
+<p>汤底：</p>
+<p>张三发现厕所外面有人在杀人，胆小的张三不敢制止所以出不去了。杀完人凶手好像离开了，所以又说能出去了。结果凶手杀完人其实是去拿了工具又回来分尸装进麻袋，所以又出不去了。这时尸体怨气不散成了鬼，杀了凶手又来杀了厕所里的张三，因为凶手杀人的时候张三没有制止。</p>
+<p>③村子里的怪叫声</p>
+<p>汤面:</p>
+<p>某个村子每家每户过了0点必须关灯，于此同时半夜三更都会传来怪叫声，虽然把全村人都吵醒都没有人出去看。真相是什么？</p>
+<p>汤底：</p>
+<p>村中有个人人皆知的变态杀人狂，行迹神秘且有夜盲症，所以全村人都必须要在晚上关灯。由于杀人狂在没有灯的地方找不到人，于是就用怪叫声来吸引村民夜晚开灯并将其杀死。</p>
+<p>④甜汤命案</p>
+<p>汤面：</p>
+<p>晚饭时，玛丽的爸爸抱怨妈妈做的汤太甜了，当晚，妈妈就死了</p>
+<p>汤底：玛丽是个极端主义者，无法容忍家庭中有任何人对家庭不忠。玛丽最近发现父母的关系没有从前好了，并且还在厨房里发现了毒药，玛丽断定一定是爸爸妈妈之中有一人想毒害自己的伴侣。为了知道谁对这个家不忠，玛丽把毒药换成了糖，结果当晚喝到甜汤的是爸爸，于是玛丽便下毒药将妈妈毒死了。后来玛丽才知道，原来是爸爸想要杀了妈妈，而他已经知道毒药被玛丽发现，于是顺水推舟，让玛丽亲手害死妈妈。</p>
+<p>⑤一杯冰水</p>
+<p>汤面：</p>
+<p>小蔡走进了一家餐厅，要了一杯冰水，</p>
+<p>服务员掏出了枪对准了他，他说了一声谢谢。</p>
+<p>为什么？</p>
+<p>汤底：</p>
+<p>小蔡打嗝难忍，想点一杯冰水止嗝，于是服务员掏出了一把假枪吓他，他的打嗝成功被吓没了，知道真相的小蔡感激不尽。</p>
+<p>(混入了什么奇怪的东西啊喂！)</p>
+<p>⑥敲门声</p>
+<p>汤面：</p>
+<p>小梅和老公小王驾车旅游，深夜在一条山路车抛锚了，小王说要走到前面的镇子里去找一位修理工，小梅先留在车里。在车内看不到外面的情况下，夫妻俩约定小王回来时敲三下车门小梅就开门，过了不久，小梅听到了很多次敲门声但从来都不是三下。请推理出故事全貌。</p>
+<p>汤底：</p>
+<p>小王刚走不久就被守株待兔的变态杀人犯杀了，拖着他的尸体回到了车旁边，把他吊在了旁边的树上，当时风很大，小王的头时常会撞到车门再回弹撞很多次。</p>
+<p>⑦废旧古堡</p>
+<p>汤面：</p>
+<p>我和小伙伴约好一起去废弃的古堡参加万圣节变装派对，结果只剩下了我一个……请推理故事全貌</p>
+<p>汤底：</p>
+<p>我和小伙伴们约定好玩躲猫猫，我找了半天都没在古堡里发现什么好躲的地方。我只好打算躲在假棺材里吓他们一下，结果我等了好久好久，都没有人来，当我想推开棺材盖时，却发现棺材已经被锁上了，这时，我才发现不对劲，我被伙伴们送进了真棺材……</p>
+<p>⑧不敢喝的水</p>
+<p>汤面：</p>
+<p>有一位男子常驻在了一家饭店，某一天他再也不敢喝饭店里的水了，请问为什么？</p>
+<p>汤底：</p>
+<p>某一天，一位女子在这个饭店里失踪了，</p>
+<p>警察找了很久，都找不到。原来是男子杀了这位女子，并把她藏在饭点顶楼的水仓里。</p>
+<p>改编自《蓝可儿事件》</p>
+<p>⑨健身房</p>
+<p>汤面：</p>
+<p>最近来健身房的人越来越少，但老板的心情却越来越好，钱正前几天受伤找老板请假，发现了老板的秘密……请推理故事全貌</p>
+<p>汤底：</p>
+<p>钱正在跑步机上跑步的时候摔倒了，发现跑步机的履带上居然冒着油，仔细一闻居然好像是人油，钱正没再多想来到老板的办公室请假，发现刚才还在的人现在却不见了，没想到在钱正翻看书架时意外打开了老板的密室，眼前的一幕，把钱正吓坏了……</p>
+<p>⑩三兄弟(经 典 永 流 传)</p>
+<p>汤面：</p>
+<p>A和B是一对双胞胎，他们和C关系非常好，三人每天都要睡在同一张床上，有一天A病死了，当晚C把B杀了。请推理出故事全貌</p>
+<p>汤底：</p>
+<p>A病死后，每天晚上睡在A和B中间的C因为心理怪癖无法忍受睡觉时一边没有人，于是把B纵向劈成了两半，睡觉时C在自己的左边放B的右半边，在自己的右边放B的左半边。以保证睡觉时的“安全感”<br>作者：九十九克游码<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv9200136/">https://www.bilibili.com/read/cv9200136/</a><br>出处： bilibili</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>海龟汤</div>
+      <div>https://tokisaki.top/blog/ltp/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Tokisaki Galaxy</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年5月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/create-game-accelerator/" title="自建游戏加速器">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">自建游戏加速器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/remote-desktop-use-ssl-certificates/" title="远程桌面使用SSL证书">
+                        <span class="hidden-mobile">远程桌面使用SSL证书</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="cusdis" style="width:100%; overflow:visible; min-height:480px;">
+    <div id="cusdis_thread"
+      style="width:100%; overflow:visible;"
+      data-host="https://cusdis.com"
+      data-app-id="27923e0d-279d-4dad-bdc5-f1b12b6add4c"
+      data-page-id="d4603c235539f0d5f7a8220ec228bb35"
+      data-page-url="blog/ltp/"
+      data-page-title="海龟汤"
+      data-theme="auto"
+    >
+    </div>
+  </div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#cusdis_thread', function() {
+      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
+      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
+
+      // 取消容器滚动条，尝试让 iframe 展开显示
+      var container = document.querySelector('.cusdis');
+      var thread = document.querySelector('#cusdis_thread');
+      if (container) container.style.overflow = 'visible';
+      if (thread) thread.style.overflow = 'visible';
+
+      // 等待 widget 加载后调整 iframe 样式
+      setTimeout(function() {
+        try {
+          var iframe = thread && thread.querySelector('iframe');
+          if (iframe) {
+            iframe.style.width = '100%';
+            iframe.style.border = 'none';
+            iframe.style.overflow = 'visible';
+            iframe.style.minHeight = '600px';
+            iframe.setAttribute('scrolling', 'no');
+
+            // 若同源，尝试根据内容自适应高度
+            try {
+              var doc = iframe.contentDocument || iframe.contentWindow.document;
+              if (doc && doc.body) {
+                iframe.style.height = doc.body.scrollHeight + 'px';
+              }
+            } catch (e) {
+            }
+          }
+        } catch (e) {
+        }
+      }, 600);
+
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema) {
+        document.querySelector('#cusdis_thread').dataset.theme = schema
+      }
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+<script src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" integrity="sha256-pMhcV6/TBDtqH9E9PWKgS+P32PVguLG8IipkPyqMtfY=" crossorigin="anonymous">
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha256-SyTu6CwrfOhaznYZPoolVw2rxoY7lKYKQvqbtqN93HI=" crossorigin="anonymous"></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+<script src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" integrity="sha256-UVQ5HtHTmtqBT3KY5cd4AvI47pp0gJwIM+q45HD9oLk=" crossorigin="anonymous"></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://s4.zstatic.net/ajax/libs/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.js"></script><!-- hexo injector body_end end --></body>
+</html>

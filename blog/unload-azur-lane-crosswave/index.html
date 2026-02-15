@@ -1,0 +1,962 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<script>
+(function() {
+    var userLang = navigator.language || navigator.userLanguage;
+    if (userLang && userLang.startsWith('zh')) {
+        document.documentElement.setAttribute('lang', 'zh-CN');
+        window.addEventListener('DOMContentLoaded', function() {
+            // 1. Handle article page title and H1
+            if (window._zh_title && window._en_title) {
+                // Precisely detect: find English title in current title and replace with Chinese
+                if (document.title.includes(window._en_title)) {
+                    document.title = document.title.replace(window._en_title, window._zh_title);
+                } else {
+                    // Fallback: if theme handles title specially (e.g., truncation), replace directly
+                    document.title = window._zh_title;
+                }
+                // Replace article page h1 title
+                // Consider different theme selectors, find first h1 tag for replacement
+                var h1 = document.querySelector('h1');
+                if (h1 && window._zh_title) {
+                    h1.textContent = window._zh_title;
+                }
+            }
+            // 2. Replace all title elements with data-zh-title and data-en-title attributes on homepage or list pages
+            var titleElements = document.querySelectorAll('[data-zh-title][data-en-title]');
+            titleElements.forEach(function(el) {
+                var zhTitle = el.getAttribute('data-zh-title');
+                var enTitle = el.getAttribute('data-en-title');
+                if (zhTitle && enTitle) {
+                    // Replace element text content
+                    if (el.textContent.trim() === enTitle.trim()) {
+                        el.textContent = zhTitle;
+                    }
+                    // If it's a link element, also check its title attribute
+                    if (el.hasAttribute('title') && el.getAttribute('title').trim() === enTitle.trim()) {
+                        el.setAttribute('title', zhTitle);
+                    }
+                }
+            });
+            // 3. Replace article titles on homepage/list pages (using global title mapping)
+            if (window._hexo_title_pairs && window._hexo_title_pairs.length > 0) {
+                // Create English to Chinese mapping
+                var titleMap = {};
+                window._hexo_title_pairs.forEach(function(pair) {
+                    titleMap[pair.en.trim()] = pair.zh;
+                });
+                // Helper function to replace article titles, supports exact match and contains match
+                // Preserves child links when replacing text (assumes single link per title element)
+                var replaceTitle = function(el) {
+                    var text = el.textContent.trim();
+                    var zhTitle = null;
+                    var matchedEnTitle = null;
+                    // Prefer exact match
+                    if (titleMap[text]) {
+                        zhTitle = titleMap[text];
+                        matchedEnTitle = text;
+                    } else {
+                        // Try contains match (handle cases with extra spaces or child elements)
+                        // Using indexOf for IE/older browser compatibility (this runs in browser context)
+                        for (var enTitle in titleMap) {
+                            if (text === enTitle || text.indexOf(enTitle) !== -1) {
+                                // Only replace when text is highly similar to title (avoid false replacements)
+                                if (text.length <= enTitle.length * 1.5) {
+                                    zhTitle = titleMap[enTitle];
+                                    matchedEnTitle = enTitle;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (!zhTitle) return;
+                    // Check if element contains a child link - if so, update link text to preserve hyperlink
+                    var childLink = el.querySelector('a');
+                    if (childLink) {
+                        childLink.textContent = zhTitle;
+                        // Also update title attribute if it matches the English title
+                        if (childLink.hasAttribute('title') && childLink.getAttribute('title').trim() === matchedEnTitle) {
+                            childLink.setAttribute('title', zhTitle);
+                        }
+                    } else {
+                        el.textContent = zhTitle;
+                    }
+                };
+                // Find title elements within article card/list containers (limit search scope for performance)
+                var containers = document.querySelectorAll('main, article, .post, .posts, .post-list, .article-list, .card, .content, #content, #main');
+                if (containers.length === 0) {
+                    containers = [document.body];
+                }
+                containers.forEach(function(container) {
+                    var titleSelectors = 'h1, h2, h3, .post-title, .article-title, .entry-title, .card-title, a[rel="bookmark"]';
+                    var potentialTitleElements = container.querySelectorAll(titleSelectors);
+                    potentialTitleElements.forEach(replaceTitle);
+                });
+            }
+        });
+    } else {
+        document.documentElement.setAttribute('lang', 'en');
+    }
+})();
+</script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/favicon.png">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ERU">
+  <meta name="keywords" content="blog">
+  
+    <meta name="description" content="转载【碧蓝航线】Azur Lane Crosswave 解包指南+探索历程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【碧蓝航线】Azur Lane Crosswave 解包指南+探索历程">
+<meta property="og:url" content="https://tokisaki.top/blog/unload-azur-lane-crosswave/index.html">
+<meta property="og:site_name" content="Tokisaki Galaxy的博客">
+<meta property="og:description" content="转载【碧蓝航线】Azur Lane Crosswave 解包指南+探索历程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sxjeru.files.wordpress.com/2020/04/znarqh5exmviggm.png">
+<meta property="og:image" content="https://sxjeru.files.wordpress.com/2020/04/7p0j57voq0ullllq.png">
+<meta property="og:image" content="https://sxjeru.files.wordpress.com/2020/04/td7s7sro_o4hp6kok.png">
+<meta property="og:image" content="https://sxjeru.files.wordpress.com/2020/04/31q40q0eth2mxcb1.png">
+<meta property="og:image" content="https://sxjeru.files.wordpress.com/2020/04/ch001.png?w=1024">
+<meta property="og:image" content="https://sxjeru.files.wordpress.com/2020/04/ch002_touch.png">
+<meta property="og:image" content="https://sxjeru.files.wordpress.com/2020/04/z9ykx_8ejqg4fckfxbgzl.png?w=768&h=455">
+<meta property="og:image" content="https://sxjeru.files.wordpress.com/2020/04/3r_huhh4nxd40bgtn.png?w=768&h=455">
+<meta property="og:image" content="https://sxjeru.files.wordpress.com/2020/04/bc_erkjahts3lq0.png">
+<meta property="og:image" content="https://sxjeru.files.wordpress.com/2020/04/g4luort5b4hkd26pcuu.png">
+<meta property="og:image" content="https://sxjeru.files.wordpress.com/2020/04/hpzlaa7_kp_q2cdno04.png">
+<meta property="og:image" content="https://sxjeru.files.wordpress.com/2020/04/5gatfi723o9nqeg40w3.png?w=1024">
+<meta property="og:image" content="https://sxjeru.files.wordpress.com/2020/04/t6kpemfn559qp3plm.png">
+<meta property="og:image" content="https://sxjeru.files.wordpress.com/2020/04/u49e0tfy_dri.png">
+<meta property="og:image" content="https://sxjeru.files.wordpress.com/2020/04/ota55_asbp2om95gt2xu.png">
+<meta property="og:image" content="https://sxjeru.files.wordpress.com/2020/04/e94057woete1404k5dc.png?w=1024">
+<meta property="article:published_time" content="2020-12-19T23:13:17.000Z">
+<meta property="article:modified_time" content="2026-02-15T12:36:30.314Z">
+<meta property="article:author" content="Tokisaki Galaxy">
+<meta property="article:tag" content="azur-lane">
+<meta property="article:tag" content="解包">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sxjeru.files.wordpress.com/2020/04/znarqh5exmviggm.png">
+  
+  
+  
+  <title>【碧蓝航线】Azur Lane Crosswave 解包指南+探索历程 - Tokisaki Galaxy的博客</title>
+
+  <link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous">
+
+
+
+  <link  rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"tokisaki.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":50,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":"enable","follow_dnt":false,"baidu":"91eeedd7b367cd070a600501df970843","google":{"measurement_id":"G-9YQEB4P3YS"},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"microsoftclarity":"eell8b38tb","gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?91eeedd7b367cd070a600501df970843";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=G-9YQEB4P3YS", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', 'G-9YQEB4P3YS');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "eell8b38tb");
+    </script>
+
+
+
+  
+<!-- hexo injector head_end start -->
+<style>
+    .hexo-llm-zh { display: none; }
+    .hexo-llm-en { display: block; }
+    html[lang^="zh"] .hexo-llm-en { display: none !important; }
+    html[lang^="zh"] .hexo-llm-zh { display: block !important; }
+</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="Tokisaki Galaxy的博客" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Tokisaki Galaxy的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【碧蓝航线】Azur Lane Crosswave 解包指南+探索历程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-12-20 07:13" pubdate>
+          2020年12月20日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          33 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">【碧蓝航线】Azur Lane Crosswave 解包指南+探索历程</h1>
+            
+            <div class="markdown-body">
+              
+              <blockquote>
+<p>本文转载自<a target="_blank" rel="noopener" href="https://sxjeru.wordpress.com/2020/04/17/%e3%80%90%e7%a2%a7%e8%93%9d%e8%88%aa%e7%ba%bf%e3%80%91azur-lane-crosswave-%e8%a7%a3%e5%8c%85%e6%8c%87%e5%8d%97%e6%8e%a2%e7%b4%a2%e5%8e%86%e7%a8%8b/">ERU博客</a></p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/Tokisaki-Galaxy/Azur-Lane-Crosswave-Res-Extractor-Tools">工具，船名对照表</a><br><strong>前排注意：任何解包行为需把握资源用途，为尊重作品著作权，请勿用于商业行为或大范围传播！</strong></p>
+</blockquote>
+<p><strong>此处仅提供教程与经验，无资源。</strong></p>
+<p>本人共计探索了超过4天，终于摸透了包里的数据。目前除了3D模型还未测试（已可提取），其余资源都可成功提取。</p>
+<p>大体流程（目录）：</p>
+<p>PAK数据包解包<br>虚幻4资源文件提取（CG get~）<br>Spine动画提取*<br>3D模型构建*（暂无，有生之年更新）</p>
+<p>探索历程的无关文字会被折叠，请只看教程的读者放心食用。</p>
+<p>文中用到的工具会给出官网与网盘地址，本人希望诸位能支持官方下载。网盘文件可能无法做到及时更新，敬请谅解。</p>
+<h2 id="一、裂解PAK"><a href="#一、裂解PAK" class="headerlink" title="一、裂解PAK"></a>一、裂解PAK</h2><p>或许是幸运，或许是“自知之明”，总之地雷社没有给ALC的数据包加密，这也使得解包变得异常简单。这一步并没有坑，因而也就没有探索文字啦。</p>
+<p>准备解包工具QuickBMS（<a target="_blank" rel="noopener" href="https://aluigi.altervista.org/quickbms.htm">官网</a>、<a target="_blank" rel="noopener" href="http://sxj.mcmod.cn/tutorial/quickbms.zip">网盘</a>）与UE4解包脚本（<a target="_blank" rel="noopener" href="https://aluigi.altervista.org/quickbms.htm">官网同上</a>、<a target="_blank" rel="noopener" href="http://sxj.mcmod.cn/tutorial/unreal_tournament_4.bms">网盘</a>）。<br><img src="https://sxjeru.files.wordpress.com/2020/04/znarqh5exmviggm.png" srcset="/img/loading.gif" lazyload alt="znarqh5exmviggm"></p>
+<p>双击“quickbms.exe”，依次选择脚本、PAK数据包（通常位于“~\Azur Lane Crosswave\Azurlane\Content\Paks”）、解包位置（资源保存至何处）。<br>等待……  Done！</p>
+<h2 id="二、渗透UE4"><a href="#二、渗透UE4" class="headerlink" title="二、渗透UE4"></a>二、渗透UE4</h2><p>ALC采用UE4（v4.21.2.0）游戏引擎，导致所有资源文件都被“加密”成uasset、uexp等文件，如何将这些还原成原始文件是这一关的核心任务。</p>
+<blockquote>
+<p>吐槽<br>手贱用umodel选游戏路径时把所有解包出来的资源文件全选了，结果分析就花了半个多小时……<br>而且umodel稳定性也不太好，在我手上至少崩了30多回。另外它无法提取所有文件，这可着实坑惨我了……</p>
+</blockquote>
+<p>1.准备提取工具UE Viewer（官网、网盘）。</p>
+<p>2.双击“umodel.exe”，按图中配置参数，路径自选，不建议选择根路径（Content），否则所需时间较长。我在下面列出了子目录中包含的部分资源，可参考个人需要选择相应路径。<br>最后点击“OK”，等待处理。（此时命令符窗口无显示，请耐心等待）<br><img src="https://sxjeru.files.wordpress.com/2020/04/7p0j57voq0ullllq.png" srcset="/img/loading.gif" lazyload alt="7~$P0%ULLLLQ.png"><br>Battle：含有战斗场景下的各种3D模型，2D UI设计等。<br>Event：含有VN（视觉小说）界面下的各种立绘、CG。<br>Sound：含有游戏内所有的BGM、SE、Voice（配音）。<br>System：含有游戏主页面的UI设计文件。<br>World*：含有主线剧情内世界场景的资源文件，包括地图架构，2D动态Q版人物等。</p>
+<p>4.处理完成后弹出资源选择窗口，左侧目录树找到目标后可在右侧双击感兴趣的资源来预览。建议预览较大的文件，这些文件通常是图片、模型、音乐。<br><img src="https://sxjeru.files.wordpress.com/2020/04/td7s7sro_o4hp6kok.png" srcset="/img/loading.gif" lazyload alt="TD7S7SR{O_O$4HP"></p>
+<p>5.预览完毕后可以直接在预览器的“Tools”菜单中导出，或在文件浏览窗口批量选择需导出的文件，点击下方“Export”，选好路径与图片格式（仅影响图片文件）后确认导出即可。<br><img src="https://sxjeru.files.wordpress.com/2020/04/31q40q0eth2mxcb1.png" srcset="/img/loading.gif" lazyload alt="a"></p>
+<p><strong>注：UE Viewer仅能导出部分资源文件，一些数据文件无法识别与导出。</strong></p>
+<p><em>通常没有什么刚需的话，止步于此即可。也就只有我这么死脑筋的人会去想下面的内容了……</em></p>
+<h2 id="三、​​啊Q版小人太可爱了还会动-i了i了-一定要把她们导出来！"><a href="#三、​​啊Q版小人太可爱了还会动-i了i了-一定要把她们导出来！" class="headerlink" title="三、​​啊Q版小人太可爱了还会动 i了i了 一定要把她们导出来！~~"></a>三、​​啊Q版小人太可爱了还会动 i了i了 一定要把她们导出来！~~</h2><p>闹着玩嘛，这节主要是来提取ALC地图场景那些Q版小人。在这个坑里花了70%的时间才爬出来，获得不少经验的同时也感谢各位提供神奇工具的开源作者。</p>
+<p>在这节里，经验伴你同行。</p>
+<blockquote>
+<p>人生经验（点击查看）<br>一开始就花了半小时分析数据包文件架构，才找到路径“~\Azurlane\Content\World\Spine”。本以为是CG一样的玩意，结果用Umodel（UE Viewer）一看——Ch001.png<br><img src="https://sxjeru.files.wordpress.com/2020/04/ch001.png?w=1024" srcset="/img/loading.gif" lazyload alt="aab"><br>【心脏骤停】誒呀好难受啊……与六年前拆CS1.6素材文件是一样的感觉呢。</p>
+</blockquote>
+<ol>
+<li>经分析可知此类2D建模由Spine软件设计，单个建模包含json<em>1、atlas</em>1、png*1，对应解包后的路径为“~\Azurlane\Content\World\Spine”。其中“Ch001”即岛风，“Ch002”即…… 额这是谁来着？</li>
+</ol>
+<p><img src="https://sxjeru.files.wordpress.com/2020/04/ch002_touch.png" srcset="/img/loading.gif" lazyload alt="Ch002_touch.png"></p>
+<p>是绫波吗…？是她吧…… 誒别打我啊！</p>
+<p>剩下52位诸位若学成的话就可以自己提取哦~ 请自行探索吧~~（按道理每艘秘书舰都有的说）</p>
+<ol start="2">
+<li>准备文本编辑器（无脑推荐VS Code、Sublime Text 3，Notepad++ 因过于自由而不推荐），Spine Viewer WPF（作者：kiletw）。</li>
+</ol>
+<p>注：SpineViewerWPF需要.NET Framework 4.7.2与Microsoft XNA Framework Redistributable 4.0作为前置库。</p>
+<blockquote>
+<p>经验+1（点击查看）<br>这一步就着实不容易呐，Spine Viewer出奇的好用，虽然有点小Bug但作者很快就修复了，真得感谢他，不然可能就得买原装Spine了。（试用版无法导出图像，基础版就要69刀……）<br>悲惨的是，到最后我才找到这玩意。<br>辛运的是，你们的时间不会浪费了</p>
+</blockquote>
+<ol start="3">
+<li><p>利用第二节的方法，通过 umodel 从“~\Azur Lane Crosswave\World\Spine\Chxxx\Textures”（xxx指数字，为避免误解下面采用001，毕竟小岛风辣么可爱，拿来练手也不错~）得到Ch001.png。</p>
+</li>
+<li><p>神奇又关键的一步。资源管理器定位至“~\Azurlane\Content\World\Spine\Ch001”，将“Ch001.uexp”用文本编辑器打开，得到下图内容。（可能会有所卡顿）<br><img src="https://sxjeru.files.wordpress.com/2020/04/z9ykx_8ejqg4fckfxbgzl.png?w=768&h=455" srcset="/img/loading.gif" lazyload alt="Z9YKX_8KFXBGZL.png"></p>
+</li>
+</ol>
+<p>将分界线（一排乱码）上端的文字复制，注意顶端乱码不用，按岛风举例是从“Ch001.png”到“index: -1”，创建一个新文本文件，重命名为Ch001.atlas，将内容粘贴进去，保存。</p>
+<p>再将分界线下端文字复制，底端乱码不用，同样以岛风为例是从“{“skeleton”:”到“”angle”:-0.05}]}}}}}”。注意编辑器显示缺陷导致的复制不全。<br><img src="https://sxjeru.files.wordpress.com/2020/04/3r_huhh4nxd40bgtn.png?w=768&h=455" srcset="/img/loading.gif" lazyload alt="523N.png"></p>
+<p>创建新文本文件，命名为Ch001.json，将内容粘贴进去，保存。</p>
+<p>建议移至同个文件夹，便于处理。顺便吹一波QTTabBar。</p>
+<p><img src="https://sxjeru.files.wordpress.com/2020/04/bc_erkjahts3lq0.png" srcset="/img/loading.gif" lazyload alt="JAHTS3LQ0.png"></p>
+<blockquote>
+<p>痛苦不堪的经历（点击查看）<br>知道是Spine模型后，我苦思冥想地雷社把json藏哪了。当时用umodel找了一晚上也没找着，倒是在预览窗口发现了端倪，但问题是——根本不能导出啊！！<br><img src="https://sxjeru.files.wordpress.com/2020/04/g4luort5b4hkd26pcuu.png" srcset="/img/loading.gif" lazyload alt="G4LUO5B4HPCUU.png"><br>诶呦真的火气来了。在解包文件中浏览，突然一个“Azurlane.uproject”让我眼前一亮。woc，这不就是ALC的工程文件吗！感觉胜利的曙光都要照到身上了，赶紧双击，结果报错……<br><img src="https://sxjeru.files.wordpress.com/2020/04/hpzlaa7_kp_q2cdno04.png" srcset="/img/loading.gif" lazyload alt="Q2CDNO04.png"><br>凉拌，这胜利曙光刺激啊，把我眼都给亮瞎了。<br>接着网上冲浪，但几乎丧失了信心，直到有一次想复制“Ch001.uasset”文件名，不小心双击打开了它……<br><img src="https://sxjeru.files.wordpress.com/2020/04/5gatfi723o9nqeg40w3.png?w=1024" srcset="/img/loading.gif" lazyload alt="5GATFI73.png"><br>？？梦寐以求的json与atlas，简直就是乱码丛中的那两颗耀眼的钻石啊！<br>顺手打开和它在一起的“Ch001.uexp”，便出现教程里这一幕。简直泪流满面……辛苦没有白费！</p>
+</blockquote>
+<p>接下去我会分成两种情况，<strong>5富人党（购买了Spine正式版）<strong>与</strong>6穷人党（如本人）</strong>，分别用两种颜色描述。</p>
+<p>由于个人经济情况限制，以下步骤可能不准确，以Spine客服为准。</p>
+<p>5-1. 发动钞能力，购买Spine！</p>
+<p>5-2. Spine中新建项目，选择“导入数据”，导入Ch001.json。再选择“纹理解包器”，图集文件导入Ch001.atlas，确保Ch001.png在同一文件夹，选择输出文件夹后确定。</p>
+<p>5-3. 将导出的许多单张图与Ch001.json放在一起，就能在Spine中预览到了。更多功能请自行探索，此处不再赘述。毕竟这不是教程想表达的方法。</p>
+<p>5-4. 选择导出，各种图片视频格式任君挑选。</p>
+<ol start="6">
+<li>接上第4步。双击打开“SpineViewerWPF.exe”，在“Use Version”菜单中选择“3.7.83”（注意不是最新的3.8.x）。再点击“File -&gt; Load Spine”，选择Ch001.atlas文件路径，并保证png与json在同一文件夹，能看到如下图。<br><img src="https://sxjeru.files.wordpress.com/2020/04/t6kpemfn559qp3plm.png" srcset="/img/loading.gif" lazyload alt="ASG.PNG"></li>
+</ol>
+<p>其中左侧“Anime”可选择不同动画，一个角色通常有多种动画（如岛风有3种）。下方是播放控件与截图（相机键）还有Gif导出（摄像键）。</p>
+<p>没错，白嫖就是那么简单~~  不过探索出这条路来并不是那么简单的……</p>
+<p><strong>在此提醒下，导出Gif时会占用大量内存资源，请留出足够的内存，否则程序会崩溃。</strong></p>
+<blockquote>
+<p>现在让我们看看探索历程的艰辛——<br>一开始我用Spine 试用版，它可以导入json数据文件。然而Spine不认atlas，而“纹理解包器”功能试用版又无法使用，导致只有骨架，材质全部遗失…… 简直就是死路一条啊。<br><img src="https://sxjeru.files.wordpress.com/2020/04/u49e0tfy_dri.png" srcset="/img/loading.gif" lazyload alt="ab"><br>然后就开始考虑分割图集（那张大png），网上找了近乎两天，测试了各种软件：Skeleton Viewer、Texture Packer、Sprite UV、Gdx Texture Packer、Dragon Bones Pro 等等。<br>最后找到了“splitAtlas.py”，可惜没有原出处了。不过它成功帮我分割了大图，当时怕是都感动到哭了</p>
+<p>一言难尽，其中的辛酸没人能理解，文字完全没法描述。这几天已经处于返校倒计时，我是多么想在返校前作出一番成就呢！终于——<br><img src="https://sxjeru.files.wordpress.com/2020/04/ota55_asbp2om95gt2xu.png" srcset="/img/loading.gif" lazyload alt="KP89O26YGB7SN.png"><br>热泪盈眶，终于在游戏外看到成品了！！虽然不能导出，但也足矣。<br>我并非没想过找破解版的Spine，可这设计软件太小众了，以至于根本没人破解，或许也有联网激活难破解的原因吧。<br>也尝试了替代品，Dragon Bones Pro。可这玩意有Bug，硬生生把可怜岛风的头发给整没了…… （wdnmd！！毁谁形象呢？！）受害者照片如下：<br><img src="https://sxjeru.files.wordpress.com/2020/04/e94057woete1404k5dc.png?w=1024" srcset="/img/loading.gif" lazyload alt="4K5DC.png"><br>最后的最后，我看到了真正的曙光——Spine Viewer WPF！</p>
+</blockquote>
+<p>感谢你能看到最后，祝提取顺利。</p>
+<p>当然如果有了解Spine Web用法的盆友，欢迎联系我，我实在是无法玩明白这东西。这是我搭建的测试网址：<a target="_blank" rel="noopener" href="http://sxj.mcmod.cn/123.html">http://sxj.mcmod.cn/123.html</a><br>不知道为什么就是不显示……</p>
+<p>插一句，岛风这憨憨，我要定了，都礼貌点儿，别抢。</p>
+<p>最后有个<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1da4y147Qq">彩蛋</a>~ 虽与教程无关，但挺有趣的。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B8%B8%E6%88%8F/" class="category-chain-item">游戏</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/azur-lane/" class="print-no-link">#azur-lane</a>
+      
+        <a href="/tags/%E8%A7%A3%E5%8C%85/" class="print-no-link">#解包</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【碧蓝航线】Azur Lane Crosswave 解包指南+探索历程</div>
+      <div>https://tokisaki.top/blog/unload-azur-lane-crosswave/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>ERU</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年12月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/ntfs-file-system/" title="NTFS文件系统修复经历">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">NTFS文件系统修复经历</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/how-to-uninstall-lenovo-im/" title="完全卸载联想电脑管家">
+                        <span class="hidden-mobile">完全卸载联想电脑管家</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="cusdis" style="width:100%; overflow:visible; min-height:480px;">
+    <div id="cusdis_thread"
+      style="width:100%; overflow:visible;"
+      data-host="https://cusdis.com"
+      data-app-id="27923e0d-279d-4dad-bdc5-f1b12b6add4c"
+      data-page-id="fa0b04f564959b17d2985efb1ad4716a"
+      data-page-url="blog/unload-azur-lane-crosswave/"
+      data-page-title="【碧蓝航线】Azur Lane Crosswave 解包指南+探索历程"
+      data-theme="auto"
+    >
+    </div>
+  </div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#cusdis_thread', function() {
+      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
+      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
+
+      // 取消容器滚动条，尝试让 iframe 展开显示
+      var container = document.querySelector('.cusdis');
+      var thread = document.querySelector('#cusdis_thread');
+      if (container) container.style.overflow = 'visible';
+      if (thread) thread.style.overflow = 'visible';
+
+      // 等待 widget 加载后调整 iframe 样式
+      setTimeout(function() {
+        try {
+          var iframe = thread && thread.querySelector('iframe');
+          if (iframe) {
+            iframe.style.width = '100%';
+            iframe.style.border = 'none';
+            iframe.style.overflow = 'visible';
+            iframe.style.minHeight = '600px';
+            iframe.setAttribute('scrolling', 'no');
+
+            // 若同源，尝试根据内容自适应高度
+            try {
+              var doc = iframe.contentDocument || iframe.contentWindow.document;
+              if (doc && doc.body) {
+                iframe.style.height = doc.body.scrollHeight + 'px';
+              }
+            } catch (e) {
+            }
+          }
+        } catch (e) {
+        }
+      }, 600);
+
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema) {
+        document.querySelector('#cusdis_thread').dataset.theme = schema
+      }
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+<script src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" integrity="sha256-pMhcV6/TBDtqH9E9PWKgS+P32PVguLG8IipkPyqMtfY=" crossorigin="anonymous">
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha256-SyTu6CwrfOhaznYZPoolVw2rxoY7lKYKQvqbtqN93HI=" crossorigin="anonymous"></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+<script src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" integrity="sha256-UVQ5HtHTmtqBT3KY5cd4AvI47pp0gJwIM+q45HD9oLk=" crossorigin="anonymous"></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://s4.zstatic.net/ajax/libs/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.js"></script><!-- hexo injector body_end end --></body>
+</html>

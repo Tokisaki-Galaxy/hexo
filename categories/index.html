@@ -1,0 +1,2086 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<script>
+(function() {
+    var userLang = navigator.language || navigator.userLanguage;
+    if (userLang && userLang.startsWith('zh')) {
+        document.documentElement.setAttribute('lang', 'zh-CN');
+        window.addEventListener('DOMContentLoaded', function() {
+            // 1. Handle article page title and H1
+            if (window._zh_title && window._en_title) {
+                // Precisely detect: find English title in current title and replace with Chinese
+                if (document.title.includes(window._en_title)) {
+                    document.title = document.title.replace(window._en_title, window._zh_title);
+                } else {
+                    // Fallback: if theme handles title specially (e.g., truncation), replace directly
+                    document.title = window._zh_title;
+                }
+                // Replace article page h1 title
+                // Consider different theme selectors, find first h1 tag for replacement
+                var h1 = document.querySelector('h1');
+                if (h1 && window._zh_title) {
+                    h1.textContent = window._zh_title;
+                }
+            }
+            // 2. Replace all title elements with data-zh-title and data-en-title attributes on homepage or list pages
+            var titleElements = document.querySelectorAll('[data-zh-title][data-en-title]');
+            titleElements.forEach(function(el) {
+                var zhTitle = el.getAttribute('data-zh-title');
+                var enTitle = el.getAttribute('data-en-title');
+                if (zhTitle && enTitle) {
+                    // Replace element text content
+                    if (el.textContent.trim() === enTitle.trim()) {
+                        el.textContent = zhTitle;
+                    }
+                    // If it's a link element, also check its title attribute
+                    if (el.hasAttribute('title') && el.getAttribute('title').trim() === enTitle.trim()) {
+                        el.setAttribute('title', zhTitle);
+                    }
+                }
+            });
+            // 3. Replace article titles on homepage/list pages (using global title mapping)
+            if (window._hexo_title_pairs && window._hexo_title_pairs.length > 0) {
+                // Create English to Chinese mapping
+                var titleMap = {};
+                window._hexo_title_pairs.forEach(function(pair) {
+                    titleMap[pair.en.trim()] = pair.zh;
+                });
+                // Helper function to replace article titles, supports exact match and contains match
+                // Preserves child links when replacing text (assumes single link per title element)
+                var replaceTitle = function(el) {
+                    var text = el.textContent.trim();
+                    var zhTitle = null;
+                    var matchedEnTitle = null;
+                    // Prefer exact match
+                    if (titleMap[text]) {
+                        zhTitle = titleMap[text];
+                        matchedEnTitle = text;
+                    } else {
+                        // Try contains match (handle cases with extra spaces or child elements)
+                        // Using indexOf for IE/older browser compatibility (this runs in browser context)
+                        for (var enTitle in titleMap) {
+                            if (text === enTitle || text.indexOf(enTitle) !== -1) {
+                                // Only replace when text is highly similar to title (avoid false replacements)
+                                if (text.length <= enTitle.length * 1.5) {
+                                    zhTitle = titleMap[enTitle];
+                                    matchedEnTitle = enTitle;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (!zhTitle) return;
+                    // Check if element contains a child link - if so, update link text to preserve hyperlink
+                    var childLink = el.querySelector('a');
+                    if (childLink) {
+                        childLink.textContent = zhTitle;
+                        // Also update title attribute if it matches the English title
+                        if (childLink.hasAttribute('title') && childLink.getAttribute('title').trim() === matchedEnTitle) {
+                            childLink.setAttribute('title', zhTitle);
+                        }
+                    } else {
+                        el.textContent = zhTitle;
+                    }
+                };
+                // Find title elements within article card/list containers (limit search scope for performance)
+                var containers = document.querySelectorAll('main, article, .post, .posts, .post-list, .article-list, .card, .content, #content, #main');
+                if (containers.length === 0) {
+                    containers = [document.body];
+                }
+                containers.forEach(function(container) {
+                    var titleSelectors = 'h1, h2, h3, .post-title, .article-title, .entry-title, .card-title, a[rel="bookmark"]';
+                    var potentialTitleElements = container.querySelectorAll(titleSelectors);
+                    potentialTitleElements.forEach(replaceTitle);
+                });
+            }
+        });
+    } else {
+        document.documentElement.setAttribute('lang', 'en');
+    }
+})();
+</script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/favicon.png">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Tokisaki Galaxy">
+  <meta name="keywords" content="blog">
+  
+    <meta name="description" content="C++ | Linux | Games | 网络">
+<meta property="og:type" content="website">
+<meta property="og:title" content="分类">
+<meta property="og:url" content="https://tokisaki.top/categories/index.html">
+<meta property="og:site_name" content="Tokisaki Galaxy的博客">
+<meta property="og:description" content="C++ | Linux | Games | 网络">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-02-15T12:36:30.322Z">
+<meta property="article:modified_time" content="2026-02-15T12:36:30.322Z">
+<meta property="article:author" content="Tokisaki Galaxy">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>分类 - Tokisaki Galaxy的博客</title>
+
+  <link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous">
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"tokisaki.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":50,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":"enable","follow_dnt":false,"baidu":"91eeedd7b367cd070a600501df970843","google":{"measurement_id":"G-9YQEB4P3YS"},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"microsoftclarity":"eell8b38tb","gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?91eeedd7b367cd070a600501df970843";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=G-9YQEB4P3YS", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', 'G-9YQEB4P3YS');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "eell8b38tb");
+    </script>
+
+
+
+  
+<!-- hexo injector head_end start -->
+<style>
+    .hexo-llm-zh { display: none; }
+    .hexo-llm-en { display: block; }
+    html[lang^="zh"] .hexo-llm-en { display: none !important; }
+    html[lang^="zh"] .hexo-llm-zh { display: block !important; }
+</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="Tokisaki Galaxy的博客" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Tokisaki Galaxy的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="分类"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="软件安装与配置"
+        id="heading-680e742fcbaf3c218ac31894fe4d2a86" role="tab" data-toggle="collapse" href="#collapse-680e742fcbaf3c218ac31894fe4d2a86"
+        aria-expanded="false"
+      >
+        软件安装与配置
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>15</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-680e742fcbaf3c218ac31894fe4d2a86"
+           role="tabpanel" aria-labelledby="heading-680e742fcbaf3c218ac31894fe4d2a86">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/resolution-wsa-wsl-usage-much-system-space/" title="解决WSA或WSL占用过多C盘空间"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">解决WSA或WSL占用过多C盘空间</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/hackrf-upgrade-firmware/" title="Win/Lin HackRF升级固件 (2021.03.1)"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Win/Lin HackRF升级固件 (2021.03.1)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/hackrf-send-signal/" title="HackRF发送信号"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">HackRF发送信号</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/remote-desktop-use-ssl-certificates/" title="远程桌面使用SSL证书"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">远程桌面使用SSL证书</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/office-e5/" title="Office E5订阅"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Office E5订阅</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/beautify-windows-terminal/" title="美化Windows Terminal"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">美化Windows Terminal</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/how-to-uninstall-lenovo-im/" title="完全卸载联想电脑管家"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">完全卸载联想电脑管家</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/wsl-metasploit-config/" title="WSL安装metasploit"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">WSL安装metasploit</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/rpi-gps/" title="RPi连接GPS模块"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">RPi连接GPS模块</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/rpi-screen/" title="RPi使用Screen"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">RPi使用Screen</span>
+        </a>
+      
+    
+      
+      
+        <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" class="list-group-item list-group-item-action">
+          <span class="category-post">More...</span>
+        </a>
+        
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="踩坑记录"
+        id="heading-1d75c00c8ee35267008a044d5ce52a80" role="tab" data-toggle="collapse" href="#collapse-1d75c00c8ee35267008a044d5ce52a80"
+        aria-expanded="false"
+      >
+        踩坑记录
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>10</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-1d75c00c8ee35267008a044d5ce52a80"
+           role="tabpanel" aria-labelledby="heading-1d75c00c8ee35267008a044d5ce52a80">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/meterpreter-via-cloudflare-argo/" title="msf http使用cloudflare argo上线"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">msf http使用cloudflare argo上线</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/viper-via-cloudflare-argo/" title="使用Cloudflare Argo隐藏VIPER后台"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">使用Cloudflare Argo隐藏VIPER后台</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/tencentos-install-docker/" title="TencentOS安装Docker"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">TencentOS安装Docker</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/crack-me-ckme002/" title="【CrackMe】之CKme002"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【CrackMe】之CKme002</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/crack-me-ckme/" title="【CrackMe】之CKme"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【CrackMe】之CKme</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/crack-me-acid-burn/" title="【CrackMe】之Acid Burn"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【CrackMe】之Acid Burn</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/vs-static-compilation-setting/" title="VS静态编译设置"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">VS静态编译设置</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/temporarily-closed-hyperv/" title="临时关闭Hyper-V"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">临时关闭Hyper-V</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/edgeless/" title="Edgeless"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Edgeless</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/config-ipv6-and-iptv/" title="中国移动宽带配置ipv6与IPTV"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">中国移动宽带配置ipv6与IPTV</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="编程"
+        id="heading-41282bf95e43c64d579757573a03cdde" role="tab" data-toggle="collapse" href="#collapse-41282bf95e43c64d579757573a03cdde"
+        aria-expanded="false"
+      >
+        编程
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E7%BC%96%E7%A8%8B/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>8</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-41282bf95e43c64d579757573a03cdde"
+           role="tabpanel" aria-labelledby="heading-41282bf95e43c64d579757573a03cdde">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/rpy2-install-via-wheel/" title="通过wheel文件解决rpy2安装权限问题"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">通过wheel文件解决rpy2安装权限问题</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/github-copilot/" title="在pwsh里面使用终端Github Copilot"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">在pwsh里面使用终端Github Copilot</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/cpp-opt-mysql/" title="c++ 操作mysql数据库"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">c++ 操作mysql数据库</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/cpp-vector/" title="vector 用法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">vector 用法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/cpp-strtok-s/" title="strtok_s()函数用法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">strtok_s()函数用法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/cpp-project-calc-for-average/" title="平均数及方差计算器"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">平均数及方差计算器</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/cmd-script/" title="CMD script"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CMD script</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/cpp-array-element-count/" title="C++数组元素个数计算"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">C++数组元素个数计算</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Linux"
+        id="heading-edc9f0a5a5d57797bf68e37364743831" role="tab" data-toggle="collapse" href="#collapse-edc9f0a5a5d57797bf68e37364743831"
+        aria-expanded="false"
+      >
+        Linux
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/Linux/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>8</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-edc9f0a5a5d57797bf68e37364743831"
+           role="tabpanel" aria-labelledby="heading-edc9f0a5a5d57797bf68e37364743831">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/router-openwrt-common-operate/" title="openwrt找出占用空间最大的文件"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">openwrt找出占用空间最大的文件</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/router-openwrt-cloudflare/" title="在OpenWrt上安装cloudflared服务"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">在OpenWrt上安装cloudflared服务</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/rpi-openwrt-sideroute/" title="树莓派3b刷openwrt作为旁路由"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">树莓派3b刷openwrt作为旁路由</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/debian-rename-network-interface/" title="debian重新命名网卡"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">debian重新命名网卡</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/apt/" title="apt"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">apt</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/parrot-prompt-no-public-key/" title="ParrotSec提示NO PUBLIC KEY"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ParrotSec提示NO PUBLIC KEY</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/create-game-accelerator/" title="自建游戏加速器"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">自建游戏加速器</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/linux-new-service/" title="Linux新建服务"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Linux新建服务</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="blog"
+        id="heading-126ac9f6149081eb0e97c2e939eaad52" role="tab" data-toggle="collapse" href="#collapse-126ac9f6149081eb0e97c2e939eaad52"
+        aria-expanded="false"
+      >
+        blog
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/blog/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>7</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-126ac9f6149081eb0e97c2e939eaad52"
+           role="tabpanel" aria-labelledby="heading-126ac9f6149081eb0e97c2e939eaad52">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/git-submodule-blog-change-theme/" title="Git子模块教程：更换Hexo博客主题"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Git子模块教程：更换Hexo博客主题</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/switch-theme-log/" title="切换主题的纪念和一些想法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">切换主题的纪念和一些想法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/tencent-public-dns/" title="dnspod public dns 初体验"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">dnspod public dns 初体验</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/jsdelivr-cdn/" title="jsdelivrCDN使用方法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">jsdelivrCDN使用方法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/cloudflare-dnspod-enable-dnssec/" title="DnsPod，cloudflare启用DNSSEC"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">DnsPod，cloudflare启用DNSSEC</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/make-blog/" title="搭建博客"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">搭建博客</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/test-page/" title="测试页面"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">测试页面</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="学习"
+        id="heading-4ef520d6cd20ba4a727af08e17e4939e" role="tab" data-toggle="collapse" href="#collapse-4ef520d6cd20ba4a727af08e17e4939e"
+        aria-expanded="false"
+      >
+        学习
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>6</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-4ef520d6cd20ba4a727af08e17e4939e"
+           role="tabpanel" aria-labelledby="heading-4ef520d6cd20ba4a727af08e17e4939e">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/zerotier-network/" title="ZeroTier原理与实践"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ZeroTier原理与实践</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/cobalt-strike-notes/" title="cobalt-strike笔记"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">cobalt-strike笔记</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/c-study-notes/" title="《C++入门经典（第10版）》学习笔记"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">《C++入门经典（第10版）》学习笔记</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/cron-expressions/" title="cron表达式结构"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">cron表达式结构</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/hackrf/" title="使用hackrf伪造GPS信号"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">使用hackrf伪造GPS信号</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/project-sh-math/" title="高中数学"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">高中数学</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="openwrt"
+        id="heading-27d03b6f0fc0a15464669d7950529cae" role="tab" data-toggle="collapse" href="#collapse-27d03b6f0fc0a15464669d7950529cae"
+        aria-expanded="false"
+      >
+        openwrt
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/openwrt/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>4</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-27d03b6f0fc0a15464669d7950529cae"
+           role="tabpanel" aria-labelledby="heading-27d03b6f0fc0a15464669d7950529cae">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/openwrt-template/" title="现代化 LuCI 插件开发方案：AI Agent 集成 Playwright 和 Docker 全自动开发"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">现代化 LuCI 插件开发方案：AI Agent 集成 Playwright 和 Docker 全自动开发</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/openwrt-luci-app-tailscale-community/" title="在 OpenWrt 上优雅地管理 Tailscale：luci-app-tailscale-community"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">在 OpenWrt 上优雅地管理 Tailscale：luci-app-tailscale-community</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/openwrt-acmesh/" title="在 OpenWRT 上使用 acme.sh 配置 SSL 证书"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">在 OpenWRT 上使用 acme.sh 配置 SSL 证书</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/openwrt-cloudflared-curvepreferences-includes-unsupported-curve/" title="cloudflare出现了CurvePreferences-includes-unsupported-curve错误"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">cloudflare出现了CurvePreferences-includes-unsupported-curve错误</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="电脑硬件"
+        id="heading-5b1ffa5c31e75c34142bcce99ecbdb2f" role="tab" data-toggle="collapse" href="#collapse-5b1ffa5c31e75c34142bcce99ecbdb2f"
+        aria-expanded="false"
+      >
+        电脑硬件
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E7%94%B5%E8%84%91%E7%A1%AC%E4%BB%B6/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>3</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-5b1ffa5c31e75c34142bcce99ecbdb2f"
+           role="tabpanel" aria-labelledby="heading-5b1ffa5c31e75c34142bcce99ecbdb2f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/rtl9210-firmware/" title="RTL9210(A/B)固件配置"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">RTL9210(A/B)固件配置</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/throttlestop/" title="ThrottleStop教程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ThrottleStop教程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/cpu-adjust/" title="CPU升(降)压教程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CPU升(降)压教程</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="游戏"
+        id="heading-ba08216f13dd1742157412386eee1225" role="tab" data-toggle="collapse" href="#collapse-ba08216f13dd1742157412386eee1225"
+        aria-expanded="false"
+      >
+        游戏
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E6%B8%B8%E6%88%8F/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>3</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-ba08216f13dd1742157412386eee1225"
+           role="tabpanel" aria-labelledby="heading-ba08216f13dd1742157412386eee1225">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/unload-azur-lane-crosswave/" title="【碧蓝航线】Azur Lane Crosswave 解包指南+探索历程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【碧蓝航线】Azur Lane Crosswave 解包指南+探索历程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/direct-connection-rain6/" title="裸连R6"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">裸连R6</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/arknight-w/" title="ARKNIGHT 5-1限定"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ARKNIGHT 5-1限定</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="评价"
+        id="heading-6061203a46f26759897307422bcfb925" role="tab" data-toggle="collapse" href="#collapse-6061203a46f26759897307422bcfb925"
+        aria-expanded="false"
+      >
+        评价
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E8%AF%84%E4%BB%B7/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>3</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-6061203a46f26759897307422bcfb925"
+           role="tabpanel" aria-labelledby="heading-6061203a46f26759897307422bcfb925">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/review-relief/" title="review-relief"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">review-relief</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/review-weathering-with-you/" title="review-weathering-with-you"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">review-weathering-with-you</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/review-your-name./" title="《你的名字。》的一些想法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">《你的名字。》的一些想法</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="技术分享"
+        id="heading-1c943e3f418889814b69af8752656cad" role="tab" data-toggle="collapse" href="#collapse-1c943e3f418889814b69af8752656cad"
+        aria-expanded="false"
+      >
+        技术分享
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>2</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-1c943e3f418889814b69af8752656cad"
+           role="tabpanel" aria-labelledby="heading-1c943e3f418889814b69af8752656cad">
+        
+        
+          
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/ntfs-file-system/" title="NTFS文件系统修复经历"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">NTFS文件系统修复经历</span>
+        </a>
+      
+    
+  </div>
+
+          
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="小玩具"
+        id="heading-93549ed492a446b098f22fdc356b1800" role="tab" data-toggle="collapse" href="#collapse-93549ed492a446b098f22fdc356b1800"
+        aria-expanded="false"
+      >
+        小玩具
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/%E5%B0%8F%E7%8E%A9%E5%85%B7/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-93549ed492a446b098f22fdc356b1800"
+           role="tabpanel" aria-labelledby="heading-93549ed492a446b098f22fdc356b1800">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/github-action-openwrt-package-builder/" title="Github云编译Openwrt软件包，再也不用本地配环境"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Github云编译Openwrt软件包，再也不用本地配环境</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="前端"
+        id="heading-9abfe4a03928eb88a75a5cd95822dfef" role="tab" data-toggle="collapse" href="#collapse-9abfe4a03928eb88a75a5cd95822dfef"
+        aria-expanded="false"
+      >
+        前端
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>2</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-9abfe4a03928eb88a75a5cd95822dfef"
+           role="tabpanel" aria-labelledby="heading-9abfe4a03928eb88a75a5cd95822dfef">
+        
+        
+          
+          
+  <div class="category-post-list">
+    
+    
+  </div>
+
+          
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Web组件"
+        id="heading-e74abeedc88a8233348498ada933f7e2" role="tab" data-toggle="collapse" href="#collapse-e74abeedc88a8233348498ada933f7e2"
+        aria-expanded="false"
+      >
+        Web组件
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E5%89%8D%E7%AB%AF/Web%E7%BB%84%E4%BB%B6/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-e74abeedc88a8233348498ada933f7e2"
+           role="tabpanel" aria-labelledby="heading-e74abeedc88a8233348498ada933f7e2">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/background-tryment-clock/" title="仿 TrymenT 游戏风格的Hexo时钟组件"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">仿 TrymenT 游戏风格的Hexo时钟组件</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="开发笔记"
+        id="heading-8f7c644f9769e6a5a859454c83be8b22" role="tab" data-toggle="collapse" href="#collapse-8f7c644f9769e6a5a859454c83be8b22"
+        aria-expanded="false"
+      >
+        开发笔记
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E5%89%8D%E7%AB%AF/%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-8f7c644f9769e6a5a859454c83be8b22"
+           role="tabpanel" aria-labelledby="heading-8f7c644f9769e6a5a859454c83be8b22">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/statistics-zhulishenghuo/" title="住理生活自动记账工具开发实践"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">住理生活自动记账工具开发实践</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="捡垃圾"
+        id="heading-315e4568414969a95be5423900070345" role="tab" data-toggle="collapse" href="#collapse-315e4568414969a95be5423900070345"
+        aria-expanded="false"
+      >
+        捡垃圾
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E6%8D%A1%E5%9E%83%E5%9C%BE/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>2</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-315e4568414969a95be5423900070345"
+           role="tabpanel" aria-labelledby="heading-315e4568414969a95be5423900070345">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/r3g-flush-breed-openwrt/" title="小米R3G刷机breed后刷openwrt"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">小米R3G刷机breed后刷openwrt</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/chromebook-batterymanage/" title="ChromeBook电池阈值限制充电到80%停止"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ChromeBook电池阈值限制充电到80%停止</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Kindle"
+        id="heading-5441bf55ddbc84e8f574acd8d735638b" role="tab" data-toggle="collapse" href="#collapse-5441bf55ddbc84e8f574acd8d735638b"
+        aria-expanded="false"
+      >
+        Kindle
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/Kindle/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>2</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-5441bf55ddbc84e8f574acd8d735638b"
+           role="tabpanel" aria-labelledby="heading-5441bf55ddbc84e8f574acd8d735638b">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/kindle-modify-browserua/" title="Kindle 浏览器 User-Agent 切换工具"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kindle 浏览器 User-Agent 切换工具</span>
+        </a>
+      
+    
+      
+      
+        <a href="/blog/kindle-koreader-custom-translator/" title="KOReader 自定义翻译后端插件"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">KOReader 自定义翻译后端插件</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="效率工具"
+        id="heading-cc8732388d57a0224528fdedfa40162b" role="tab" data-toggle="collapse" href="#collapse-cc8732388d57a0224528fdedfa40162b"
+        aria-expanded="false"
+      >
+        效率工具
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-cc8732388d57a0224528fdedfa40162b"
+           role="tabpanel" aria-labelledby="heading-cc8732388d57a0224528fdedfa40162b">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/aistudio-dump-script/" title="Google AI Studio 对话导出工具"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Google AI Studio 对话导出工具</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="网络技术"
+        id="heading-7be04a666f73c24d31de82c370d8147e" role="tab" data-toggle="collapse" href="#collapse-7be04a666f73c24d31de82c370d8147e"
+        aria-expanded="false"
+      >
+        网络技术
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-7be04a666f73c24d31de82c370d8147e"
+           role="tabpanel" aria-labelledby="heading-7be04a666f73c24d31de82c370d8147e">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/diff-zerotier-tailscale/" title="ZeroTier和Tailscale的区别"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ZeroTier和Tailscale的区别</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="开发工具"
+        id="heading-2c509530bf439a36168a86e21c160c06" role="tab" data-toggle="collapse" href="#collapse-2c509530bf439a36168a86e21c160c06"
+        aria-expanded="false"
+      >
+        开发工具
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-2c509530bf439a36168a86e21c160c06"
+           role="tabpanel" aria-labelledby="heading-2c509530bf439a36168a86e21c160c06">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/hexo-translate-llm/" title="基于大语言模型的 Hexo 博客自动化翻译方案"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">基于大语言模型的 Hexo 博客自动化翻译方案</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="项目"
+        id="heading-31ecc0e65b4cd3e6b12577382bb56d6a" role="tab" data-toggle="collapse" href="#collapse-31ecc0e65b4cd3e6b12577382bb56d6a"
+        aria-expanded="false"
+      >
+        项目
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E9%A1%B9%E7%9B%AE/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-31ecc0e65b4cd3e6b12577382bb56d6a"
+           role="tabpanel" aria-labelledby="heading-31ecc0e65b4cd3e6b12577382bb56d6a">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/popucom-chess/" title="POPUCOM 三消棋：网页的多人联机小游戏"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">POPUCOM 三消棋：网页的多人联机小游戏</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="android&amp;linux"
+        id="heading-23de538baf8b3db9422135a1d52721e7" role="tab" data-toggle="collapse" href="#collapse-23de538baf8b3db9422135a1d52721e7"
+        aria-expanded="false"
+      >
+        android&amp;linux
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/android-linux/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-23de538baf8b3db9422135a1d52721e7"
+           role="tabpanel" aria-labelledby="heading-23de538baf8b3db9422135a1d52721e7">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/portable-wifi-flash/" title="晓龙410芯片随身wifi刷机浅谈"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">晓龙410芯片随身wifi刷机浅谈</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="数据恢复"
+        id="heading-a7b833fd9e1e94f45eb8aae758abf151" role="tab" data-toggle="collapse" href="#collapse-a7b833fd9e1e94f45eb8aae758abf151"
+        aria-expanded="false"
+      >
+        数据恢复
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-a7b833fd9e1e94f45eb8aae758abf151"
+           role="tabpanel" aria-labelledby="heading-a7b833fd9e1e94f45eb8aae758abf151">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/refs-salvage-experience/" title="解决REFS卷变成RAW的经历"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">解决REFS卷变成RAW的经历</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="文件系统"
+        id="heading-8dc8bbbc206dfad6ccf6d358ebdb1f73" role="tab" data-toggle="collapse" href="#collapse-8dc8bbbc206dfad6ccf6d358ebdb1f73"
+        aria-expanded="false"
+      >
+        文件系统
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-8dc8bbbc206dfad6ccf6d358ebdb1f73"
+           role="tabpanel" aria-labelledby="heading-8dc8bbbc206dfad6ccf6d358ebdb1f73">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/refs-attention/" title="ReFS使用注意事项"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ReFS使用注意事项</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="服务器运维"
+        id="heading-bc9e8b909386627382724b90ef0f51a6" role="tab" data-toggle="collapse" href="#collapse-bc9e8b909386627382724b90ef0f51a6"
+        aria-expanded="false"
+      >
+        服务器运维
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-bc9e8b909386627382724b90ef0f51a6"
+           role="tabpanel" aria-labelledby="heading-bc9e8b909386627382724b90ef0f51a6">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/use-ipset-ban-chinaip/" title="在 Linux 上使用 ipset 高效屏蔽特定国家 IP（中国等）"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">在 Linux 上使用 ipset 高效屏蔽特定国家 IP（中国等）</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="教程"
+        id="heading-b7824d5cd41d06de995a661879fefd3d" role="tab" data-toggle="collapse" href="#collapse-b7824d5cd41d06de995a661879fefd3d"
+        aria-expanded="false"
+      >
+        教程
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E6%95%99%E7%A8%8B/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-b7824d5cd41d06de995a661879fefd3d"
+           role="tabpanel" aria-labelledby="heading-b7824d5cd41d06de995a661879fefd3d">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/blog/zerotier-game-setting/" title="使用ZeroTier搭建游戏局域网环境"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">使用ZeroTier搭建游戏局域网环境</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+<script src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" integrity="sha256-pMhcV6/TBDtqH9E9PWKgS+P32PVguLG8IipkPyqMtfY=" crossorigin="anonymous">
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha256-SyTu6CwrfOhaznYZPoolVw2rxoY7lKYKQvqbtqN93HI=" crossorigin="anonymous"></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+<script src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" integrity="sha256-UVQ5HtHTmtqBT3KY5cd4AvI47pp0gJwIM+q45HD9oLk=" crossorigin="anonymous"></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.js"></script><!-- hexo injector body_end end --></body>
+</html>

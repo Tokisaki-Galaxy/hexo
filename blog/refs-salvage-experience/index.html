@@ -1,0 +1,903 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<script>
+(function() {
+    var userLang = navigator.language || navigator.userLanguage;
+    if (userLang && userLang.startsWith('zh')) {
+        document.documentElement.setAttribute('lang', 'zh-CN');
+        window.addEventListener('DOMContentLoaded', function() {
+            // 1. Handle article page title and H1
+            if (window._zh_title && window._en_title) {
+                // Precisely detect: find English title in current title and replace with Chinese
+                if (document.title.includes(window._en_title)) {
+                    document.title = document.title.replace(window._en_title, window._zh_title);
+                } else {
+                    // Fallback: if theme handles title specially (e.g., truncation), replace directly
+                    document.title = window._zh_title;
+                }
+                // Replace article page h1 title
+                // Consider different theme selectors, find first h1 tag for replacement
+                var h1 = document.querySelector('h1');
+                if (h1 && window._zh_title) {
+                    h1.textContent = window._zh_title;
+                }
+            }
+            // 2. Replace all title elements with data-zh-title and data-en-title attributes on homepage or list pages
+            var titleElements = document.querySelectorAll('[data-zh-title][data-en-title]');
+            titleElements.forEach(function(el) {
+                var zhTitle = el.getAttribute('data-zh-title');
+                var enTitle = el.getAttribute('data-en-title');
+                if (zhTitle && enTitle) {
+                    // Replace element text content
+                    if (el.textContent.trim() === enTitle.trim()) {
+                        el.textContent = zhTitle;
+                    }
+                    // If it's a link element, also check its title attribute
+                    if (el.hasAttribute('title') && el.getAttribute('title').trim() === enTitle.trim()) {
+                        el.setAttribute('title', zhTitle);
+                    }
+                }
+            });
+            // 3. Replace article titles on homepage/list pages (using global title mapping)
+            if (window._hexo_title_pairs && window._hexo_title_pairs.length > 0) {
+                // Create English to Chinese mapping
+                var titleMap = {};
+                window._hexo_title_pairs.forEach(function(pair) {
+                    titleMap[pair.en.trim()] = pair.zh;
+                });
+                // Helper function to replace article titles, supports exact match and contains match
+                // Preserves child links when replacing text (assumes single link per title element)
+                var replaceTitle = function(el) {
+                    var text = el.textContent.trim();
+                    var zhTitle = null;
+                    var matchedEnTitle = null;
+                    // Prefer exact match
+                    if (titleMap[text]) {
+                        zhTitle = titleMap[text];
+                        matchedEnTitle = text;
+                    } else {
+                        // Try contains match (handle cases with extra spaces or child elements)
+                        // Using indexOf for IE/older browser compatibility (this runs in browser context)
+                        for (var enTitle in titleMap) {
+                            if (text === enTitle || text.indexOf(enTitle) !== -1) {
+                                // Only replace when text is highly similar to title (avoid false replacements)
+                                if (text.length <= enTitle.length * 1.5) {
+                                    zhTitle = titleMap[enTitle];
+                                    matchedEnTitle = enTitle;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (!zhTitle) return;
+                    // Check if element contains a child link - if so, update link text to preserve hyperlink
+                    var childLink = el.querySelector('a');
+                    if (childLink) {
+                        childLink.textContent = zhTitle;
+                        // Also update title attribute if it matches the English title
+                        if (childLink.hasAttribute('title') && childLink.getAttribute('title').trim() === matchedEnTitle) {
+                            childLink.setAttribute('title', zhTitle);
+                        }
+                    } else {
+                        el.textContent = zhTitle;
+                    }
+                };
+                // Find title elements within article card/list containers (limit search scope for performance)
+                var containers = document.querySelectorAll('main, article, .post, .posts, .post-list, .article-list, .card, .content, #content, #main');
+                if (containers.length === 0) {
+                    containers = [document.body];
+                }
+                containers.forEach(function(container) {
+                    var titleSelectors = 'h1, h2, h3, .post-title, .article-title, .entry-title, .card-title, a[rel="bookmark"]';
+                    var potentialTitleElements = container.querySelectorAll(titleSelectors);
+                    potentialTitleElements.forEach(replaceTitle);
+                });
+            }
+        });
+    } else {
+        document.documentElement.setAttribute('lang', 'en');
+    }
+})();
+</script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/favicon.png">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Tokisaki Galaxy">
+  <meta name="keywords" content="blog">
+  
+    <meta name="description" content="之前把分区格式化成REFS，结果系统更新之后变成RAW分区，最后用微软自带的refsutil工具把数据捞出来了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决REFS卷变成RAW的经历">
+<meta property="og:url" content="https://tokisaki.top/blog/refs-salvage-experience/index.html">
+<meta property="og:site_name" content="Tokisaki Galaxy的博客">
+<meta property="og:description" content="之前把分区格式化成REFS，结果系统更新之后变成RAW分区，最后用微软自带的refsutil工具把数据捞出来了。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.imgdb.cn/item/652d57f2c458853aef660f9d.png">
+<meta property="og:image" content="https://pic.imgdb.cn/item/652d57f1c458853aef660d88.png">
+<meta property="og:image" content="https://pic.imgdb.cn/item/652d5e21c458853aef7691e4.png">
+<meta property="og:image" content="https://pic.imgdb.cn/item/652d57fbc458853aef6629f8.png">
+<meta property="og:image" content="https://pic.imgdb.cn/item/652d57f2c458853aef6610b8.png">
+<meta property="og:image" content="https://pic.imgdb.cn/item/652d57f1c458853aef660ca4.png">
+<meta property="article:published_time" content="2023-10-16T07:58:21.000Z">
+<meta property="article:modified_time" content="2026-02-15T12:36:30.311Z">
+<meta property="article:author" content="Tokisaki Galaxy">
+<meta property="article:tag" content="REFS">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="refsutil">
+<meta property="article:tag" content="数据恢复">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://pic.imgdb.cn/item/652d57f2c458853aef660f9d.png">
+  
+  
+  
+  <title>解决REFS卷变成RAW的经历 - Tokisaki Galaxy的博客</title>
+
+  <link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous">
+
+
+
+  <link  rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"tokisaki.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":50,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":"enable","follow_dnt":false,"baidu":"91eeedd7b367cd070a600501df970843","google":{"measurement_id":"G-9YQEB4P3YS"},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"microsoftclarity":"eell8b38tb","gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?91eeedd7b367cd070a600501df970843";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=G-9YQEB4P3YS", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', 'G-9YQEB4P3YS');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "eell8b38tb");
+    </script>
+
+
+
+  
+<!-- hexo injector head_end start -->
+<style>
+    .hexo-llm-zh { display: none; }
+    .hexo-llm-en { display: block; }
+    html[lang^="zh"] .hexo-llm-en { display: none !important; }
+    html[lang^="zh"] .hexo-llm-zh { display: block !important; }
+</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="Tokisaki Galaxy的博客" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Tokisaki Galaxy的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="解决REFS卷变成RAW的经历"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-10-16 15:58" pubdate>
+          2023年10月16日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">解决REFS卷变成RAW的经历</h1>
+            
+            <div class="markdown-body">
+              
+              <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>之前听闻REFS文件系统对NVME和SMR HDD有特别的优化，而且数据安全更好，是未来代替NTFS的文件系统。<br>所以一年前的时候把两个分区格式化成REFS来试试水。确实效果不错，<strong>除了OneDrive没法在REFS分区上用以外。</strong></p>
+<p>前几天突然内置的SMR HDD在系统更新之后变成了RAW分区。一开始是尝试在文件浏览器里面打开，显示参数错误。后来磁盘管理里显示RAW分区。<br>一开始以为是系统更新的问题，但是发现另一个REFS分区可以打开，突发奇想去事件管理器里一看，发现原来分区挂了。<br><img src="https://pic.imgdb.cn/item/652d57f2c458853aef660f9d.png" srcset="/img/loading.gif" lazyload alt="无法打开"></p>
+<p>然后接着发现电脑很卡，在任务管理器里面看到那个已经挂的磁盘占用率持续90%+的读写，很好奇在干嘛，然后发现事件管理器里面提示这个。</p>
+<p><img src="https://pic.imgdb.cn/item/652d57f1c458853aef660d88.png" srcset="/img/loading.gif" lazyload alt="自动修复不成功"><br><img src="https://pic.imgdb.cn/item/652d5e21c458853aef7691e4.png" srcset="/img/loading.gif" lazyload alt="无法纠正"></p>
+<p>那就只能去整数据恢复了。一开始我打算用R-Studio。<br>但是发现虽然REFS分区现在可以用R-Studio，但是REFS文件系统在快速迭代，那个软件更新速度赶不上微软的更新速度。所以我用那个软件恢复出来的文件是没有文件目录结构的。最后还是用微软自己家的数据恢复工具refsutil。</p>
+<h2 id="REFS数据打捞工具refsutil"><a href="#REFS数据打捞工具refsutil" class="headerlink" title="REFS数据打捞工具refsutil"></a>REFS数据打捞工具refsutil</h2><h3 id="什么是refsutil"><a href="#什么是refsutil" class="headerlink" title="什么是refsutil"></a>什么是refsutil</h3><p>用于诊断严重损坏的 ReFS 卷（变成RAW）、识别剩余文件，并将这些文件复制到另一个卷。<br>该工具位于 %SystemRoot%\Windows\System32 文件夹中。<br><strong>除非卷为 RAW，否则不必使用 ReFSutil 工具。 如果为只读，则仍可访问数据。</strong></p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows-server/administration/windows-commands/refsutil">Microsoft对refsutil的介绍</a></p>
+<h3 id="怎么用"><a href="#怎么用" class="headerlink" title="怎么用"></a>怎么用</h3><blockquote>
+<p>ReFS Salvage 有两个阶段：扫描阶段和复制阶段。 在自动模式下，扫描阶段和复制阶段将按顺序运行。 在手动模式下，每个阶段都可以单独运行。 进度和日志保存在工作目录中，以允许单独运行阶段以及暂停和恢复扫描阶段。</p>
+</blockquote>
+<p>1.确定为什么不能挂载<br>2.快速扫描阶段<br>3.完全扫描阶段<br>4.查看交互式控制台(因为可以看看哪些不需要的，然后在txt文件里删掉)<br>5.使用列表的复制阶段，把选择的文件复制出来</p>
+<p>确定目标卷是否为refs卷，并确定该卷是否可装载。 如果卷不可装载，则会提供原因。<br><img src="https://pic.imgdb.cn/item/652d57fbc458853aef6629f8.png" srcset="/img/loading.gif" lazyload alt="诊断扫描"></p>
+<p><img src="https://pic.imgdb.cn/item/652d57f2c458853aef6610b8.png" srcset="/img/loading.gif" lazyload alt="快速扫描阶段"></p>
+<p><img src="https://pic.imgdb.cn/item/652d57f1c458853aef660ca4.png" srcset="/img/loading.gif" lazyload alt="完全扫描阶段"></p>
+<h2 id="后期的思路"><a href="#后期的思路" class="headerlink" title="后期的思路"></a>后期的思路</h2><h3 id="启动REFS的完整性流功能"><a href="#启动REFS的完整性流功能" class="headerlink" title="启动REFS的完整性流功能"></a>启动REFS的完整性流功能</h3><p>启动完整性流可能有帮助，完整性流是REFS的一项可选功能，保证获得数据是原始未出错。</p>
+<blockquote>
+<p>完整性流是 ReFS 中的可选功能，它使用校验和来验证和维护数据完整性。虽然 ReFS 始终对元数据使用校验和，但默认情况下，ReFS 不会为文件数据生成或验证校验和。 完整性流是一项可选功能，允许用户对文件数据使用校验和。 启用完整性流后，ReFS 可以清楚地确定数据是否有效或已损坏。 此外，ReFS 和存储空间可以共同自动地更正损坏的元数据和数据。</p>
+</blockquote>
+<p><strong>！！！对性能有负面影响哦！！！</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">Get-Item -Path <span class="hljs-string">&#x27;C:\*&#x27;</span> | Set-FileIntegrity -Enable <span class="hljs-variable">$True</span><br>Set-FileIntegrity C:\ -Enable <span class="hljs-variable">$True</span><br><br>Get-Item -Path <span class="hljs-string">&#x27;C:\*&#x27;</span> | Set-FileIntegrity -Enable <span class="hljs-variable">$False</span><br>Set-FileIntegrity C:\ -Enable <span class="hljs-variable">$False</span><br><br>Get-Item -Path <span class="hljs-string">&#x27;C:\*&#x27;</span> | Get-FileIntegrity<br>Get-Item -Path <span class="hljs-string">&#x27;C:\&#x27;</span> | Get-FileIntegrity<br></code></pre></td></tr></table></figure>
+
+<h3 id="使用软RAID阵列"><a href="#使用软RAID阵列" class="headerlink" title="使用软RAID阵列"></a>使用软RAID阵列</h3><p>使用VHDX的虚拟硬盘，并且使用Windows的存储池功能，构造软RAID1。分布在两个硬盘上提升可靠性。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/" class="category-chain-item">数据恢复</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Windows/" class="print-no-link">#Windows</a>
+      
+        <a href="/tags/REFS/" class="print-no-link">#REFS</a>
+      
+        <a href="/tags/refsutil/" class="print-no-link">#refsutil</a>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/" class="print-no-link">#数据恢复</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>解决REFS卷变成RAW的经历</div>
+      <div>https://tokisaki.top/blog/refs-salvage-experience/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Tokisaki Galaxy</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年10月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/github-copilot/" title="在pwsh里面使用终端Github Copilot">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">在pwsh里面使用终端Github Copilot</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/r3g-flush-breed-openwrt/" title="小米R3G刷机breed后刷openwrt">
+                        <span class="hidden-mobile">小米R3G刷机breed后刷openwrt</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="cusdis" style="width:100%; overflow:visible; min-height:480px;">
+    <div id="cusdis_thread"
+      style="width:100%; overflow:visible;"
+      data-host="https://cusdis.com"
+      data-app-id="27923e0d-279d-4dad-bdc5-f1b12b6add4c"
+      data-page-id="27aeb4d1c7161879b869c2e4ea21bf2a"
+      data-page-url="blog/refs-salvage-experience/"
+      data-page-title="解决REFS卷变成RAW的经历"
+      data-theme="auto"
+    >
+    </div>
+  </div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#cusdis_thread', function() {
+      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
+      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
+
+      // 取消容器滚动条，尝试让 iframe 展开显示
+      var container = document.querySelector('.cusdis');
+      var thread = document.querySelector('#cusdis_thread');
+      if (container) container.style.overflow = 'visible';
+      if (thread) thread.style.overflow = 'visible';
+
+      // 等待 widget 加载后调整 iframe 样式
+      setTimeout(function() {
+        try {
+          var iframe = thread && thread.querySelector('iframe');
+          if (iframe) {
+            iframe.style.width = '100%';
+            iframe.style.border = 'none';
+            iframe.style.overflow = 'visible';
+            iframe.style.minHeight = '600px';
+            iframe.setAttribute('scrolling', 'no');
+
+            // 若同源，尝试根据内容自适应高度
+            try {
+              var doc = iframe.contentDocument || iframe.contentWindow.document;
+              if (doc && doc.body) {
+                iframe.style.height = doc.body.scrollHeight + 'px';
+              }
+            } catch (e) {
+            }
+          }
+        } catch (e) {
+        }
+      }, 600);
+
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema) {
+        document.querySelector('#cusdis_thread').dataset.theme = schema
+      }
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+<script src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" integrity="sha256-pMhcV6/TBDtqH9E9PWKgS+P32PVguLG8IipkPyqMtfY=" crossorigin="anonymous">
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha256-SyTu6CwrfOhaznYZPoolVw2rxoY7lKYKQvqbtqN93HI=" crossorigin="anonymous"></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+<script src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" integrity="sha256-UVQ5HtHTmtqBT3KY5cd4AvI47pp0gJwIM+q45HD9oLk=" crossorigin="anonymous"></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://s4.zstatic.net/ajax/libs/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.js"></script><!-- hexo injector body_end end --></body>
+</html>

@@ -1,0 +1,975 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<script>
+(function() {
+    var userLang = navigator.language || navigator.userLanguage;
+    if (userLang && userLang.startsWith('zh')) {
+        document.documentElement.setAttribute('lang', 'zh-CN');
+        window.addEventListener('DOMContentLoaded', function() {
+            // 1. Handle article page title and H1
+            if (window._zh_title && window._en_title) {
+                // Precisely detect: find English title in current title and replace with Chinese
+                if (document.title.includes(window._en_title)) {
+                    document.title = document.title.replace(window._en_title, window._zh_title);
+                } else {
+                    // Fallback: if theme handles title specially (e.g., truncation), replace directly
+                    document.title = window._zh_title;
+                }
+                // Replace article page h1 title
+                // Consider different theme selectors, find first h1 tag for replacement
+                var h1 = document.querySelector('h1');
+                if (h1 && window._zh_title) {
+                    h1.textContent = window._zh_title;
+                }
+            }
+            // 2. Replace all title elements with data-zh-title and data-en-title attributes on homepage or list pages
+            var titleElements = document.querySelectorAll('[data-zh-title][data-en-title]');
+            titleElements.forEach(function(el) {
+                var zhTitle = el.getAttribute('data-zh-title');
+                var enTitle = el.getAttribute('data-en-title');
+                if (zhTitle && enTitle) {
+                    // Replace element text content
+                    if (el.textContent.trim() === enTitle.trim()) {
+                        el.textContent = zhTitle;
+                    }
+                    // If it's a link element, also check its title attribute
+                    if (el.hasAttribute('title') && el.getAttribute('title').trim() === enTitle.trim()) {
+                        el.setAttribute('title', zhTitle);
+                    }
+                }
+            });
+            // 3. Replace article titles on homepage/list pages (using global title mapping)
+            if (window._hexo_title_pairs && window._hexo_title_pairs.length > 0) {
+                // Create English to Chinese mapping
+                var titleMap = {};
+                window._hexo_title_pairs.forEach(function(pair) {
+                    titleMap[pair.en.trim()] = pair.zh;
+                });
+                // Helper function to replace article titles, supports exact match and contains match
+                // Preserves child links when replacing text (assumes single link per title element)
+                var replaceTitle = function(el) {
+                    var text = el.textContent.trim();
+                    var zhTitle = null;
+                    var matchedEnTitle = null;
+                    // Prefer exact match
+                    if (titleMap[text]) {
+                        zhTitle = titleMap[text];
+                        matchedEnTitle = text;
+                    } else {
+                        // Try contains match (handle cases with extra spaces or child elements)
+                        // Using indexOf for IE/older browser compatibility (this runs in browser context)
+                        for (var enTitle in titleMap) {
+                            if (text === enTitle || text.indexOf(enTitle) !== -1) {
+                                // Only replace when text is highly similar to title (avoid false replacements)
+                                if (text.length <= enTitle.length * 1.5) {
+                                    zhTitle = titleMap[enTitle];
+                                    matchedEnTitle = enTitle;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (!zhTitle) return;
+                    // Check if element contains a child link - if so, update link text to preserve hyperlink
+                    var childLink = el.querySelector('a');
+                    if (childLink) {
+                        childLink.textContent = zhTitle;
+                        // Also update title attribute if it matches the English title
+                        if (childLink.hasAttribute('title') && childLink.getAttribute('title').trim() === matchedEnTitle) {
+                            childLink.setAttribute('title', zhTitle);
+                        }
+                    } else {
+                        el.textContent = zhTitle;
+                    }
+                };
+                // Find title elements within article card/list containers (limit search scope for performance)
+                var containers = document.querySelectorAll('main, article, .post, .posts, .post-list, .article-list, .card, .content, #content, #main');
+                if (containers.length === 0) {
+                    containers = [document.body];
+                }
+                containers.forEach(function(container) {
+                    var titleSelectors = 'h1, h2, h3, .post-title, .article-title, .entry-title, .card-title, a[rel="bookmark"]';
+                    var potentialTitleElements = container.querySelectorAll(titleSelectors);
+                    potentialTitleElements.forEach(replaceTitle);
+                });
+            }
+        });
+    } else {
+        document.documentElement.setAttribute('lang', 'en');
+    }
+})();
+</script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/favicon.png">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Tokisaki Galaxy">
+  <meta name="keywords" content="blog">
+  
+    <meta name="description" content="针对 Google AI Studio 缺少原生导出功能的问题，开发了一款基于 Tampermonkey 的用户脚本。该脚本可将对话内容完整抓取并导出为 JSON 格式，支持 Markdown 渲染，便于后续的资料整理与归档。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Google AI Studio 对话导出工具">
+<meta property="og:url" content="https://tokisaki.top/blog/aistudio-dump-script/index.html">
+<meta property="og:site_name" content="Tokisaki Galaxy的博客">
+<meta property="og:description" content="针对 Google AI Studio 缺少原生导出功能的问题，开发了一款基于 Tampermonkey 的用户脚本。该脚本可将对话内容完整抓取并导出为 JSON 格式，支持 Markdown 渲染，便于后续的资料整理与归档。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-12-04T07:11:53.000Z">
+<meta property="article:modified_time" content="2026-02-15T12:36:29.629Z">
+<meta property="article:author" content="Tokisaki Galaxy">
+<meta property="article:tag" content="Google AI Studio">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Tampermonkey">
+<meta property="article:tag" content="效率工具">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Google AI Studio 对话导出工具 - Tokisaki Galaxy的博客</title>
+
+  <link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous">
+
+
+
+  <link  rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"tokisaki.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":50,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":"enable","follow_dnt":false,"baidu":"91eeedd7b367cd070a600501df970843","google":{"measurement_id":"G-9YQEB4P3YS"},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"microsoftclarity":"eell8b38tb","gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?91eeedd7b367cd070a600501df970843";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=G-9YQEB4P3YS", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', 'G-9YQEB4P3YS');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "eell8b38tb");
+    </script>
+
+
+
+  
+<!-- hexo injector head_end start -->
+<style>
+    .hexo-llm-zh { display: none; }
+    .hexo-llm-en { display: block; }
+    html[lang^="zh"] .hexo-llm-en { display: none !important; }
+    html[lang^="zh"] .hexo-llm-zh { display: block !important; }
+</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="Tokisaki Galaxy的博客" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Tokisaki Galaxy的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Google AI Studio 对话导出工具"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-12-04 15:11" pubdate>
+          2025年12月4日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          29 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Google AI Studio 对话导出工具</h1>
+            
+            <div class="markdown-body">
+              
+              <h2 id="背景与动机"><a href="#背景与动机" class="headerlink" title="背景与动机"></a>背景与动机</h2><p>Google AI Studio 提供了优秀的对话体验。但在科研或日常记录中，我们常面临数据留存的难题。原生界面并未提供导出选项。</p>
+<p>若要保存灵感、整理代码片段或备份团队协作内容，逐条复制粘贴显然过于低效。这种重复性劳动不应占据宝贵的时间。</p>
+<p>为此，编写了一款基于 Tampermonkey 的用户脚本：<strong>AI Studio Chat Exporter</strong>。它旨在解决这一痛点，实现对话内容的一键打包。</p>
+<h2 id="功能概述"><a href="#功能概述" class="headerlink" title="功能概述"></a>功能概述</h2><p>该脚本主要实现了以下几项功能，旨在简化数据获取流程：</p>
+<ul>
+<li><p><strong>一键导出</strong><br>页面加载完成后，屏幕上会出现一个悬浮的 “Export JSON” 按钮。点击它，即可将当前的聊天内容打包成 JSON 文件并下载。</p>
+</li>
+<li><p><strong>完整抓取</strong><br>脚本会自动处理页面的滚动加载。这确保了每一轮对话——无论是用户的输入还是模型的回复——都能被完整收录，避免了手动复制可能产生的遗漏。</p>
+</li>
+<li><p><strong>系统提示词提取</strong><br>System Prompt 往往定义了对话的基调和规则。即使侧边栏处于折叠状态，脚本也会自动展开并捕获这部分关键信息。</p>
+</li>
+<li><p><strong>Markdown 格式支持</strong><br>模型输出中的标题、列表、代码块等元素，会被转换为标准的 Markdown 格式。这使得导出的内容可以直接粘贴到笔记软件或博客中，无需二次排版。</p>
+</li>
+<li><p><strong>多语言适配</strong><br>界面提示词支持简体中文、英文、德语等多种语言，会根据浏览器的语言设置自动切换。</p>
+</li>
+</ul>
+<h2 id="部署方法"><a href="#部署方法" class="headerlink" title="部署方法"></a>部署方法</h2><p>使用该脚本需要浏览器扩展程序的支持。</p>
+<ol>
+<li><p><strong>环境准备</strong><br>在 Chrome、Edge 或 Brave 等浏览器中安装 <strong>Tampermonkey</strong> (油猴) 扩展。</p>
+</li>
+<li><p><strong>脚本安装</strong><br>获取 <code>script.js</code> 脚本文件或链接。Tampermonkey 会自动识别并弹出安装界面，点击 “Install” 即可。<br><a target="_blank" rel="noopener" href="https://greasyfork.org/zh-CN/scripts/557864-ai-studio-chat-exporter-markdown-code-block-support">点此安装</a></p>
+</li>
+<li><p><strong>权限确认</strong><br>确保脚本的匹配规则覆盖了 <code>https://aistudio.google.com/prompts/*</code> 这一域名。</p>
+</li>
+<li><p><strong>生效验证</strong><br>刷新 AI Studio 的对话页面。若页面顶部出现一个可拖拽的蓝色按钮，即表示安装成功。</p>
+</li>
+</ol>
+<h2 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h2><p>操作流程非常直观：</p>
+<ol>
+<li>打开任意一个 AI Studio 对话项目。</li>
+<li>找到悬浮按钮，将其拖动到不遮挡视线的位置。</li>
+<li>点击按钮。脚本将自动执行以下操作：<ul>
+<li>获取系统提示词 (System Instruction)。</li>
+<li>滚动并加载所有历史对话。</li>
+<li>将内容格式化为 Markdown。</li>
+<li>生成并下载 JSON 文件。</li>
+</ul>
+</li>
+</ol>
+<p>文件默认以当前项目的标题命名，例如 <code>My_Project.json</code>。</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>导出的 JSON 文件结构清晰，便于程序二次处理或人工阅读：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;system_instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;项目的系统提示词&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;messages&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span> <span class="hljs-attr">&quot;role&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;user&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;用户输入的 Markdown 文本&quot;</span> <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span> <span class="hljs-attr">&quot;role&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;assistant&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;模型输出的 Markdown 文本&quot;</span> <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>在使用过程中，可能会遇到一些细微的情况：</p>
+<ul>
+<li><strong>按钮未显示</strong>：请检查 Tampermonkey 扩展是否已启用，或者尝试刷新页面。</li>
+<li><strong>导出内容为空</strong>：脚本依赖于页面的 DOM 结构。请确保对话区域已正常加载，且能够滚动。</li>
+<li><strong>System Prompt 字段为空</strong>：并非所有对话都设置了系统提示词。若原项目未设置，该字段自然为空。</li>
+<li><strong>权限提示</strong>：脚本更新时，Tampermonkey 可能会请求新的地址权限，允许即可。</li>
+</ul>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><h2 id="AI-Studio-Chat-Exporter-将繁琐的备份工作简化为一个点击动作。这不仅节省了时间，也让知识管理变得-filepath-x-GitHub-hexo-source-posts-aistudio-dump-script-md"><a href="#AI-Studio-Chat-Exporter-将繁琐的备份工作简化为一个点击动作。这不仅节省了时间，也让知识管理变得-filepath-x-GitHub-hexo-source-posts-aistudio-dump-script-md" class="headerlink" title="AI Studio Chat Exporter 将繁琐的备份工作简化为一个点击动作。这不仅节省了时间，也让知识管理变得&#x2F;&#x2F; filepath: x:\GitHub\hexo\source_posts\aistudio-dump-script.md"></a>AI Studio Chat Exporter 将繁琐的备份工作简化为一个点击动作。这不仅节省了时间，也让知识管理变得&#x2F;&#x2F; filepath: x:\GitHub\hexo\source_posts\aistudio-dump-script.md</h2><h2 id="title-Google-AI-Studio-对话导出工具date-2025-12-04-15-11-53author-Tokisaki-Galaxyexcerpt-针对-Google-AI-Studio-缺少原生导出功能的问题，开发了一款基于-Tampermonkey-的用户脚本。该脚本可将对话内容完整抓取并导出为-JSON-格式，支持-Markdown-渲染，便于后续的资料整理与归档。tags-Tampermonkey-Google-AI-Studio-效率工具-JavaScriptcategories-效率工具"><a href="#title-Google-AI-Studio-对话导出工具date-2025-12-04-15-11-53author-Tokisaki-Galaxyexcerpt-针对-Google-AI-Studio-缺少原生导出功能的问题，开发了一款基于-Tampermonkey-的用户脚本。该脚本可将对话内容完整抓取并导出为-JSON-格式，支持-Markdown-渲染，便于后续的资料整理与归档。tags-Tampermonkey-Google-AI-Studio-效率工具-JavaScriptcategories-效率工具" class="headerlink" title="title: Google AI Studio 对话导出工具date: 2025-12-04 15:11:53author: Tokisaki Galaxyexcerpt: 针对 Google AI Studio 缺少原生导出功能的问题，开发了一款基于 Tampermonkey 的用户脚本。该脚本可将对话内容完整抓取并导出为 JSON 格式，支持 Markdown 渲染，便于后续的资料整理与归档。tags: - Tampermonkey - Google AI Studio - 效率工具 - JavaScriptcategories: - 效率工具"></a>title: Google AI Studio 对话导出工具<br>date: 2025-12-04 15:11:53<br>author: Tokisaki Galaxy<br>excerpt: 针对 Google AI Studio 缺少原生导出功能的问题，开发了一款基于 Tampermonkey 的用户脚本。该脚本可将对话内容完整抓取并导出为 JSON 格式，支持 Markdown 渲染，便于后续的资料整理与归档。<br>tags:<br> - Tampermonkey<br> - Google AI Studio<br> - 效率工具<br> - JavaScript<br>categories:<br> - 效率工具</h2><h2 id="背景与动机-1"><a href="#背景与动机-1" class="headerlink" title="背景与动机"></a>背景与动机</h2><p>Google AI Studio 提供了优秀的对话体验。但在科研或日常记录中，我们常面临数据留存的难题。原生界面并未提供导出选项。</p>
+<p>若要保存灵感、整理代码片段或备份团队协作内容，逐条复制粘贴显然过于低效。这种重复性劳动不应占据宝贵的时间。</p>
+<p>为此，编写了一款基于 Tampermonkey 的用户脚本：<strong>AI Studio Chat Exporter</strong>。它旨在解决这一痛点，实现对话内容的一键打包。</p>
+<h2 id="功能概述-1"><a href="#功能概述-1" class="headerlink" title="功能概述"></a>功能概述</h2><p>该脚本主要实现了以下几项功能，旨在简化数据获取流程：</p>
+<ul>
+<li><p><strong>一键导出</strong><br>页面加载完成后，屏幕上会出现一个悬浮的 “Export JSON” 按钮。点击它，即可将当前的聊天内容打包成 JSON 文件并下载。</p>
+</li>
+<li><p><strong>完整抓取</strong><br>脚本会自动处理页面的滚动加载。这确保了每一轮对话——无论是用户的输入还是模型的回复——都能被完整收录，避免了手动复制可能产生的遗漏。</p>
+</li>
+<li><p><strong>系统提示词提取</strong><br>System Prompt 往往定义了对话的基调和规则。即使侧边栏处于折叠状态，脚本也会自动展开并捕获这部分关键信息。</p>
+</li>
+<li><p><strong>Markdown 格式支持</strong><br>模型输出中的标题、列表、代码块等元素，会被转换为标准的 Markdown 格式。这使得导出的内容可以直接粘贴到笔记软件或博客中，无需二次排版。</p>
+</li>
+<li><p><strong>多语言适配</strong><br>界面提示词支持简体中文、英文、德语等多种语言，会根据浏览器的语言设置自动切换。</p>
+</li>
+</ul>
+<h2 id="部署方法-1"><a href="#部署方法-1" class="headerlink" title="部署方法"></a>部署方法</h2><p>使用该脚本需要浏览器扩展程序的支持。</p>
+<ol>
+<li><p><strong>环境准备</strong><br>在 Chrome、Edge 或 Brave 等浏览器中安装 <strong>Tampermonkey</strong> (油猴) 扩展。</p>
+</li>
+<li><p><strong>脚本安装</strong><br>获取 <code>script.js</code> 脚本文件或链接。Tampermonkey 会自动识别并弹出安装界面，点击 “Install” 即可。</p>
+</li>
+<li><p><strong>权限确认</strong><br>确保脚本的匹配规则覆盖了 <code>https://aistudio.google.com/prompts/*</code> 这一域名。</p>
+</li>
+<li><p><strong>生效验证</strong><br>刷新 AI Studio 的对话页面。若页面顶部出现一个可拖拽的蓝色按钮，即表示安装成功。</p>
+</li>
+</ol>
+<h2 id="使用说明-1"><a href="#使用说明-1" class="headerlink" title="使用说明"></a>使用说明</h2><p>操作流程非常直观：</p>
+<ol>
+<li>打开任意一个 AI Studio 对话项目。</li>
+<li>找到悬浮按钮，将其拖动到不遮挡视线的位置。</li>
+<li>点击按钮。脚本将自动执行以下操作：<ul>
+<li>获取系统提示词 (System Instruction)。</li>
+<li>滚动并加载所有历史对话。</li>
+<li>将内容格式化为 Markdown。</li>
+<li>生成并下载 JSON 文件。</li>
+</ul>
+</li>
+</ol>
+<p>文件默认以当前项目的标题命名，例如 <code>My_Project.json</code>。</p>
+<h2 id="数据结构-1"><a href="#数据结构-1" class="headerlink" title="数据结构"></a>数据结构</h2><p>导出的 JSON 文件结构清晰，便于程序二次处理或人工阅读：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;system_instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;项目的系统提示词&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;messages&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span> <span class="hljs-attr">&quot;role&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;user&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;用户输入的 Markdown 文本&quot;</span> <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span> <span class="hljs-attr">&quot;role&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;assistant&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;模型输出的 Markdown 文本&quot;</span> <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h2><p>在使用过程中，可能会遇到一些细微的情况：</p>
+<ul>
+<li><strong>按钮未显示</strong>：请检查 Tampermonkey 扩展是否已启用，或者尝试刷新页面。</li>
+<li><strong>导出内容为空</strong>：脚本依赖于页面的 DOM 结构。请确保对话区域已正常加载，且能够滚动。</li>
+<li><strong>System Prompt 字段为空</strong>：并非所有对话都设置了系统提示词。若原项目未设置，该字段自然为空。</li>
+<li><strong>权限提示</strong>：脚本更新时，Tampermonkey 可能会请求新的地址权限，允许即可。</li>
+</ul>
+<h2 id="结语-1"><a href="#结语-1" class="headerlink" title="结语"></a>结语</h2><p>AI Studio Chat Exporter 将繁琐的备份工作简化为一个点击动作。这不仅节省了时间，也让知识管理变得更加有序。希望这个小工具能为各位的研究与工作带来便利。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" class="category-chain-item">效率工具</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Tampermonkey/" class="print-no-link">#Tampermonkey</a>
+      
+        <a href="/tags/Google-AI-Studio/" class="print-no-link">#Google AI Studio</a>
+      
+        <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" class="print-no-link">#效率工具</a>
+      
+        <a href="/tags/JavaScript/" class="print-no-link">#JavaScript</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Google AI Studio 对话导出工具</div>
+      <div>https://tokisaki.top/blog/aistudio-dump-script/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Tokisaki Galaxy</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年12月4日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/kindle-koreader-custom-translator/" title="KOReader 自定义翻译后端插件">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">KOReader 自定义翻译后端插件</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/popucom-chess/" title="POPUCOM 三消棋：网页的多人联机小游戏">
+                        <span class="hidden-mobile">POPUCOM 三消棋：网页的多人联机小游戏</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="cusdis" style="width:100%; overflow:visible; min-height:480px;">
+    <div id="cusdis_thread"
+      style="width:100%; overflow:visible;"
+      data-host="https://cusdis.com"
+      data-app-id="27923e0d-279d-4dad-bdc5-f1b12b6add4c"
+      data-page-id="bd184404f6aa4930d32850c7aaed1b94"
+      data-page-url="blog/aistudio-dump-script/"
+      data-page-title="Google AI Studio 对话导出工具"
+      data-theme="auto"
+    >
+    </div>
+  </div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#cusdis_thread', function() {
+      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
+      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
+
+      // 取消容器滚动条，尝试让 iframe 展开显示
+      var container = document.querySelector('.cusdis');
+      var thread = document.querySelector('#cusdis_thread');
+      if (container) container.style.overflow = 'visible';
+      if (thread) thread.style.overflow = 'visible';
+
+      // 等待 widget 加载后调整 iframe 样式
+      setTimeout(function() {
+        try {
+          var iframe = thread && thread.querySelector('iframe');
+          if (iframe) {
+            iframe.style.width = '100%';
+            iframe.style.border = 'none';
+            iframe.style.overflow = 'visible';
+            iframe.style.minHeight = '600px';
+            iframe.setAttribute('scrolling', 'no');
+
+            // 若同源，尝试根据内容自适应高度
+            try {
+              var doc = iframe.contentDocument || iframe.contentWindow.document;
+              if (doc && doc.body) {
+                iframe.style.height = doc.body.scrollHeight + 'px';
+              }
+            } catch (e) {
+            }
+          }
+        } catch (e) {
+        }
+      }, 600);
+
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema) {
+        document.querySelector('#cusdis_thread').dataset.theme = schema
+      }
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+<script src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" integrity="sha256-pMhcV6/TBDtqH9E9PWKgS+P32PVguLG8IipkPyqMtfY=" crossorigin="anonymous">
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha256-SyTu6CwrfOhaznYZPoolVw2rxoY7lKYKQvqbtqN93HI=" crossorigin="anonymous"></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+<script src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" integrity="sha256-UVQ5HtHTmtqBT3KY5cd4AvI47pp0gJwIM+q45HD9oLk=" crossorigin="anonymous"></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://s4.zstatic.net/ajax/libs/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.js"></script><!-- hexo injector body_end end --></body>
+</html>
