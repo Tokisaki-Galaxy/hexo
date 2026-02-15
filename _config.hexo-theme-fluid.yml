@@ -878,6 +878,7 @@ archive:
   banner_img: /img/default.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
+  enable_paginator: false
 
 
 #---------------------------

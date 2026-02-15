@@ -102,6 +102,12 @@ time_format: HH:mm:ss
 per_page: 12
 pagination_dir: page
 
+archive_generator:
+  per_page: 0
+  yearly: true
+  monthly: true
+  daily: false
+
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
